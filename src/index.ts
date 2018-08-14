@@ -1,13 +1,15 @@
 import 'babel-polyfill';
 import config from './config';
+
+config();
+
 import { BotFrameworkAdapter } from 'botbuilder';
 import { join } from 'path';
+import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
 
 import commands from './commands';
-
-config();
 
 // Create server
 const server = restify.createServer();
@@ -20,6 +22,27 @@ server.listen(process.env.PORT, () => {
 const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
+});
+
+let numActivities = 0;
+const up = Date.now();
+
+server.get('/', async (req, res) => {
+  const message = `MockBot v4 is up since ${ prettyMs(Date.now() - up) } ago, processed ${ numActivities } activities.`;
+  const separator = new Array(message.length).fill('-').join('');
+
+  res.set('Content-Type', 'text/plain');
+  res.send(JSON.stringify({
+    human: [
+      separator,
+      message,
+      separator
+    ],
+    computer: {
+      numActivities,
+      up
+    }
+  }, null, 2));
 });
 
 server.get('/public/:filename', async (req, res) => {
@@ -37,6 +60,8 @@ server.get('/public/assets/:filename', async (req, res) => {
 // Listen for incoming requests
 server.post('/api/messages/', (req, res) => {
   adapter.processActivity(req, res, async context => {
+    numActivities++;
+
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
     if (
       context.activity.type === 'conversationUpdate'
