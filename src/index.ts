@@ -45,6 +45,11 @@ server.get('/', async (req, res) => {
   }, null, 2));
 });
 
+server.get('/health.txt', async (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send('OK');
+});
+
 server.get('/public/:filename', async (req, res) => {
   await serveHandler(req, res, {
     path: join(__dirname, './public')
