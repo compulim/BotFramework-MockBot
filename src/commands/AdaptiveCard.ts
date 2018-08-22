@@ -6,6 +6,7 @@ import FlightUpdate from './Cards/FlightUpdate';
 import Inputs from './Cards/Inputs';
 import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
+import Review from './Cards/Review';
 
 function getCardJSON(name: string = '') {
   switch (name.toLowerCase()) {
@@ -30,6 +31,8 @@ function getCardJSON(name: string = '') {
 
     case 'weather':
       return Weather();
+    case 'review':
+      return Review();
   }
 }
 
