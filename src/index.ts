@@ -5,6 +5,7 @@ config();
 
 import { BotFrameworkAdapter } from 'botbuilder';
 import { join } from 'path';
+import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
@@ -50,15 +51,55 @@ server.get('/health.txt', async (req, res) => {
   res.send('OK');
 });
 
-server.get('/public/:filename', async (req, res) => {
-  await serveHandler(req, res, {
-    path: join(__dirname, './public')
-  });
+server.post('/token-generate', async (_, res) => {
+  console.log('requesting token');
+
+  try {
+    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
+      headers: {
+        authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`
+      },
+      method: 'POST'
+    });
+
+    const json = await cres.json();
+
+    if ('error' in json) {
+      res.send(500);
+    } else {
+      res.send(json);
+    }
+  } catch (err) {
+    res.send(500);
+  }
 });
 
-server.get('/public/assets/:filename', async (req, res) => {
+server.post('/token-refresh/:token', async (req, res) => {
+  console.log('refreshing token');
+
+  try {
+    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
+      headers: {
+        authorization: `Bearer ${ req.params.token }`
+      },
+      method: 'POST'
+    });
+
+    const json = await cres.json();
+
+    if ('error' in json) {
+      res.send(500);
+    } else {
+      res.send(json);
+    }
+  } catch (err) {
+    res.send(500);
+  }
+});
+
+server.get('/public/*', async (req, res) => {
   await serveHandler(req, res, {
-    path: join(__dirname, './public/assets')
+    path: join(__dirname, './public')
   });
 });
 
