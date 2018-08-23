@@ -67,7 +67,9 @@ server.post('/token-generate', async (_, res) => {
     if ('error' in json) {
       res.send(500);
     } else {
-      res.send(json);
+      res.send(json, {
+        'Access-Control-Allow-Origin': '*'
+      });
     }
   } catch (err) {
     res.send(500);
@@ -90,7 +92,9 @@ server.post('/token-refresh/:token', async (req, res) => {
     if ('error' in json) {
       res.send(500);
     } else {
-      res.send(json);
+      res.send(json, {
+        'Access-Control-Allow-Origin': '*'
+      });
     }
   } catch (err) {
     res.send(500);
