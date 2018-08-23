@@ -1,9 +1,11 @@
+// http://adaptivecards.io/samples/WeatherLarge.html
+
 export default () => ({
 	"$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
 	"type": "AdaptiveCard",
 	"version": "1.0",
 	"speak": "<s>Weather forecast for Monday is high of 62 and low of 42 degrees with a 20% chance of rain</s><s>Winds will be 5 mph from the northeast</s>",
-	"backgroundImage": "http://messagecardplayground.azurewebsites.net/assets/Mostly Cloudy-Background-Dark.jpg",
+	"backgroundImage": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Background-Dark.jpg",
 	"body": [
 		{
 			"type": "ColumnSet",
@@ -14,7 +16,7 @@ export default () => ({
 					"items": [
 						{
 							"type": "Image",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly Cloudy-Square.png",
+							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png",
 							"size": "stretch"
 						}
 					]
@@ -65,7 +67,7 @@ export default () => ({
 						{
 							"type": "Image",
 							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly Cloudy-Square.png"
+							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
 						},
 						{
 							"type": "TextBlock",
@@ -127,7 +129,7 @@ export default () => ({
 						{
 							"type": "Image",
 							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly Cloudy-Square.png"
+							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
 						},
 						{
 							"type": "TextBlock",
@@ -158,7 +160,7 @@ export default () => ({
 						{
 							"type": "Image",
 							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly Cloudy-Square.png"
+							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
 						},
 						{
 							"type": "TextBlock",

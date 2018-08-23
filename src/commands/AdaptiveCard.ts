@@ -41,8 +41,15 @@ export default async function (context: TurnContext, name: string = '', arg: str
   const content = getCardJSON(name, (arg || '').trim());
 
   if (content) {
+    let text;
+
+    if (name === 'weather') {
+      text = 'This is the weather card';
+    }
+
     await context.sendActivity({
       type: 'message',
+      text,
       attachments: [{
         contentType: 'application/vnd.microsoft.card.adaptive',
         content

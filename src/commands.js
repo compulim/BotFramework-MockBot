@@ -37,7 +37,7 @@ export default [
   { pattern: 'oauth', processor: OAuthCard },
   { pattern: 'receiptcard', processor: ReceiptCard },
   { pattern: 'signin', processor: SignInCard },
-  { pattern: 'suggested-actions', processor: SuggestedActionsCard },
+  { pattern: /^suggested\-actions(\s+[\d\w]+)?/, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
   { pattern: /^video(\s+([\d\w]+))?$/, processor: Video },
   { pattern: 'videocard', processor: VideoCard },

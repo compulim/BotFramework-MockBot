@@ -1,3 +1,5 @@
+// http://adaptivecards.io/samples/FlightUpdate.html
+
 export default () => ({
 	"$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
 	"type": "AdaptiveCard",
@@ -13,7 +15,7 @@ export default () => ({
 						{
 							"type": "Image",
 							"size": "small",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Airplane.png"
+							"url": "http://adaptivecards.io/content/airplane.png"
 						}
 					]
 				},
@@ -184,7 +186,7 @@ export default () => ({
 						},
 						{
 							"type":"Image",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/airplane.png",
+							"url": "http://adaptivecards.io/content/airplane.png",
 							"size": "small"
 						}
 					]
