@@ -51,8 +51,23 @@ server.get('/health.txt', async (req, res) => {
   res.send('OK');
 });
 
-server.post('/token-generate', async (_, res) => {
-  console.log('requesting token');
+function trustedOrigin(origin) {
+  return (
+    /^https?:\/\/localxhost[\/:]/.test(origin)
+    || /^https?:\/\/[\d\w]+\.ngrok\.io[\/:]/.test(origin)
+    || /^https?:\/\/webchat\.azurewebsites\.net[\/:]/.test(origin)
+    || /^https?:\/\/([\d\w]+\.)+botframework\.com[\/:]/.test(origin)
+  );
+}
+
+server.post('/token-generate', async (req, res) => {
+  const origin = req.header('origin');
+
+  console.log(`requesting token from ${ origin }`);
+
+  if (!trustedOrigin(origin)) {
+    return res.send(403, 'not trusted origin');
+  }
 
   try {
     const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
@@ -77,7 +92,13 @@ server.post('/token-generate', async (_, res) => {
 });
 
 server.post('/token-refresh/:token', async (req, res) => {
-  console.log('refreshing token');
+  const origin = req.header('origin');
+
+  console.log(`refreshing token from ${ origin }`);
+
+  if (!trustedOrigin(origin)) {
+    return res.send(403, 'not trusted origin');
+  }
 
   try {
     const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
