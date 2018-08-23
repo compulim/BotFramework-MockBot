@@ -8,52 +8,65 @@ import Inputs from './Cards/Inputs';
 import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
 
-function getCardJSON(name: string = '', arg: string) {
+function getCardJSON(name: string = '', arg: string): any[] {
   switch (name.toLowerCase()) {
     case 'bingsports':
     case 'sports':
-      return BingSports();
+      return [BingSports()];
 
     case 'broken':
-      return Broken(arg);
+      return [Broken(arg)];
 
     case 'calendarreminder':
     case 'calendar':
     case 'reminder':
-      return CalendarReminder();
+      return [CalendarReminder()];
 
     case 'flight':
     case 'flightupdate':
-      return FlightUpdate();
+      return [FlightUpdate()];
 
     case 'inputs':
-      return Inputs();
+      return [Inputs()];
+
+    case 'multiple':
+      return [
+        FlightUpdate(),
+        Weather()
+      ];
 
     case 'simple':
-      return Simple();
+      return [Simple()];
 
     case 'weather':
-      return Weather();
+      return [Weather()];
   }
 }
 
 export default async function (context: TurnContext, name: string = '', arg: string) {
-  const content = getCardJSON(name, (arg || '').trim());
+  const contents = getCardJSON(name, (arg || '').trim());
 
-  if (content) {
+  if (contents && contents.length) {
     let text;
 
-    if (name === 'weather') {
-      text = 'This is the weather card';
+    switch (name) {
+      case 'multiple':
+        text = 'Multiple cards';
+        break;
+
+      case 'weather':
+        text = 'This is the weather card';
+        break;
     }
 
     await context.sendActivity({
       type: 'message',
       text,
-      attachments: [{
+      attachmentLayout: 'carousel',
+      attachments: contents.map(content => ({
         contentType: 'application/vnd.microsoft.card.adaptive',
         content
-      }]
+      }))
     });
   } else {
     await context.sendActivity({
