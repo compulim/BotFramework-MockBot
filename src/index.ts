@@ -70,7 +70,7 @@ server.post('/api/messages/', (req, res) => {
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
     if (
       context.activity.type === 'conversationUpdate'
-      && context.activity.membersAdded[0].name !== 'Bot'
+      && context.activity.membersAdded[0].id !== 'hawo-mockbot'
     ) {
       await context.sendActivity(`Welcome to Mockbot v4!`);
     } else if (context.activity.type === 'message') {

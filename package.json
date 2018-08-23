@@ -11,7 +11,7 @@
     "clean": "rimraf lib",
     "postinstall": "npm run build",
     "start": "node-dev --respawn .",
-    "watch": "concurrently --names \"babel,typecheck\" \"npm run build:babel -- --watch\" \"npm run build:typecheck -- --preserveWatchOutput --watch\""
+    "watch": "concurrently --names \"babel,start,typecheck\" \"npm run build:babel -- --watch\" \"npm run start\" \"npm run build:typecheck -- --preserveWatchOutput --watch\""
   },
   "jest": {
     "moduleFileExtensions": [

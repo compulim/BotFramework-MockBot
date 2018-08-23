@@ -15,12 +15,13 @@ import OAuthCard from './commands/OAuthCard';
 import ReceiptCard from './commands/ReceiptCard';
 import SignInCard from './commands/SignInCard';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
+import Text from './commands/Text';
 import Video from './commands/Video';
 import VideoCard from './commands/VideoCard';
 import Xml from './commands/Xml';
 
 export default [
-  { pattern: /^card ([\d\w]+)/, processor: AdaptiveCard },
+  { pattern: /^card ([\d\w]+)(\s+[\d\w]+)?/, processor: AdaptiveCard },
   { pattern: 'animationcard', processor: AnimationCard },
   { pattern: 'audio', processor: Audio },
   { pattern: 'audiocard', processor: AudioCard },
@@ -37,6 +38,7 @@ export default [
   { pattern: 'receiptcard', processor: ReceiptCard },
   { pattern: 'signin', processor: SignInCard },
   { pattern: 'suggested-actions', processor: SuggestedActionsCard },
+  { pattern: 'text', processor: Text },
   { pattern: /^video(\s+([\d\w]+))?$/, processor: Video },
   { pattern: 'videocard', processor: VideoCard },
   { pattern: 'xml', processor: Xml }

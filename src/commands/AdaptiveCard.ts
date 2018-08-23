@@ -1,17 +1,21 @@
 import { TurnContext } from 'botbuilder';
 
 import BingSports from './Cards/BingSports';
+import Broken from './Cards/Broken';
 import CalendarReminder from './Cards/CalendarReminder';
 import FlightUpdate from './Cards/FlightUpdate';
 import Inputs from './Cards/Inputs';
 import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
 
-function getCardJSON(name: string = '') {
+function getCardJSON(name: string = '', arg: string) {
   switch (name.toLowerCase()) {
     case 'bingsports':
     case 'sports':
       return BingSports();
+
+    case 'broken':
+      return Broken(arg);
 
     case 'calendarreminder':
     case 'calendar':
@@ -33,8 +37,8 @@ function getCardJSON(name: string = '') {
   }
 }
 
-export default async function (context: TurnContext, name: string = '') {
-  const content = getCardJSON(name);
+export default async function (context: TurnContext, name: string = '', arg: string) {
+  const content = getCardJSON(name, (arg || '').trim());
 
   if (content) {
     await context.sendActivity({
