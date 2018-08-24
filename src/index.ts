@@ -136,7 +136,7 @@ server.post('/api/messages/', (req, res) => {
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
     if (
       context.activity.type === 'conversationUpdate'
-      && context.activity.membersAdded[0].id !== 'webchat-mockbot'
+      && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
