@@ -55,7 +55,7 @@ function trustedOrigin(origin) {
   return (
     /^https?:\/\/localhost([\/:]|$)/.test(origin)
     || /^https?:\/\/[\d\w]+\.ngrok\.io([\/:]|$)/.test(origin)
-    || /^https?:\/\/webchat\.azurewebsites\.net([\/:]|$)/.test(origin)
+    || /^https?:\/\/webchat-playground\.azurewebsites\.net([\/:]|$)/.test(origin)
     || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
   );
 }
