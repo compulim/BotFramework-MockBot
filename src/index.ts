@@ -138,7 +138,7 @@ server.post('/api/messages/', (req, res) => {
       context.activity.type === 'conversationUpdate'
       && context.activity.membersAdded[0].id !== 'webchat-mockbot'
     ) {
-      await context.sendActivity(`Welcome to Mockbot v4!`);
+      await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
       const { activity: { text } } = context;
       const command = commands.find(({ pattern }) => pattern.test(text));
