@@ -9,6 +9,7 @@ import EmptyCard from './commands/EmptyCard';
 import HeroCard from './commands/HeroCard';
 import Image from './commands/Image';
 import ImageSVG from './commands/ImageSVG';
+import Layout from './commands/Layout';
 import Markdown from './commands/Markdown';
 import MultimediaCard from './commands/MultimediaCard';
 import OAuthCard from './commands/OAuthCard';
@@ -21,7 +22,7 @@ import VideoCard from './commands/VideoCard';
 import Xml from './commands/Xml';
 
 export default [
-  { pattern: /^card ([\d\w]+)(\s+[\d\w]+)?/, processor: AdaptiveCard },
+  { pattern: /^card ([\d\w]+)(\s+[\d\w]+)?/i, processor: AdaptiveCard },
   { pattern: 'animationcard', processor: AnimationCard },
   { pattern: 'audio', processor: Audio },
   { pattern: 'audiocard', processor: AudioCard },
@@ -32,14 +33,15 @@ export default [
   { pattern: 'herocard', processor: HeroCard },
   { pattern: 'image', processor: Image },
   { pattern: 'image-svg', processor: ImageSVG },
+  { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, processor: Layout },
   { pattern: 'markdown', processor: Markdown },
   { pattern: 'content-multimedia', processor: MultimediaCard },
   { pattern: 'oauth', processor: OAuthCard },
   { pattern: 'receiptcard', processor: ReceiptCard },
   { pattern: 'signin', processor: SignInCard },
-  { pattern: /^suggested\-actions(\s+[\d\w]+)?/, processor: SuggestedActionsCard },
+  { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
-  { pattern: /^video(\s+([\d\w]+))?$/, processor: Video },
+  { pattern: /^video(\s+([\d\w]+))?$/i, processor: Video },
   { pattern: 'videocard', processor: VideoCard },
   { pattern: 'xml', processor: Xml }
 ].map(({ pattern, processor }) => ({
