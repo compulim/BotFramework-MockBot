@@ -6,6 +6,7 @@ import Carousel from './commands/Carousel';
 import DocumentPlain from './commands/DocumentPlain';
 import DocumentWord from './commands/DocumentWord';
 import EmptyCard from './commands/EmptyCard';
+import File from './commands/File';
 import HeroCard from './commands/HeroCard';
 import Image from './commands/Image';
 import ImageSVG from './commands/ImageSVG';
@@ -30,6 +31,7 @@ export default [
   { pattern: 'document-plain', processor: DocumentPlain },
   { pattern: 'document-word', processor: DocumentWord },
   { pattern: 'emptycard', processor: EmptyCard },
+  { pattern: 'file', processor: File },
   { pattern: 'herocard', processor: HeroCard },
   { pattern: 'image', processor: Image },
   { pattern: 'image-svg', processor: ImageSVG },
