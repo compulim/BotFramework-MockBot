@@ -36,14 +36,14 @@ function getCardJSON(name: string = '', arg: string): any[] {
         Weather()
       ];
 
+    case 'review':
+      return [Review()];
+
     case 'simple':
       return [Simple()];
 
     case 'weather':
       return [Weather()];
-
-    case 'review':
-      return [Review()];
   }
 }
 
