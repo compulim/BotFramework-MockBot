@@ -5,6 +5,7 @@ config();
 
 import { BotFrameworkAdapter } from 'botbuilder';
 import { join } from 'path';
+import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
@@ -50,15 +51,80 @@ server.get('/health.txt', async (req, res) => {
   res.send('OK');
 });
 
-server.get('/public/:filename', async (req, res) => {
-  await serveHandler(req, res, {
-    path: join(__dirname, './public')
-  });
+function trustedOrigin(origin) {
+  return (
+    /^https?:\/\/localhost([\/:]|$)/.test(origin)
+    || /^https?:\/\/[\d\w]+\.ngrok\.io([\/:]|$)/.test(origin)
+    || /^https?:\/\/webchat-playground\.azurewebsites\.net([\/:]|$)/.test(origin)
+    || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
+  );
+}
+
+server.post('/token-generate', async (req, res) => {
+  const origin = req.header('origin');
+
+  console.log(`requesting token from ${ origin }`);
+
+  if (!trustedOrigin(origin)) {
+    return res.send(403, 'not trusted origin');
+  }
+
+  try {
+    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
+      headers: {
+        authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`
+      },
+      method: 'POST'
+    });
+
+    const json = await cres.json();
+
+    if ('error' in json) {
+      res.send(500);
+    } else {
+      res.send(json, {
+        'Access-Control-Allow-Origin': '*'
+      });
+    }
+  } catch (err) {
+    res.send(500);
+  }
 });
 
-server.get('/public/assets/:filename', async (req, res) => {
+server.post('/token-refresh/:token', async (req, res) => {
+  const origin = req.header('origin');
+
+  console.log(`refreshing token from ${ origin }`);
+
+  if (!trustedOrigin(origin)) {
+    return res.send(403, 'not trusted origin');
+  }
+
+  try {
+    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
+      headers: {
+        authorization: `Bearer ${ req.params.token }`
+      },
+      method: 'POST'
+    });
+
+    const json = await cres.json();
+
+    if ('error' in json) {
+      res.send(500);
+    } else {
+      res.send(json, {
+        'Access-Control-Allow-Origin': '*'
+      });
+    }
+  } catch (err) {
+    res.send(500);
+  }
+});
+
+server.get('/public/*', async (req, res) => {
   await serveHandler(req, res, {
-    path: join(__dirname, './public/assets')
+    path: join(__dirname, './public')
   });
 });
 
@@ -70,9 +136,9 @@ server.post('/api/messages/', (req, res) => {
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
     if (
       context.activity.type === 'conversationUpdate'
-      && context.activity.membersAdded[0].name !== 'Bot'
+      && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
     ) {
-      await context.sendActivity(`Welcome to Mockbot v4!`);
+      await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
       const { activity: { text } } = context;
       const command = commands.find(({ pattern }) => pattern.test(text));

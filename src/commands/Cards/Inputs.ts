@@ -1,3 +1,5 @@
+// http://adaptivecards.io/samples/Inputs.html
+
 export default () => ({
   "$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
   "type": "AdaptiveCard",

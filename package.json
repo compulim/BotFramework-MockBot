@@ -11,7 +11,7 @@
     "clean": "rimraf lib",
     "postinstall": "npm run build",
     "start": "node-dev --respawn .",
-    "watch": "concurrently --names \"babel,typecheck\" \"npm run build:babel -- --watch\" \"npm run build:typecheck -- --preserveWatchOutput --watch\""
+    "watch": "concurrently --names \"babel,start,typecheck\" \"npm run build:babel -- --watch\" \"npm run start\" \"npm run build:typecheck -- --preserveWatchOutput --watch\""
   },
   "jest": {
     "moduleFileExtensions": [
@@ -42,6 +42,7 @@
     "dotenv": "^6.0.0",
     "jest": "^23.5.0",
     "node-dev": "^3.1.3",
+    "node-fetch": "^2.2.0",
     "pretty-ms": "^3.2.0",
     "restify": "^7.2.1",
     "rimraf": "^2.6.2",
