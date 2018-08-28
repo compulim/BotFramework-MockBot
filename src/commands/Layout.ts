@@ -33,6 +33,24 @@ export default async function (context: TurnContext, ...args: string[]) {
 
       break;
 
+    case 'double':
+      await context.sendActivity({
+        type: 'message',
+        text: 'This command show single attachment in **carousel** layout',
+        attachmentLayout: 'carousel',
+        attachments: [{
+          contentType: 'image/jpg',
+          contentUrl: `${ PUBLIC_URL }assets/surface1.jpg`,
+          name: 'Microsoft Surface'
+        }, {
+          contentType: 'image/jpg',
+          contentUrl: `${ PUBLIC_URL }assets/surface2.jpg`,
+          name: 'Microsoft Surface'
+        }]
+      });
+
+      break;
+
     case 'carousel':
       await context.sendActivity({
         type: 'message',
@@ -44,22 +62,13 @@ export default async function (context: TurnContext, ...args: string[]) {
           name: 'Microsoft Surface'
         }, {
           contentType: 'text/plain',
-          content: {
-            text: '**Message with plain text**\r\nShould see asterisks.',
-            textFormat: 'plain'
-          }
+          content: '**Message with plain text**\r\nShould see asterisks.'
         }, {
-          contentType: 'text/plain',
-          content: {
-            text: '**Message with Markdown**\r\nShould see bold text.',
-            textFormat: 'markdown'
-          }
+          contentType: 'text/markdown',
+          content: '**Message with Markdown**\r\nShould see bold text.'
         }, {
-          contentType: 'text/plain',
-          content: {
-            text: '**Message with XML**\r\nShould see asterisks and monospace fonts',
-            textFormat: 'xml'
-          }
+          contentType: 'text/xml',
+          content: '**Message with XML**\r\nShould see asterisks and monospace fonts'
         }]
       });
 
@@ -75,22 +84,13 @@ export default async function (context: TurnContext, ...args: string[]) {
           name: 'Microsoft Surface'
         }, {
           contentType: 'text/plain',
-          content: {
-            text: '**Message with plain text**\r\nShould see asterisks.',
-            textFormat: 'plain'
-          }
+          content: '**Message with plain text**\r\nShould see asterisks.'
         }, {
-          contentType: 'text/plain',
-          content: {
-            text: '**Message with Markdown**\r\nShould see bold text.',
-            textFormat: 'markdown'
-          }
+          contentType: 'text/markdown',
+          content: '**Message with Markdown**\r\nShould see bold text.'
         }, {
-          contentType: 'text/plain',
-          content: {
-            text: '**Message with XML**\r\nShould see asterisks and monospace fonts',
-            textFormat: 'xml'
-          }
+          contentType: 'text/xml',
+          content: '**Message with XML**\r\nShould see asterisks and monospace fonts'
         }]
       });
   }
