@@ -7,6 +7,7 @@ import FlightUpdate from './Cards/FlightUpdate';
 import Inputs from './Cards/Inputs';
 import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
+import Review from './Cards/Review';
 
 function getCardJSON(name: string = '', arg: string): any[] {
   switch (name.toLowerCase()) {
@@ -34,6 +35,9 @@ function getCardJSON(name: string = '', arg: string): any[] {
         FlightUpdate(),
         Weather()
       ];
+
+    case 'review':
+      return [Review()];
 
     case 'simple':
       return [Simple()];
