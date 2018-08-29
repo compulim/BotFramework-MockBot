@@ -5,7 +5,7 @@ export default async function (context: TurnContext) {
 
   await context.sendActivity({
     type: 'message',
-    text: 'The reports is ready, see attached.',
+    text: 'The reports are ready, see attached.',
     attachments: [{
       contentType: 'application/octet-stream',
       contentUrl: `${ PUBLIC_URL }assets/test.txt`,
