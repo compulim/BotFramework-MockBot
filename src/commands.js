@@ -18,6 +18,7 @@ import ReceiptCard from './commands/ReceiptCard';
 import SignInCard from './commands/SignInCard';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
+import Upload from './commands/Upload';
 import Video from './commands/Video';
 import VideoCard from './commands/VideoCard';
 import Xml from './commands/Xml';
@@ -43,6 +44,7 @@ export default [
   { pattern: 'signin', processor: SignInCard },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
+  { pattern: 'upload', processor: Upload },
   { pattern: /^video(\s+([\d\w]+))?$/i, processor: Video },
   { pattern: 'videocard', processor: VideoCard },
   { pattern: 'xml', processor: Xml }
