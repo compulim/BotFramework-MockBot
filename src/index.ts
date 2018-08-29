@@ -140,7 +140,7 @@ server.post('/api/messages/', (req, res) => {
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
-      const { activity: { text } } = context;
+      const { activity: { attachments = [], text } } = context;
       const command = commands.find(({ pattern }) => pattern.test(text));
 
       if (command) {
@@ -148,8 +148,12 @@ server.post('/api/messages/', (req, res) => {
         const match = pattern.exec(text);
 
         await processor(context, ...[].slice.call(match, 1));
-      } else if (text === 'help') {
+      } else if (/^help$/i.test(text)) {
         await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
+      } else if (attachments.length) {
+        const { processor } = commands.find(({ pattern }) => pattern.test('upload'));
+
+        await processor(context, attachments);
       } else {
         await context.sendActivity(`Unknown command: \`${ text }\``);
       }
