@@ -1,10 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
 import BingSports from './Cards/BingSports';
+import Breakfast from './Cards/Breakfast';
 import Broken from './Cards/Broken';
 import CalendarReminder from './Cards/CalendarReminder';
 import FlightUpdate from './Cards/FlightUpdate';
+import FlightTracking from './Cards/FlightTracking';
 import Inputs from './Cards/Inputs';
+import Restaurant from './Cards/Restaurant';
+import RichMessage from './Cards/RichMessage';
 import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
 import Review from './Cards/Review';
@@ -14,6 +18,9 @@ function getCardJSON(name: string = '', arg: string): any[] {
     case 'bingsports':
     case 'sports':
       return [BingSports()];
+
+    case 'breakfast':
+      return [Breakfast()];
 
     case 'broken':
       return [Broken(arg)];
@@ -44,6 +51,15 @@ function getCardJSON(name: string = '', arg: string): any[] {
 
     case 'weather':
       return [Weather()];
+
+    case 'flighttracking':
+      return [FlightTracking()];
+
+    case 'restaurant':
+      return [Restaurant()];
+
+    case 'richmessage':
+      return [RichMessage()]
   }
 }
 
