@@ -1,6 +1,6 @@
 import { Attachment, TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, attachments: Attachment[]) {
+export default async function (context: TurnContext, attachments: Attachment[] = []) {
   if (attachments.length) {
     await context.sendActivity({
       text: 'You have uploaded:',
