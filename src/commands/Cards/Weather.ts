@@ -272,7 +272,5 @@ export default () => ({
             "weight": "Lighter",
             "text": "Updated 2:15 PM"
         }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.0"
+    ]
 })

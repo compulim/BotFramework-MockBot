@@ -125,7 +125,5 @@ export default () => ({
             "title": "View details",
             "url": "http://adaptivecards.io"
         }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.0"
+    ]
 })
