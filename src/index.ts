@@ -26,6 +26,7 @@ const adapter = new BotFrameworkAdapter({
 });
 
 let numActivities = 0;
+let echoTyping = false;
 const up = Date.now();
 
 server.get('/', async (req, res) => {
@@ -148,6 +149,14 @@ server.post('/api/messages/', (req, res) => {
         const match = pattern.exec(text);
 
         await processor(context, ...[].slice.call(match, 1));
+      } else if (/^echo-typing$/i.test(text)) {
+        echoTyping = !echoTyping;
+
+        if (echoTyping) {
+          await context.sendActivity('Will echo `"typing"` event');
+        } else {
+          await context.sendActivity('Will stop echoing `"typing"` event');
+        }
       } else if (/^help$/i.test(text)) {
         await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
       } else if (attachments.length) {
@@ -157,6 +166,8 @@ server.post('/api/messages/', (req, res) => {
       } else {
         await context.sendActivity(`Unknown command: \`${ text }\``);
       }
+    } else if (context.activity.type === 'typing' && echoTyping) {
+      await context.sendActivity({ type: 'typing' });
     }
   });
 });
