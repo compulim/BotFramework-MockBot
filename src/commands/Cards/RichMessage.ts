@@ -10,7 +10,7 @@ export default () => ({
                     "type": "TextBlock",
                     "size": "Medium",
                     "weight": "Bolder",
-                    "text": "Card created: Rublish"
+                    "text": "Card created: Publish"
                 },
                 {
                     "type": "ColumnSet",
