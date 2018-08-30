@@ -45,7 +45,7 @@ export default [
   { pattern: 'signin', processor: SignInCard },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
-  { pattern: 'typing', processor: Typing },
+  { pattern: /^typing(\s+[\d\w]+)?/i, processor: Typing },
   { pattern: 'upload', processor: Upload },
   { pattern: /^video(\s+([\d\w]+))?$/i, processor: Video },
   { pattern: 'videocard', processor: VideoCard },
