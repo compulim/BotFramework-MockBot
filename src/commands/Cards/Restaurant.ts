@@ -104,7 +104,5 @@ export default () => ({
             "title": "Get directions",
             "url": "http://abc.com"
         }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.0"
+    ]
 })
