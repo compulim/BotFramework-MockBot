@@ -4,7 +4,7 @@ function sleep(ms = 2000) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default async function (context: TurnContext, arg: string) {
+export default async function (context: TurnContext, arg: string = '') {
   switch (arg.trim()) {
     case '1':
       await context.sendActivity({
