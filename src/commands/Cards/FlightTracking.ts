@@ -53,11 +53,12 @@ export default () => ({
         },
         {
             "type": "Container",
+            "spacing": "Medium",
             "items": [
                 {
                     "type": "TextBlock",
                     "weight": "Bolder",
-                    "color": "Attention",
+                    "color": "Accent",
                     "text": "Status: Delayed"
                 },
                 {
@@ -69,6 +70,7 @@ export default () => ({
         },
         {
             "type": "Container",
+            "spacing": "Medium",
             "items": [
                 {
                     "type": "ColumnSet",
@@ -136,7 +138,7 @@ export default () => ({
                                     "type": "TextBlock",
                                     "size": "Large",
                                     "weight": "Bolder",
-                                    "color": "Attention",
+                                    "color": "Accent",
                                     "text": "7:35 PM"
                                 }
                             ],
@@ -160,6 +162,7 @@ export default () => ({
         },
         {
             "type": "Container",
+            "spacing": "Medium",
             "items": [
                 {
                     "type": "ColumnSet",
@@ -228,7 +231,7 @@ export default () => ({
                                     "type": "TextBlock",
                                     "size": "Large",
                                     "weight": "Bolder",
-                                    "color": "Attention",
+                                    "color": "Accent",
                                     "text": "9:55 PM"
                                 }
                             ],

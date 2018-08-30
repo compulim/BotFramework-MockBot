@@ -8,7 +8,7 @@ export default () => ({
             "items": [
                 {
                     "type": "TextBlock",
-                    "size": "Medium",
+                    "size": "Small",
                     "weight": "Lighter",
                     "text": "Alarm"
                 }
@@ -36,6 +36,7 @@ export default () => ({
             "items": [
                 {
                     "type": "TextBlock",
+                    "size": "Small",
                     "weight": "Lighter",
                     "text": "Snooze for"
                 },

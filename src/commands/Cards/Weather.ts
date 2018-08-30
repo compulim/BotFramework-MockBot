@@ -187,7 +187,7 @@ export default () => ({
         },
         {
             "type": "ColumnSet",
-            "spacing": "None",
+            "spacing": "Default",
             "columns": [
                 {
                     "type": "Column",
