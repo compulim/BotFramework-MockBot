@@ -123,7 +123,7 @@ server.post('/speech/token', async (req, res) => {
 
   if (cres.status === 200) {
     res.send({
-      accessToken: await cres.text()
+      token: await cres.text()
     }, {
       'Access-Control-Allow-Origin': process.env.ACCESS_CONTROL_ALLOW_ORIGIN
     });
