@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 
 const DEFAULT_CONFIG = {
+  ACCESS_CONTROL_ALLOW_ORIGIN: 'http://localhost:3978,https://webchat-mockbot.azurewebsites.net',
   PORT: 3978
 };
 

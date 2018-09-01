@@ -19,6 +19,8 @@ server.listen(process.env.PORT, () => {
   console.log(`${ server.name } listening to ${ server.url }`);
 });
 
+server.use(restify.plugins.queryParser());
+
 // Create adapter
 const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
@@ -61,22 +63,35 @@ function trustedOrigin(origin) {
   );
 }
 
-server.post('/token-generate', async (req, res) => {
+server.post('/directline/token', async (req, res) => {
   const origin = req.header('origin');
-
-  console.log(`requesting token from ${ origin }`);
 
   if (!trustedOrigin(origin)) {
     return res.send(403, 'not trusted origin');
   }
 
+  const { token } = req.query;
+
+  if (token) {
+    console.log(`Refreshing Direct Line token for ${ origin }`);
+  } else {
+    console.log(`Requesting Direct Line token for ${ origin }`);
+  }
+
   try {
-    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-      headers: {
-        authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`
-      },
-      method: 'POST'
-    });
+    let cres;
+
+    if (token) {
+      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
+        headers: { authorization: `Bearer ${ token }` },
+        method: 'POST'
+      });
+    } else {
+      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
+        headers: { authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }` },
+        method: 'POST'
+      });
+    }
 
     const json = await cres.json();
 
@@ -84,7 +99,7 @@ server.post('/token-generate', async (req, res) => {
       res.send(500);
     } else {
       res.send(json, {
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': process.env.ACCESS_CONTROL_ALLOW_ORIGIN
       });
     }
   } catch (err) {
@@ -92,33 +107,27 @@ server.post('/token-generate', async (req, res) => {
   }
 });
 
-server.post('/token-refresh/:token', async (req, res) => {
+server.post('/speech/token', async (req, res) => {
   const origin = req.header('origin');
-
-  console.log(`refreshing token from ${ origin }`);
 
   if (!trustedOrigin(origin)) {
     return res.send(403, 'not trusted origin');
   }
 
-  try {
-    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-      headers: {
-        authorization: `Bearer ${ req.params.token }`
-      },
-      method: 'POST'
+  console.log(`Requesting speech token for ${ origin }`);
+
+  const cres = await fetch('https://api.cognitive.microsoft.com/sts/v1.0/issueToken', {
+    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_API_KEY },
+    method: 'POST'
+  });
+
+  if (cres.status === 200) {
+    res.send({
+      accessToken: await cres.text()
+    }, {
+      'Access-Control-Allow-Origin': process.env.ACCESS_CONTROL_ALLOW_ORIGIN
     });
-
-    const json = await cres.json();
-
-    if ('error' in json) {
-      res.send(500);
-    } else {
-      res.send(json, {
-        'Access-Control-Allow-Origin': '*'
-      });
-    }
-  } catch (err) {
+  } else {
     res.send(500);
   }
 });
