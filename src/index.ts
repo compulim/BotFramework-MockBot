@@ -151,14 +151,15 @@ server.post('/api/messages/', (req, res) => {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
-      const command = commands.find(({ pattern }) => pattern.test(text));
+      const cleanedText = text.trim().replace(/\.$/, '');
+      const command = commands.find(({ pattern }) => pattern.test(cleanedText));
 
       if (command) {
         const { pattern, processor } = command;
-        const match = pattern.exec(text);
+        const match = pattern.exec(cleanedText);
 
         await processor(context, ...[].slice.call(match, 1));
-      } else if (/^echo-typing$/i.test(text)) {
+      } else if (/^echo-typing$/i.test(cleanedText)) {
         echoTyping = !echoTyping;
 
         if (echoTyping) {
@@ -166,14 +167,14 @@ server.post('/api/messages/', (req, res) => {
         } else {
           await context.sendActivity('Will stop echoing `"typing"` event');
         }
-      } else if (/^help$/i.test(text)) {
+      } else if (/^help$/i.test(cleanedText)) {
         await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
       } else if (attachments.length) {
         const { processor } = commands.find(({ pattern }) => pattern.test('upload'));
 
         await processor(context, attachments);
       } else {
-        await context.sendActivity(`Unknown command: \`${ text }\``);
+        await context.sendActivity(`Unknown command: \`${ cleanedText }\``);
       }
     } else if (context.activity.type === 'typing' && echoTyping) {
       await context.sendActivity({ type: 'typing' });
