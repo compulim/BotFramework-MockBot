@@ -41,7 +41,7 @@ export default [
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, processor: Layout },
   { pattern: 'markdown', processor: Markdown },
   { pattern: 'content-multimedia', processor: MultimediaCard },
-  { pattern: 'oauth', processor: OAuthCard },
+  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
   { pattern: 'receiptcard', processor: ReceiptCard },
   { pattern: 'signin', processor: SignInCard },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },

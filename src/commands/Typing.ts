@@ -19,7 +19,7 @@ export default async function (context: TurnContext, arg: string = '') {
     default:
       await context.sendActivity({
         type: 'message',
-        text: 'Please wait while we load your account profile.'
+        text: 'I am sending typing, will send another message 2 seconds afterward.'
       });
 
       await context.sendActivity({
@@ -30,7 +30,7 @@ export default async function (context: TurnContext, arg: string = '') {
 
       await context.sendActivity({
         type: 'message',
-        text: 'Hello, John Doe!'
+        text: 'This message should stop the typing indcator.'
       });
 
       return;
