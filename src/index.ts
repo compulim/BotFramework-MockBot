@@ -11,6 +11,7 @@ import restify from 'restify';
 import serveHandler from 'serve-handler';
 
 import commands from './commands';
+import OAuthCard from './commands/OAuthCard';
 
 // Create server
 const server = restify.createServer();
@@ -89,9 +90,7 @@ server.post('/directline/token', async (req, res) => {
 
     if (token) {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-        body: JSON.stringify({
-          TrustedOrigins: [origin]
-        }),
+        body: JSON.stringify({ TrustedOrigins: [origin] }),
         headers: {
           authorization: `Bearer ${ token }`,
           'Content-Type': 'application/json'
@@ -100,9 +99,7 @@ server.post('/directline/token', async (req, res) => {
       });
     } else {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-        body: JSON.stringify({
-          TrustedOrigins: [origin]
-        }),
+        body: JSON.stringify({ TrustedOrigins: [origin] }),
         headers: {
           authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`,
           'Content-Type': 'application/json'
@@ -171,6 +168,10 @@ server.post('/api/messages/', (req, res) => {
       && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
+    } else if (context.activity.type === 'event' && context.activity.name === 'tokens/response') {
+      // Special handling for OAuth token exchange
+      // This event is sent thru the non-magic code flow
+      await OAuthCard(context);
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
