@@ -87,14 +87,28 @@ server.post('/directline/token', async (req, res) => {
   try {
     let cres;
 
+    console.log(origin);
+
     if (token) {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-        headers: { authorization: `Bearer ${ token }` },
+        body: JSON.stringify({
+          TrustedOrigins: [origin]
+        }),
+        headers: {
+          authorization: `Bearer ${ token }`,
+          'Content-Type': 'application/json'
+        },
         method: 'POST'
       });
     } else {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-        headers: { authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }` },
+        body: JSON.stringify({
+          TrustedOrigins: [origin]
+        }),
+        headers: {
+          authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`,
+          'Content-Type': 'application/json'
+        },
         method: 'POST'
       });
     }
