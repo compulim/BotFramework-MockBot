@@ -87,8 +87,6 @@ server.post('/directline/token', async (req, res) => {
   try {
     let cres;
 
-    console.log(origin);
-
     if (token) {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
         body: JSON.stringify({
