@@ -38,6 +38,7 @@
     "babel-jest": "^23.4.2",
     "babel-polyfill": "^6.26.0",
     "botbuilder": "4.0.0-preview1.2",
+    "botbuilder-prompts": "^4.0.0-preview1.2",
     "concurrently": "^3.6.1",
     "dotenv": "^6.0.0",
     "jest": "^23.5.0",

@@ -3,7 +3,7 @@ import config from './config';
 
 config();
 
-import { BotFrameworkAdapter } from 'botbuilder';
+import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { join } from 'path';
 import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
@@ -26,6 +26,12 @@ const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
+
+const storage = new MemoryStorage();
+const convoState = new ConversationState(storage);
+const userState = new UserState(storage);
+
+adapter.use(new BotStateSet(convoState, userState));
 
 let numActivities = 0;
 let echoTyping = false;
@@ -96,7 +102,9 @@ server.post('/directline/token', async (req, res) => {
     const json = await cres.json();
 
     if ('error' in json) {
-      res.send(500);
+      res.send(500, {
+        'Access-Control-Allow-Origin': '*'
+      });
     } else {
       res.send(json, {
         'Access-Control-Allow-Origin': '*'
@@ -128,7 +136,9 @@ server.post('/speech/token', async (req, res) => {
       'Access-Control-Allow-Origin': '*'
     });
   } else {
-    res.send(500);
+    res.send(500, {
+      'Access-Control-Allow-Origin': '*'
+    });
   }
 });
 
@@ -151,7 +161,7 @@ server.post('/api/messages/', (req, res) => {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
-      const cleanedText = text.trim().replace(/\.$/, '');
+      const cleanedText = (text || '').trim().replace(/\.$/, '');
       const command = commands.find(({ pattern }) => pattern.test(cleanedText));
 
       if (command) {
