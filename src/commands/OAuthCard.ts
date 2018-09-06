@@ -39,11 +39,13 @@ export default async function (context: TurnContext, arg?: string) {
     await context.sendActivity('Please wait while I am authenticating with GitHub.');
     await context.sendActivity({ type: 'typing' });
 
+    let token;
+
     // TODO: We should try to play with the access token to see if it really works
     if (/^\d{6}$/.test(arg)) {
-      await oauthPrompt.recognize(context);
+      token = (await oauthPrompt.recognize(context)).token;
     } else {
-      await oauthPrompt.getUserToken(context);
+      token = context.activity.value.token;
     }
 
     await sendSignedInMessage(context);
