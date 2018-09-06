@@ -1,4 +1,4 @@
-export default arg => {
+export default (arg?: string) => {
   switch (arg) {
     case '1':
     case 'lang':

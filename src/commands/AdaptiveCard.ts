@@ -13,71 +13,59 @@ import Simple from './Cards/Simple';
 import Weather from './Cards/Weather';
 import Review from './Cards/Review';
 
-function getCardJSON(name: string = '', arg: string): any[] {
-  switch (name.toLowerCase()) {
+function getCardJSON(name: string = ''): any {
+  switch (name.trim().toLowerCase()) {
     case 'bingsports':
     case 'sports':
-      return [BingSports()];
+      return BingSports();
 
     case 'breakfast':
-      return [Breakfast()];
+      return Breakfast();
 
     case 'broken':
-      return [Broken(arg)];
+      return Broken();
+
+    case 'broken:1':
+    case 'broken:lang':
+      return Broken('1');
 
     case 'calendarreminder':
     case 'calendar':
     case 'reminder':
-      return [CalendarReminder()];
+      return CalendarReminder();
 
     case 'flight':
     case 'flightupdate':
-      return [FlightUpdate()];
+      return FlightUpdate();
 
     case 'inputs':
-      return [Inputs()];
-
-    case 'multiple':
-      return [
-        FlightUpdate(),
-        Weather()
-      ];
+      return Inputs();
 
     case 'review':
-      return [Review()];
+      return Review();
 
     case 'simple':
-      return [Simple()];
+      return Simple();
 
     case 'weather':
-      return [Weather()];
+      return Weather();
 
     case 'flighttracking':
-      return [FlightTracking()];
+      return FlightTracking();
 
     case 'restaurant':
-      return [Restaurant()];
+      return Restaurant();
 
     case 'richmessage':
-      return [RichMessage()]
+      return RichMessage();
   }
 }
 
-export default async function (context: TurnContext, name: string = '', arg: string) {
-  const contents = getCardJSON(name, (arg || '').trim());
+export default async function (context: TurnContext, ...names: string[]) {
+  const contents = names.filter(name => name).map(name => getCardJSON(name));
 
   if (contents && contents.length) {
-    let text;
-
-    switch (name) {
-      case 'multiple':
-        text = 'Multiple cards';
-        break;
-
-      case 'weather':
-        text = 'This is the weather card';
-        break;
-    }
+    let text = `Showing ${ names.filter(name => name).join(', ') }`;
 
     await context.sendActivity({
       type: 'message',

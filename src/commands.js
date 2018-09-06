@@ -25,7 +25,8 @@ import VideoCard from './commands/VideoCard';
 import Xml from './commands/Xml';
 
 export default [
-  { pattern: /^card ([\d\w]+)(\s+[\d\w]+)?/i, processor: AdaptiveCard },
+  // TODO: Turn this into /.../ig
+  { pattern: /^card(\s+[\d\w]+)(\s+[\d\w]+)?(\s+[\d\w]+)?(\s+[\d\w]+)?(\s+[\d\w]+)?/i, processor: AdaptiveCard },
   { pattern: 'animationcard', processor: AnimationCard },
   { pattern: 'audio', processor: Audio },
   { pattern: 'audiocard', processor: AudioCard },
