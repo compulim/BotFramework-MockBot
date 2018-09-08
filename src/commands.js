@@ -19,6 +19,7 @@ import SignInCard from './commands/SignInCard';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
 import Typing from './commands/Typing';
+import Unknown from './commands/Unknown';
 import Upload from './commands/Upload';
 import Video from './commands/Video';
 import VideoCard from './commands/VideoCard';
@@ -47,6 +48,7 @@ export default [
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
   { pattern: /^typing(\s+[\d\w]+)?/i, processor: Typing },
+  { pattern: /^unknown(\s+[\d\w]+)?/i, processor: Unknown },
   { pattern: 'upload', processor: Upload },
   { pattern: /^video(\s+([\d\w]+))?$/i, processor: Video },
   { pattern: 'videocard', processor: VideoCard },
