@@ -55,7 +55,8 @@ export default async function (context: TurnContext) {
           key: 'Delivery Address',
           value: 'Value 4'
         }],
-        total: '0.01',
+        vat: '0.01',
+        total: '0.10',
         tax: 'XXX.XX',
         buttons: [{
           type: 'imBack',
