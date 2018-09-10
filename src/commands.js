@@ -11,6 +11,7 @@ import HeroCard from './commands/HeroCard';
 import Image from './commands/Image';
 import ImageSVG from './commands/ImageSVG';
 import Layout from './commands/Layout';
+import Localization from './commands/Localization';
 import Markdown from './commands/Markdown';
 import MultimediaCard from './commands/MultimediaCard';
 import OAuthCard from './commands/OAuthCard';
@@ -40,6 +41,7 @@ export default [
   { pattern: 'image', processor: Image },
   { pattern: 'image-svg', processor: ImageSVG },
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, processor: Layout },
+  { pattern: 'localization', processor: Localization },
   { pattern: 'markdown', processor: Markdown },
   { pattern: 'content-multimedia', processor: MultimediaCard },
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
