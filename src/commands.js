@@ -16,6 +16,7 @@ import Markdown from './commands/Markdown';
 import MultimediaCard from './commands/MultimediaCard';
 import OAuthCard from './commands/OAuthCard';
 import ReceiptCard from './commands/ReceiptCard';
+import SampleGitHubRepository from './commands/SampleGitHubRepository';
 import SignInCard from './commands/SignInCard';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
@@ -36,6 +37,7 @@ export default [
   { pattern: 'document-plain', processor: DocumentPlain },
   { pattern: 'document-word', processor: DocumentWord },
   { pattern: 'emptycard', processor: EmptyCard },
+  { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
   { pattern: 'file', processor: File },
   { pattern: 'herocard', processor: HeroCard },
   { pattern: 'image', processor: Image },
