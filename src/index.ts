@@ -28,11 +28,11 @@ const adapter = new BotFrameworkAdapter({
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-const storage = new MemoryStorage();
-const convoState = new ConversationState(storage);
-const userState = new UserState(storage);
+// const storage = new MemoryStorage();
+// const convoState = new ConversationState(storage);
+// const userState = new UserState(storage);
 
-adapter.use(new BotStateSet(convoState, userState));
+// adapter.use(new BotStateSet(convoState, userState));
 
 let numActivities = 0;
 let echoTyping = false;
