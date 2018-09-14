@@ -7,6 +7,7 @@ import CalendarReminder from './Cards/CalendarReminder';
 import FlightUpdate from './Cards/FlightUpdate';
 import FlightTracking from './Cards/FlightTracking';
 import Inputs from './Cards/Inputs';
+import Markdown from './Cards/Markdown';
 import Restaurant from './Cards/Restaurant';
 import RichMessage from './Cards/RichMessage';
 import Simple from './Cards/Simple';
@@ -40,6 +41,9 @@ function getCardJSON(name: string = ''): any {
 
     case 'inputs':
       return Inputs();
+
+    case 'markdown':
+      return Markdown();
 
     case 'review':
       return Review();
