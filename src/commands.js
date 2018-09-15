@@ -15,6 +15,7 @@ import Localization from './commands/Localization';
 import Markdown from './commands/Markdown';
 import MultimediaCard from './commands/MultimediaCard';
 import OAuthCard from './commands/OAuthCard';
+import Postback from './commands/Postback';
 import ReceiptCard from './commands/ReceiptCard';
 import SampleGitHubRepository from './commands/SampleGitHubRepository';
 import SignInCard from './commands/SignInCard';
@@ -47,6 +48,7 @@ export default [
   { pattern: 'markdown', processor: Markdown },
   { pattern: 'content-multimedia', processor: MultimediaCard },
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
+  { pattern: /^postback(\s+[\d\w\-]+)?$/, processor: Postback },
   { pattern: 'receiptcard', processor: ReceiptCard },
   { pattern: 'signin', processor: SignInCard },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
