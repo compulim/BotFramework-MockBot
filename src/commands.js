@@ -18,6 +18,7 @@ import OAuthCard from './commands/OAuthCard';
 import Postback from './commands/Postback';
 import ReceiptCard from './commands/ReceiptCard';
 import SampleGitHubRepository from './commands/SampleGitHubRepository';
+import SampleReduxMiddleware from './commands/SampleReduxMiddleware';
 import SignInCard from './commands/SignInCard';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
@@ -38,7 +39,6 @@ export default [
   { pattern: 'document-plain', processor: DocumentPlain },
   { pattern: 'document-word', processor: DocumentWord },
   { pattern: 'emptycard', processor: EmptyCard },
-  { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
   { pattern: 'file', processor: File },
   { pattern: 'herocard', processor: HeroCard },
   { pattern: 'image', processor: Image },
@@ -50,6 +50,8 @@ export default [
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
   { pattern: /^postback(\s+[\d\w\-]+)?$/, processor: Postback },
   { pattern: 'receiptcard', processor: ReceiptCard },
+  { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
+  { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/, processor: SampleReduxMiddleware },
   { pattern: 'signin', processor: SignInCard },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
