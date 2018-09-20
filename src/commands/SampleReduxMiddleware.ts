@@ -17,7 +17,7 @@ const SUGGESTED_ACTIONS = {
     }, {
       type: 'imBack',
       title: 'Translucent',
-      value: 'sample-redux-middleware transparent'
+      value: 'sample:redux-middleware transparent'
     }],
     to: []
   }
