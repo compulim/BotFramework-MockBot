@@ -200,7 +200,7 @@ server.post('/api/messages/', (req, res) => {
       } else if (context.activity.value) {
         await context.sendActivity(`You posted\r\n\r\n\`\`\`\r\n${ JSON.stringify(context.activity.value, null, 2) }\r\n\`\`\``);
       } else {
-        await context.sendActivity(`Unknown command: \`${ cleanedText }\``);
+        await context.sendActivity(`Unknown command: \`${ cleanedText }\`.\r\n\r\nType \`help\` to learn more.`);
       }
     } else if (context.activity.type === 'typing' && echoTyping) {
       await context.sendActivity({ type: 'typing' });
