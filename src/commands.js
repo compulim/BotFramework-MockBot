@@ -7,6 +7,7 @@ import DocumentPlain from './commands/DocumentPlain';
 import DocumentWord from './commands/DocumentWord';
 import Empty from './commands/Empty';
 import EmptyCard from './commands/EmptyCard';
+import EmptyWithSuggestions from './commands/EmptyWithSuggestions'
 import File from './commands/File';
 import HeroCard from './commands/HeroCard';
 import Image from './commands/Image';
@@ -41,6 +42,8 @@ export default [
   { pattern: 'document-word', processor: DocumentWord },
   { pattern: 'empty', processor: Empty },
   { pattern: 'emptycard', processor: EmptyCard },
+  { pattern: 'empty-with-suggested-actions', processor: EmptyWithSuggestions },
+  { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
   { pattern: 'file', processor: File },
   { pattern: 'herocard', processor: HeroCard },
   { pattern: 'image', processor: Image },
