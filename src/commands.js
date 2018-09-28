@@ -5,6 +5,7 @@ import AudioCard from './commands/AudioCard';
 import Carousel from './commands/Carousel';
 import DocumentPlain from './commands/DocumentPlain';
 import DocumentWord from './commands/DocumentWord';
+import Empty from './commands/Empty';
 import EmptyCard from './commands/EmptyCard';
 import File from './commands/File';
 import HeroCard from './commands/HeroCard';
@@ -38,6 +39,7 @@ export default [
   { pattern: 'carousel', processor: Carousel },
   { pattern: 'document-plain', processor: DocumentPlain },
   { pattern: 'document-word', processor: DocumentWord },
+  { pattern: 'empty', processor: Empty },
   { pattern: 'emptycard', processor: EmptyCard },
   { pattern: 'file', processor: File },
   { pattern: 'herocard', processor: HeroCard },
