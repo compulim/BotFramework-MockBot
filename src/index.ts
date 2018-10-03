@@ -6,6 +6,8 @@ config();
 import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
+import createAutoResetEvent from 'auto-reset-event';
+import delay from 'delay';
 import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
@@ -170,7 +172,18 @@ server.post('/speech/token', async (req, res) => {
   }
 });
 
+const acquireSlowQueue = createAutoResetEvent();
+
 server.get('/public/*', async (req, res) => {
+  if ('slow' in req.query) {
+    res.noCache();
+
+    const release = await acquireSlowQueue();
+
+    await delay(1000);
+    release();
+  }
+
   await serveHandler(req, res, {
     path: join(__dirname, './public')
   });

@@ -20,6 +20,7 @@ import ReceiptCard from './commands/ReceiptCard';
 import SampleGitHubRepository from './commands/SampleGitHubRepository';
 import SampleReduxMiddleware from './commands/SampleReduxMiddleware';
 import SignInCard from './commands/SignInCard';
+import Slow from './commands/Slow';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
 import Typing from './commands/Typing';
@@ -53,6 +54,7 @@ export default [
   { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
   { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/, processor: SampleReduxMiddleware },
   { pattern: 'signin', processor: SignInCard },
+  { pattern: /^slow(\s+[\d\w]+)?/i, processor: Slow },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
   { pattern: /^typing(\s+[\d\w]+)?/i, processor: Typing },
