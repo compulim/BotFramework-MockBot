@@ -5,6 +5,7 @@ config();
 
 import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { join } from 'path';
+import { randomBytes } from 'crypto';
 import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
@@ -71,6 +72,18 @@ function trustedOrigin(origin) {
   );
 }
 
+async function createUserID() {
+  return new Promise((resolve, reject) => {
+    randomBytes(16, (err, buffer) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(`dl_${ buffer.toString('hex') }`);
+      }
+    })
+  });
+}
+
 server.post('/directline/token', async (req, res) => {
   const origin = req.header('origin');
 
@@ -78,6 +91,7 @@ server.post('/directline/token', async (req, res) => {
     return res.send(403, 'not trusted origin');
   }
 
+  const userID = await createUserID();
   const { token } = req.query;
 
   if (token) {
@@ -91,7 +105,7 @@ server.post('/directline/token', async (req, res) => {
 
     if (token) {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-        body: JSON.stringify({ TrustedOrigins: [origin] }),
+        // body: JSON.stringify({ TrustedOrigins: [origin] }),
         headers: {
           authorization: `Bearer ${ token }`,
           'Content-Type': 'application/json'
@@ -100,7 +114,8 @@ server.post('/directline/token', async (req, res) => {
       });
     } else {
       cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-        body: JSON.stringify({ TrustedOrigins: [origin] }),
+        // body: JSON.stringify({ TrustedOrigins: [origin] }),
+        body: JSON.stringify({ User: { Id: userID } }),
         headers: {
           authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`,
           'Content-Type': 'application/json'
@@ -109,16 +124,19 @@ server.post('/directline/token', async (req, res) => {
       });
     }
 
-    const json = await cres.json();
+    if (cres.status === 200) {
+      const json = await cres.json();
 
-    if ('error' in json) {
-      res.send(500, {
-        'Access-Control-Allow-Origin': '*'
-      });
+      if ('error' in json) {
+        res.send(500, { 'Access-Control-Allow-Origin': '*' });
+      } else {
+        res.send({
+          ...json,
+          userID
+        }, { 'Access-Control-Allow-Origin': '*' });
+      }
     } else {
-      res.send(json, {
-        'Access-Control-Allow-Origin': '*'
-      });
+      res.send(500, `Direct Line service returned ${ cres.status } while exchanging for token`, { 'Access-Control-Allow-Origin': '*' });
     }
   } catch (err) {
     res.send(500);
