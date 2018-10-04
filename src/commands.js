@@ -23,6 +23,7 @@ import SignInCard from './commands/SignInCard';
 import Slow from './commands/Slow';
 import SuggestedActionsCard from './commands/SuggestedActionsCard';
 import Text from './commands/Text';
+import Timestamp from './commands/Timestamp';
 import Typing from './commands/Typing';
 import Unknown from './commands/Unknown';
 import Upload from './commands/Upload';
@@ -57,6 +58,7 @@ export default [
   { pattern: /^slow(\s+[\d\w]+)?/i, processor: Slow },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
   { pattern: 'text', processor: Text },
+  { pattern: /^timestamp(\s+[\d\w]+)?/i, processor: Timestamp },
   { pattern: /^typing(\s+[\d\w]+)?/i, processor: Typing },
   { pattern: /^unknown(\s+[\d\w]+)?/i, processor: Unknown },
   { pattern: 'upload', processor: Upload },
