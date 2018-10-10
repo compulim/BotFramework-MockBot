@@ -17,6 +17,7 @@ import MultimediaCard from './commands/MultimediaCard';
 import OAuthCard from './commands/OAuthCard';
 import Postback from './commands/Postback';
 import ReceiptCard from './commands/ReceiptCard';
+import SampleBackchannel from './commands/SampleBackchannel';
 import SampleGitHubRepository from './commands/SampleGitHubRepository';
 import SampleReduxMiddleware from './commands/SampleReduxMiddleware';
 import SignInCard from './commands/SignInCard';
@@ -52,6 +53,7 @@ export default [
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
   { pattern: /^postback(\s+[\d\w\-]+)?$/, processor: Postback },
   { pattern: 'receiptcard', processor: ReceiptCard },
+  { pattern: 'sample:backchannel', processor: SampleBackchannel },
   { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
   { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/, processor: SampleReduxMiddleware },
   { pattern: 'signin', processor: SignInCard },
