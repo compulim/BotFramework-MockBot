@@ -65,7 +65,28 @@ function getCardJSON(name: string = ''): any {
   }
 }
 
-export default async function (context: TurnContext, ...names: string[]) {
+const name = 'Adaptive Card';
+
+function help() {
+  return {
+    'card bingsports': 'Show Bing sports using Adaptive Card',
+    'card breakfast': 'Show breakfast review using Adaptive Card',
+    'card broken:lang': 'Show an Adaptive Card that is broken because of invalid language identifier',
+    'card broken': 'Show an Adaptive Card that is broken because of invalid version',
+    'card flight': 'Show flight update using Adaptive Card',
+    'card flighttracking': 'Show flight tracking using Adaptive Card',
+    'card inputs': 'Show an Adaptive Card with all types of inputs',
+    'card markdown': 'Show Markdown using Adaptive Card',
+    'card reminder': 'Show a reminder using Adaptive Card',
+    'card restaurant': 'Show restaurant information using Adaptive Card',
+    'card review': 'Show review using Adaptive Card',
+    'card richmessage': 'Show a rich message using Adaptive Card',
+    'card simple': 'Show a simple Adaptive Card',
+    'card weather': 'Show weather forecast using Adaptive Card'
+  };
+}
+
+async function processor(context: TurnContext, ...names: string[]) {
   const contents = names.filter(name => name).map(name => getCardJSON(name));
 
   if (contents && contents.length) {
@@ -87,3 +108,5 @@ export default async function (context: TurnContext, ...names: string[]) {
     });
   }
 }
+
+export { help, name, processor }

@@ -3,6 +3,8 @@ import { createOAuthPrompt } from 'botbuilder-prompts';
 
 import fetch from 'node-fetch';
 
+const name = 'OAuth card';
+
 // Flow adopted from
 // https://github.com/Microsoft/botbuilder-js/blob/master/samples/oauth-prompt-bot-es6/app.js
 
@@ -31,7 +33,16 @@ async function sendSignedInMessage(context: TurnContext) {
   });
 }
 
-export default async function (context: TurnContext, arg?: string) {
+function help() {
+  return {
+    'oauth profile': 'Show profile (if signed in)',
+    'oauth signin': 'Sign-in using OAuth',
+    'oauth signout': 'Sign out',
+    'oauth': 'Sign-in if needed'
+  };
+}
+
+async function processor(context: TurnContext, arg?: string) {
   if (
     (context.activity.type === 'event' && context.activity.name === 'tokens/response')
     || /^\d{6}$/.test(arg)
@@ -94,3 +105,5 @@ export default async function (context: TurnContext, arg?: string) {
     }
   }
 }
+
+export { help, name, processor }

@@ -14,7 +14,8 @@ import restify from 'restify';
 import serveHandler from 'serve-handler';
 
 import commands from './commands';
-import OAuthCard from './commands/OAuthCard';
+import * as OAuthCard from './commands/OAuthCard';
+import reduceMap from './reduceMap';
 
 // Create server
 const server = restify.createServer();
@@ -204,7 +205,7 @@ server.post('/api/messages/', (req, res) => {
     } else if (context.activity.type === 'event' && context.activity.name === 'tokens/response') {
       // Special handling for OAuth token exchange
       // This event is sent thru the non-magic code flow
-      await OAuthCard(context);
+      await OAuthCard.processor(context);
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
@@ -224,6 +225,31 @@ server.post('/api/messages/', (req, res) => {
           await context.sendActivity('Will stop echoing `"typing"` event');
         }
       } else if (/^help$/i.test(cleanedText)) {
+        const attachments = commands.map(({ help, name }) => {
+          return {
+            contentType: 'application/vnd.microsoft.card.thumbnail',
+            content: {
+              buttons: reduceMap(
+                help(),
+                (result: [], title: string, value: string) => [
+                  ...result,
+                  {
+                    title,
+                    type: 'imBack',
+                    value
+                  }
+                ],
+                []
+              ).sort(({ title: x }, { title: y }) => x > y ? 1 : x < y ? -1 : 0),
+              title: name
+            }
+          };
+        });
+
+        await context.sendActivity({
+          attachments: attachments.sort(({ content: { title: x } }, { content: { title: y } }) => x > y ? 1 : x < y ? -1 : 0)
+        });
+      } else if (/^help simple$/i.test(cleanedText)) {
         await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
       } else if (attachments.length) {
         const { processor } = commands.find(({ pattern }) => pattern.test('upload'));

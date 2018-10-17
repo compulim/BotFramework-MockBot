@@ -1,7 +1,15 @@
 import delay from 'delay';
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, arg?: string) {
+const name = 'Timestamp grouping';
+
+function help() {
+  return {
+    'timestamp': 'Show 4 messages at different time for testing timestamp grouping'
+  };
+}
+
+async function processor(context: TurnContext, arg?: string) {
   await context.sendActivity({
     text: 'I am going to send 5 messages at different time _t_.',
     type: 'message'
@@ -40,3 +48,5 @@ export default async function (context: TurnContext, arg?: string) {
     type: 'message'
   });
 }
+
+export { help, name, processor }

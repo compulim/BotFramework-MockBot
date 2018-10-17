@@ -1,6 +1,16 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, _: string, provider: string) {
+const name = 'Video attachment';
+
+function help() {
+  return {
+    'video': 'Show a video attachment of MP4',
+    'video vimeo': 'Show a video attachment from Vimeo',
+    'video youtube': 'Show a video attachment from YouTube'
+  };
+}
+
+async function processor(context: TurnContext, _: string, provider: string) {
   const { PUBLIC_URL } = process.env;
 
   switch (provider) {
@@ -35,3 +45,5 @@ export default async function (context: TurnContext, _: string, provider: string
       });
   }
 }
+
+export { help, name, processor }

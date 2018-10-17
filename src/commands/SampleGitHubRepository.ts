@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, name: string, value: string) {
+const name = 'Demo for GitHub repository sample';
+
+function help() {
+  return {
+    'sample:github-repository': 'Demo for GitHub repository sample'
+  };
+}
+
+async function processor(context: TurnContext, name: string, value: string) {
   context.sendActivity({
     type: 'message',
     attachmentLayout: 'carousel',
@@ -25,3 +33,5 @@ export default async function (context: TurnContext, name: string, value: string
     }]
   });
 }
+
+export { help, name, processor }

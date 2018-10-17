@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, ...args: string[]) {
+const name = 'Images on emulated slow network';
+
+function help() {
+  return {
+    'slow': 'Show 4 images with emulated slow network'
+  };
+}
+
+async function processor(context: TurnContext, ...args: string[]) {
   const { PUBLIC_URL } = process.env;
   const arg = args.map(arg => (arg || '').trim()).filter(arg => arg).join(' ');
 
@@ -33,3 +41,5 @@ export default async function (context: TurnContext, ...args: string[]) {
       break;
   }
 }
+
+export { help, name, processor }

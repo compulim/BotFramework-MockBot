@@ -1,6 +1,14 @@
 import { Attachment, TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, attachments: Attachment[] = []) {
+const name = 'File upload';
+
+function help() {
+  return {
+    'upload': 'Upload a file'
+  };
+}
+
+async function processor(context: TurnContext, attachments: Attachment[] = []) {
   if (attachments.length) {
     await context.sendActivity({
       text: 'You have uploaded:',
@@ -18,3 +26,5 @@ export default async function (context: TurnContext, attachments: Attachment[] =
     });
   }
 }
+
+export { help, name, processor }

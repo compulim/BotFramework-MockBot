@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, arg: string) {
+const name = 'Postback messages';
+
+function help() {
+  return {
+    'postback': 'Start postback demo'
+  };
+}
+
+async function processor(context: TurnContext, arg: string) {
   if (arg) {
     await context.sendActivity({
       type: 'message',
@@ -36,3 +44,5 @@ export default async function (context: TurnContext, arg: string) {
     });
   }
 }
+
+export { help, name, processor }

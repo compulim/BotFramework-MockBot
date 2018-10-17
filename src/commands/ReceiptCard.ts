@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Receipt card';
+
+function help() {
+  return {
+    'receiptcard': 'Show a receipt card'
+  };
+}
+
+async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
@@ -76,3 +84,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }

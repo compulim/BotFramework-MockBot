@@ -9,7 +9,15 @@ const EVENT_ACTIVITY = {
   }
 };
 
-export default async function (context: TurnContext) {
+const name = 'Demo for backchannel sample';
+
+function help() {
+  return {
+    'sample:backchannel': 'Demo for backchannel sample'
+  };
+}
+
+async function processor(context: TurnContext) {
   await context.sendActivity({
     type: 'message',
     text: `I am sending an \`event\` activity like below:\n\n\`\`\`\n${ JSON.stringify(EVENT_ACTIVITY, null, 2) }\n\`\`\``
@@ -19,3 +27,5 @@ export default async function (context: TurnContext) {
 
   await context.sendActivity(EVENT_ACTIVITY);
 }
+
+export { help, name, processor }

@@ -23,7 +23,15 @@ const SUGGESTED_ACTIONS = {
   }
 };
 
-export default async function (context: TurnContext, color: string = '') {
+const name = 'Demo for Redux middleware sample';
+
+function help() {
+  return {
+    'sample:redux-middleware': 'Demo for Redux middleware sample'
+  };
+}
+
+async function processor(context: TurnContext, color: string = '') {
   color = color.trim();
 
   if (color) {
@@ -51,3 +59,5 @@ export default async function (context: TurnContext, color: string = '') {
     });
   }
 }
+
+export { help, name, processor }

@@ -1,6 +1,15 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, arg: string = '') {
+const name = 'Unknown type of activity or attachments';
+
+function help() {
+  return {
+    'unknown activity': 'Show an activity of unknown type',
+    'unknown attachment': 'Show an attachment of unknown type'
+  };
+}
+
+async function processor(context: TurnContext, arg: string = '') {
   switch (arg.trim().toLowerCase()) {
     case 'attachment':
       await context.sendActivity({
@@ -26,3 +35,5 @@ export default async function (context: TurnContext, arg: string = '') {
       break;
   }
 }
+
+export { help, name, processor }

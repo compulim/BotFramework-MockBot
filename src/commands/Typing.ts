@@ -1,10 +1,19 @@
 import { TurnContext } from 'botbuilder';
 
+const name = 'Typing indicator';
+
 function sleep(ms = 2000) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default async function (context: TurnContext, arg: string = '') {
+function help() {
+  return {
+    'typing 1': 'Send a typing indicator without ending it',
+    'typing': 'Send a typing indicator and end it with a message'
+  };
+}
+
+async function processor(context: TurnContext, arg: string = '') {
   switch (arg.trim()) {
     case '1':
       await context.sendActivity({
@@ -36,3 +45,5 @@ export default async function (context: TurnContext, arg: string = '') {
       return;
   }
 }
+
+export { help, name, processor }

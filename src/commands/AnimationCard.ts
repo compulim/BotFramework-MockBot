@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Animation card';
+
+function help() {
+  return {
+    'animationcard': 'Show an animation card'
+  };
+}
+
+async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
@@ -21,3 +29,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }

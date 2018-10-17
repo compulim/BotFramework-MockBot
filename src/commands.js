@@ -1,73 +1,73 @@
-import AdaptiveCard from './commands/AdaptiveCard';
-import AnimationCard from './commands/AnimationCard';
-import Audio from './commands/Audio';
-import AudioCard from './commands/AudioCard';
-import Carousel from './commands/Carousel';
-import DocumentPlain from './commands/DocumentPlain';
-import DocumentWord from './commands/DocumentWord';
-import EmptyCard from './commands/EmptyCard';
-import File from './commands/File';
-import HeroCard from './commands/HeroCard';
-import Image from './commands/Image';
-import ImageSVG from './commands/ImageSVG';
-import Layout from './commands/Layout';
-import Localization from './commands/Localization';
-import Markdown from './commands/Markdown';
-import MultimediaCard from './commands/MultimediaCard';
-import OAuthCard from './commands/OAuthCard';
-import Postback from './commands/Postback';
-import ReceiptCard from './commands/ReceiptCard';
-import SampleBackchannel from './commands/SampleBackchannel';
-import SampleGitHubRepository from './commands/SampleGitHubRepository';
-import SampleReduxMiddleware from './commands/SampleReduxMiddleware';
-import SignInCard from './commands/SignInCard';
-import Slow from './commands/Slow';
-import SuggestedActionsCard from './commands/SuggestedActionsCard';
-import Text from './commands/Text';
-import Timestamp from './commands/Timestamp';
-import Typing from './commands/Typing';
-import Unknown from './commands/Unknown';
-import Upload from './commands/Upload';
-import Video from './commands/Video';
-import VideoCard from './commands/VideoCard';
-import Xml from './commands/Xml';
+import * as AdaptiveCard from './commands/AdaptiveCard';
+import * as AnimationCard from './commands/AnimationCard';
+import * as Audio from './commands/Audio';
+import * as AudioCard from './commands/AudioCard';
+import * as Carousel from './commands/Carousel';
+import * as DocumentPlain from './commands/DocumentPlain';
+import * as DocumentWord from './commands/DocumentWord';
+import * as EmptyCard from './commands/EmptyCard';
+import * as File from './commands/File';
+import * as HeroCard from './commands/HeroCard';
+import * as Image from './commands/Image';
+import * as ImageSVG from './commands/ImageSVG';
+import * as Layout from './commands/Layout';
+import * as Localization from './commands/Localization';
+import * as Markdown from './commands/Markdown';
+import * as MultimediaCard from './commands/MultimediaCard';
+import * as OAuthCard from './commands/OAuthCard';
+import * as Postback from './commands/Postback';
+import * as ReceiptCard from './commands/ReceiptCard';
+import * as SampleBackchannel from './commands/SampleBackchannel';
+import * as SampleGitHubRepository from './commands/SampleGitHubRepository';
+import * as SampleReduxMiddleware from './commands/SampleReduxMiddleware';
+import * as SignInCard from './commands/SignInCard';
+import * as Slow from './commands/Slow';
+import * as SuggestedActionsCard from './commands/SuggestedActionsCard';
+import * as Text from './commands/Text';
+import * as Timestamp from './commands/Timestamp';
+import * as Typing from './commands/Typing';
+import * as Unknown from './commands/Unknown';
+import * as Upload from './commands/Upload';
+import * as Video from './commands/Video';
+import * as VideoCard from './commands/VideoCard';
+import * as Xml from './commands/Xml';
 
 export default [
   // TODO: Turn this into /.../ig
-  { pattern: /^card(\s+[\d\w:]+)(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?/i, processor: AdaptiveCard },
-  { pattern: 'animationcard', processor: AnimationCard },
-  { pattern: 'audio', processor: Audio },
-  { pattern: 'audiocard', processor: AudioCard },
-  { pattern: 'carousel', processor: Carousel },
-  { pattern: 'document-plain', processor: DocumentPlain },
-  { pattern: 'document-word', processor: DocumentWord },
-  { pattern: 'emptycard', processor: EmptyCard },
-  { pattern: 'file', processor: File },
-  { pattern: 'herocard', processor: HeroCard },
-  { pattern: 'image', processor: Image },
-  { pattern: 'image-svg', processor: ImageSVG },
-  { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, processor: Layout },
-  { pattern: 'localization', processor: Localization },
-  { pattern: 'markdown', processor: Markdown },
-  { pattern: 'content-multimedia', processor: MultimediaCard },
-  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, processor: OAuthCard },
-  { pattern: /^postback(\s+[\d\w\-]+)?$/, processor: Postback },
-  { pattern: 'receiptcard', processor: ReceiptCard },
-  { pattern: 'sample:backchannel', processor: SampleBackchannel },
-  { pattern: 'sample:github-repository', processor: SampleGitHubRepository },
-  { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/, processor: SampleReduxMiddleware },
-  { pattern: 'signin', processor: SignInCard },
-  { pattern: /^slow(\s+[\d\w]+)?/i, processor: Slow },
-  { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, processor: SuggestedActionsCard },
-  { pattern: 'text', processor: Text },
-  { pattern: /^timestamp(\s+[\d\w]+)?/i, processor: Timestamp },
-  { pattern: /^typing(\s+[\d\w]+)?/i, processor: Typing },
-  { pattern: /^unknown(\s+[\d\w]+)?/i, processor: Unknown },
-  { pattern: 'upload', processor: Upload },
-  { pattern: /^video(\s+([\d\w]+))?$/i, processor: Video },
-  { pattern: 'videocard', processor: VideoCard },
-  { pattern: 'xml', processor: Xml }
-].map(({ pattern, processor }) => ({
-  pattern: typeof pattern === 'string' ? new RegExp(`^${ pattern }$`, 'i') : pattern,
-  processor
+  { pattern: /^card(\s+[\d\w:]+)(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?/i, ...AdaptiveCard },
+  { pattern: 'animationcard', ...AnimationCard },
+  { pattern: 'audio', ...Audio },
+  { pattern: 'audiocard', ...AudioCard },
+  { pattern: 'carousel', ...Carousel },
+  { pattern: 'document-plain', ...DocumentPlain },
+  { pattern: 'document-word', ...DocumentWord },
+  { pattern: 'emptycard', ...EmptyCard },
+  { pattern: 'file', ...File },
+  { pattern: 'herocard', ...HeroCard },
+  { pattern: 'image', ...Image },
+  { pattern: 'image-svg', ...ImageSVG },
+  { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...Layout },
+  { pattern: 'localization', ...Localization },
+  { pattern: 'markdown', ...Markdown },
+  { pattern: 'content-multimedia', ...MultimediaCard },
+  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, ...OAuthCard },
+  { pattern: /^postback(\s+[\d\w\-]+)?$/, ...Postback },
+  { pattern: 'receiptcard', ...ReceiptCard },
+  { pattern: 'sample:backchannel', ...SampleBackchannel },
+  { pattern: 'sample:github-repository', ...SampleGitHubRepository },
+  { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/, ...SampleReduxMiddleware },
+  { pattern: 'signin', ...SignInCard },
+  { pattern: /^slow(\s+[\d\w]+)?/i, ...Slow },
+  { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, ...SuggestedActionsCard },
+  { pattern: 'text', ...Text },
+  { pattern: /^timestamp(\s+[\d\w]+)?/i, ...Timestamp },
+  { pattern: /^typing(\s+[\d\w]+)?/i, ...Typing },
+  { pattern: /^unknown(\s+[\d\w]+)?/i, ...Unknown },
+  { pattern: 'upload', ...Upload },
+  { pattern: /^video(\s+([\d\w]+))?$/i, ...Video },
+  { pattern: 'videocard', ...VideoCard },
+  { pattern: 'xml', ...Xml }
+].map(command => ({
+  ...command,
+  pattern: typeof command.pattern === 'string' ? new RegExp(`^${ command.pattern }$`, 'i') : command.pattern,
 }))

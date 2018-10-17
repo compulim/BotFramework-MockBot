@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Multiple media attachments';
+
+function help() {
+  return {
+    'content-multimedia': 'Show animation, audio, and video attachments in a single message'
+  };
+}
+
+async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
@@ -48,3 +56,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }

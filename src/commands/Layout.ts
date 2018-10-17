@@ -1,6 +1,18 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, ...args: string[]) {
+const name = 'Layout';
+
+function help() {
+  return {
+    'layout single': 'Show a single attachment in stacked layout',
+    'layout single carousel': 'Show a single attachment in carousel layout',
+    'layout double': 'Show 2 attachments in carousel layout',
+    'layout carousel': 'Show 4 attachments in carousel layout',
+    'layout': 'Show 4 attachments in stacked layout'
+  };
+}
+
+async function processor(context: TurnContext, ...args: string[]) {
   const { PUBLIC_URL } = process.env;
   const arg = args.map(arg => (arg || '').trim()).filter(arg => arg).join(' ');
 
@@ -95,3 +107,5 @@ export default async function (context: TurnContext, ...args: string[]) {
       });
   }
 }
+
+export { help, name, processor }

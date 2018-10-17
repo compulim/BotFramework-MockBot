@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Audio attachment';
+
+function help() {
+  return {
+    'audio': 'Show an audio attachment'
+  };
+}
+
+async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
@@ -13,3 +21,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }
