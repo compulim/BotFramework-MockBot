@@ -14,7 +14,7 @@ import restify from 'restify';
 import serveHandler from 'serve-handler';
 
 import commands from './commands';
-import * as OAuthCard from './commands/OAuthCard';
+import * as OAuthCard from './commands/OAuthCard2';
 import reduceMap from './reduceMap';
 
 // Create server

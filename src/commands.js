@@ -14,7 +14,7 @@ import * as Layout from './commands/Layout';
 import * as Localization from './commands/Localization';
 import * as Markdown from './commands/Markdown';
 import * as MultimediaCard from './commands/MultimediaCard';
-import * as OAuthCard from './commands/OAuthCard';
+import * as OAuthCard from './commands/OAuthCard2';
 import * as Postback from './commands/Postback';
 import * as ReceiptCard from './commands/ReceiptCard';
 import * as SampleBackchannel from './commands/SampleBackchannel';
