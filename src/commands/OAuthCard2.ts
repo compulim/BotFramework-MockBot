@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 
 import conversationState from '../singletonConversationState';
 
-const dialogState = conversationState.createProperty('dialogState');
+const dialogState = conversationState['createProperty']('dialogState');
 const dialogs = new DialogSet(dialogState);
 
 dialogs.add(new ChoicePrompt('CONFIRM_PROMPT'));
@@ -61,7 +61,7 @@ async function processor(context: TurnContext, arg: string) {
   if ((arg || '').trim() === 'oauth signout') {
     await context.sendActivity('Please wait while I am signing you out.');
     await context.sendActivity({ type: 'typing' });
-    await context.adapter.signOutUser(context, process.env.OAUTH_CONNECTION_NAME);
+    await context.adapter['signOutUser'](context, process.env.OAUTH_CONNECTION_NAME);
     await context.sendActivity('You have been signed out now.');
   } else {
     const dialogContext = await dialogs.createContext(context);
@@ -72,7 +72,7 @@ async function processor(context: TurnContext, arg: string) {
       await dialogContext.beginDialog('AUTH_DIALOG');
     }
 
-    await conversationState.saveChanges(context);
+    await conversationState['saveChanges'](context);
   }
 }
 
