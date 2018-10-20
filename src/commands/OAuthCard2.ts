@@ -57,7 +57,7 @@ function help() {
 
 const name = 'OAuth card';
 
-async function processor(context: TurnContext, arg: string) {
+async function processor(context: TurnContext, arg?: string) {
   if ((arg || '').trim() === 'oauth signout') {
     await context.sendActivity('Please wait while I am signing you out.');
     await context.sendActivity({ type: 'typing' });
