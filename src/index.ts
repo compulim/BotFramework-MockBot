@@ -134,6 +134,8 @@ server.post('/directline/token', async (req, res) => {
       if ('error' in json) {
         res.send(500, { 'Access-Control-Allow-Origin': '*' });
       } else {
+        // TODO: In latest build of Web Chat, we get user ID out of the token via JWT.decode
+        //       We can safely remove userID from the response
         res.send({
           ...json,
           userID
