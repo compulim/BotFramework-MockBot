@@ -1,3 +1,4 @@
+import * as Accessibility from './commands/Accessibility';
 import * as AdaptiveCard from './commands/AdaptiveCard';
 import * as AnimationCard from './commands/AnimationCard';
 import * as Audio from './commands/Audio';
@@ -33,7 +34,7 @@ import * as VideoCard from './commands/VideoCard';
 import * as Xml from './commands/Xml';
 
 export default [
-  // TODO: Turn this into /.../ig
+  { pattern: 'accessibility', ...Accessibility },
   { pattern: /^card(\s+[\d\w:]+)(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?/i, ...AdaptiveCard },
   { pattern: 'animationcard', ...AnimationCard },
   { pattern: 'audio', ...Audio },
