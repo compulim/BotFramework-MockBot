@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Sign-in card';
+
+function help() {
+  return {
+    'signin': 'Show a signin card'
+  };
+}
+
+async function processor(context: TurnContext) {
   await context.sendActivity({
     type: 'message',
     attachments: [{
@@ -16,3 +24,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }

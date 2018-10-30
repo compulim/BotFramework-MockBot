@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext) {
+const name = 'Carousel layout';
+
+function help() {
+  return {
+    'carousel': 'Show a carousel of product details'
+  };
+}
+
+async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
@@ -86,3 +94,5 @@ export default async function (context: TurnContext) {
     }]
   });
 }
+
+export { help, name, processor }

@@ -3,14 +3,19 @@ import config from './config';
 
 config();
 
-import { BotFrameworkAdapter } from 'botbuilder';
+import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { join } from 'path';
+import { randomBytes } from 'crypto';
+import createAutoResetEvent from 'auto-reset-event';
+import delay from 'delay';
 import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
 
 import commands from './commands';
+import * as OAuthCard from './commands/OAuthCard2';
+import reduceMap from './reduceMap';
 
 // Create server
 const server = restify.createServer();
@@ -19,13 +24,22 @@ server.listen(process.env.PORT, () => {
   console.log(`${ server.name } listening to ${ server.url }`);
 });
 
+server.use(restify.plugins.queryParser());
+
 // Create adapter
 const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
+// const storage = new MemoryStorage();
+// const convoState = new ConversationState(storage);
+// const userState = new UserState(storage);
+
+// adapter.use(new BotStateSet(convoState, userState));
+
 let numActivities = 0;
+let echoTyping = false;
 const up = Date.now();
 
 server.get('/', async (req, res) => {
@@ -57,72 +71,123 @@ function trustedOrigin(origin) {
     || /^https?:\/\/[\d\w]+\.ngrok\.io([\/:]|$)/.test(origin)
     || /^https?:\/\/webchat-playground\.azurewebsites\.net([\/:]|$)/.test(origin)
     || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
+    || /^https:\/\/compulim\.github\.io/.test(origin)
+    || /^https:\/\/microsoft\.github\.io/.test(origin)
   );
 }
 
-server.post('/token-generate', async (req, res) => {
-  const origin = req.header('origin');
+async function createUserID() {
+  return new Promise((resolve, reject) => {
+    randomBytes(16, (err, buffer) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(`dl_${ buffer.toString('hex') }`);
+      }
+    })
+  });
+}
 
-  console.log(`requesting token from ${ origin }`);
+server.post('/directline/token', async (req, res) => {
+  const origin = req.header('origin');
 
   if (!trustedOrigin(origin)) {
     return res.send(403, 'not trusted origin');
   }
 
+  const userID = await createUserID();
+  const { token } = req.query;
+
+  if (token) {
+    console.log(`Refreshing Direct Line token for ${ origin }`);
+  } else {
+    console.log(`Requesting Direct Line token for ${ origin }`);
+  }
+
   try {
-    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-      headers: {
-        authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`
-      },
-      method: 'POST'
-    });
+    let cres;
 
-    const json = await cres.json();
-
-    if ('error' in json) {
-      res.send(500);
-    } else {
-      res.send(json, {
-        'Access-Control-Allow-Origin': '*'
+    if (token) {
+      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
+        // body: JSON.stringify({ TrustedOrigins: [origin] }),
+        headers: {
+          authorization: `Bearer ${ token }`,
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
       });
+    } else {
+      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
+        // body: JSON.stringify({ TrustedOrigins: [origin] }),
+        body: JSON.stringify({ User: { Id: userID } }),
+        headers: {
+          authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`,
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      });
+    }
+
+    if (cres.status === 200) {
+      const json = await cres.json();
+
+      if ('error' in json) {
+        res.send(500, { 'Access-Control-Allow-Origin': '*' });
+      } else {
+        // TODO: In latest build of Web Chat, we get user ID out of the token via JWT.decode
+        //       We can safely remove userID from the response
+        res.send({
+          ...json,
+          userID
+        }, { 'Access-Control-Allow-Origin': '*' });
+      }
+    } else {
+      res.send(500, `Direct Line service returned ${ cres.status } while exchanging for token`, { 'Access-Control-Allow-Origin': '*' });
     }
   } catch (err) {
     res.send(500);
   }
 });
 
-server.post('/token-refresh/:token', async (req, res) => {
+server.post('/speech/token', async (req, res) => {
   const origin = req.header('origin');
-
-  console.log(`refreshing token from ${ origin }`);
 
   if (!trustedOrigin(origin)) {
     return res.send(403, 'not trusted origin');
   }
 
-  try {
-    const cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-      headers: {
-        authorization: `Bearer ${ req.params.token }`
-      },
-      method: 'POST'
+  console.log(`Requesting speech token for ${ origin }`);
+
+  const cres = await fetch('https://api.cognitive.microsoft.com/sts/v1.0/issueToken', {
+    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_API_KEY },
+    method: 'POST'
+  });
+
+  if (cres.status === 200) {
+    res.send({
+      token: await cres.text()
+    }, {
+      'Access-Control-Allow-Origin': '*'
     });
-
-    const json = await cres.json();
-
-    if ('error' in json) {
-      res.send(500);
-    } else {
-      res.send(json, {
-        'Access-Control-Allow-Origin': '*'
-      });
-    }
-  } catch (err) {
-    res.send(500);
+  } else {
+    res.send(500, {
+      'Access-Control-Allow-Origin': '*'
+    });
   }
 });
+
+const acquireSlowQueue = createAutoResetEvent();
 
 server.get('/public/*', async (req, res) => {
+  if ('slow' in req.query) {
+    res.noCache();
+
+    const release = await acquireSlowQueue();
+
+    await delay(1000);
+    release();
+  }
+
   await serveHandler(req, res, {
     path: join(__dirname, './public')
   });
@@ -139,20 +204,66 @@ server.post('/api/messages/', (req, res) => {
       && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
+    } else if (context.activity.type === 'event' && context.activity.name === 'tokens/response') {
+      // Special handling for OAuth token exchange
+      // This event is sent thru the non-magic code flow
+      await OAuthCard.processor(context);
     } else if (context.activity.type === 'message') {
-      const { activity: { text } } = context;
-      const command = commands.find(({ pattern }) => pattern.test(text));
+      const { activity: { attachments = [], text } } = context;
+      const cleanedText = (text || '').trim().replace(/\.$/, '');
+      const command = commands.find(({ pattern }) => pattern.test(cleanedText));
 
       if (command) {
         const { pattern, processor } = command;
-        const match = pattern.exec(text);
+        const match = pattern.exec(cleanedText);
 
         await processor(context, ...[].slice.call(match, 1));
-      } else if (text === 'help') {
+      } else if (/^echo-typing$/i.test(cleanedText)) {
+        echoTyping = !echoTyping;
+
+        if (echoTyping) {
+          await context.sendActivity('Will echo `"typing"` event');
+        } else {
+          await context.sendActivity('Will stop echoing `"typing"` event');
+        }
+      } else if (/^help$/i.test(cleanedText)) {
+        const attachments = commands.map(({ help, name }) => {
+          return {
+            contentType: 'application/vnd.microsoft.card.thumbnail',
+            content: {
+              buttons: reduceMap(
+                help(),
+                (result: [], title: string, value: string) => [
+                  ...result,
+                  {
+                    title,
+                    type: 'imBack',
+                    value
+                  }
+                ],
+                []
+              ).sort(({ title: x }, { title: y }) => x > y ? 1 : x < y ? -1 : 0),
+              title: name
+            }
+          };
+        });
+
+        await context.sendActivity({
+          attachments: attachments.sort(({ content: { title: x } }, { content: { title: y } }) => x > y ? 1 : x < y ? -1 : 0)
+        });
+      } else if (/^help simple$/i.test(cleanedText)) {
         await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
+      } else if (attachments.length) {
+        const { processor } = commands.find(({ pattern }) => pattern.test('upload'));
+
+        await processor(context, attachments);
+      } else if (context.activity.value) {
+        await context.sendActivity(`You posted\r\n\r\n\`\`\`\r\n${ JSON.stringify(context.activity.value, null, 2) }\r\n\`\`\``);
       } else {
-        await context.sendActivity(`Unknown command: \`${ text }\``);
+        await context.sendActivity(`Unknown command: \`${ cleanedText }\`.\r\n\r\nType \`help\` to learn more.`);
       }
+    } else if (context.activity.type === 'typing' && echoTyping) {
+      await context.sendActivity({ type: 'typing' });
     }
   });
 });

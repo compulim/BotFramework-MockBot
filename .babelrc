@@ -5,7 +5,9 @@
   "presets": [
     "@babel/preset-typescript",
     ["@babel/preset-env", {
-      "forceAllTransforms": true,
+      "targets": {
+        "node": "10"
+      },
       "modules": "commonjs"
     }]
   ]

@@ -1,185 +1,276 @@
-// http://adaptivecards.io/samples/WeatherLarge.html
-
 export default () => ({
-	"$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
-	"type": "AdaptiveCard",
-	"version": "1.0",
-	"speak": "<s>Weather forecast for Monday is high of 62 and low of 42 degrees with a 20% chance of rain</s><s>Winds will be 5 mph from the northeast</s>",
-	"backgroundImage": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Background-Dark.jpg",
-	"body": [
-		{
-			"type": "ColumnSet",
-			"columns": [
-				{
-					"type": "Column",
-					"size": "35",
-					"items": [
-						{
-							"type": "Image",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png",
-							"size": "stretch"
-						}
-					]
-				},
-				{
-					"type": "Column",
-					"size": "65",
-					"items": [
-						{
-							"type": "TextBlock",
-							"text": "**Monday April 1**",
-							"size": "large"
-						},
-						{
-							"type": "TextBlock",
-							"text": "63 / 42",
-							"size": "medium",
-							"separation": "none"
-						},
-						{
-							"type": "TextBlock",
-							"isSubtle": true,
-							"text": "20% chance of rain",
-							"separation": "none"
-						},
-						{
-							"type": "TextBlock",
-							"isSubtle": true,
-							"text": "Winds 5 mph NE",
-							"separation": "none"
-						}
-					]
-				}
-			]
-		},
-		{
-			"type": "ColumnSet",
-			"columns": [
-				{
-					"type": "Column",
-					"size": "20",
-					"items": [
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "Fri"
-						},
-						{
-							"type": "Image",
-							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "62"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"isSubtle": true,
-							"text": "523"
-						}
-					],
-					"selectAction": {
-						"type": "Action.OpenUrl",
-						"url": "http://www.microsoft.com"
-					}
-				},
-				{
-					"type": "Column",
-					"size": "20",
-					"items": [
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "Sat"
-						},
-						{
-							"type": "Image",
-							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Drizzle-Square.png"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "60"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"isSubtle": true,
-							"text": "48"
-						}
-					],
-					"selectAction": {
-						"type": "Action.OpenUrl",
-						"url": "http://www.microsoft.com"
-					}
-				},
-				{
-					"type": "Column",
-					"size": "20",
-					"items": [
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "Sun"
-						},
-						{
-							"type": "Image",
-							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "59"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"isSubtle": true,
-							"text": "49"
-						}
-					],
-					"selectAction": {
-						"type": "Action.OpenUrl",
-						"url": "http://www.microsoft.com"
-					}
-				},
-				{
-					"type": "Column",
-					"size": "20",
-					"items": [
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "Mon"
-						},
-						{
-							"type": "Image",
-							"size": "auto",
-							"url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"text": "64"
-						},
-						{
-							"type": "TextBlock",
-							"horizontalAlignment": "center",
-							"isSubtle": true,
-							"text": "51"
-						}
-					],
-					"selectAction": {
-						"type": "Action.OpenUrl",
-						"url": "http://www.microsoft.com"
-					}
-				}
-			]
-		}
-	]
+    "$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
+    "version": "1.0",
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "height": "stretch",
+                            "text": "Fri 20"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "horizontalAlignment": "Right",
+                    "separator": true,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Right",
+                            "height": "stretch",
+                            "weight": "Bolder",
+                            "text": "Seattle, WA"
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "style": "Person",
+                                    "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-sunny.png",
+                                    "size": "Medium"
+                                }
+                            ],
+                            "width": "stretch"
+                        },
+                        {
+                            "type": "Column",
+                            "horizontalAlignment": "Center",
+                            "spacing": "ExtraLarge",
+                            "height": "stretch",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "size": "ExtraLarge",
+                                    "weight": "Bolder",
+                                    "text": "50°"
+                                }
+                            ],
+                            "width": "auto"
+                        },
+                        {
+                            "type": "Column",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "40°"
+                                }
+                            ],
+                            "width": "auto"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "weight": "Bolder",
+                    "text": "Sunny"
+                },
+                {
+                    "type": "TextBlock",
+                    "size": "Small",
+                    "weight": "Lighter",
+                    "text": "10% chance of rain"
+                },
+                {
+                    "type": "TextBlock",
+                    "spacing": "Small",
+                    "size": "Small",
+                    "weight": "Lighter",
+                    "text": "Winds 5 mph NE"
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "text": "Sat 21"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "text": "Sun 22"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "text": "Mon 23"
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "horizontalAlignment": "Left",
+                            "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-partly-cloudy-day.png",
+                            "size": "Small"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "horizontalAlignment": "Left",
+                            "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-rain-showers-day.png",
+                            "size": "Small"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "horizontalAlignment": "Left",
+                            "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-sunny.png",
+                            "size": "Small"
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "spacing": "Default",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "weight": "Bolder",
+                            "text": "49°"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "weight": "Bolder",
+                            "text": "49°"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "weight": "Bolder",
+                            "text": "49°"
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "horizontalAlignment": "Left",
+            "spacing": "None",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "horizontalAlignment": "Left",
+                            "size": "Small",
+                            "text": "39°"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "39°"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "39°"
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "size": "Small",
+            "weight": "Lighter",
+            "text": "Updated 2:15 PM"
+        }
+    ]
 })

@@ -1,6 +1,14 @@
 import { TurnContext } from 'botbuilder';
 
-export default async function (context: TurnContext, arg: string) {
+const name = 'Suggested actions';
+
+function help() {
+  return {
+    'suggested-actions': 'Show a suggested actions demo'
+  };
+}
+
+async function processor(context: TurnContext, arg: string) {
   const { PUBLIC_URL } = process.env;
 
   if (arg) {
@@ -39,3 +47,5 @@ export default async function (context: TurnContext, arg: string) {
     });
   }
 }
+
+export { help, name, processor }
