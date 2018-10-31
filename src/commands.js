@@ -4,13 +4,16 @@ import * as AnimationCard from './commands/AnimationCard';
 import * as Audio from './commands/Audio';
 import * as AudioCard from './commands/AudioCard';
 import * as Carousel from './commands/Carousel';
+import * as DocumentDataURI from './commands/DocumentDataURI';
 import * as DocumentPlain from './commands/DocumentPlain';
 import * as DocumentWord from './commands/DocumentWord';
 import * as EmptyCard from './commands/EmptyCard';
+import * as EmptyWithSuggestions from './commands/EmptyWithSuggestions';
 import * as File from './commands/File';
 import * as HeroCard from './commands/HeroCard';
 import * as Image from './commands/Image';
 import * as ImageSVG from './commands/ImageSVG';
+import * as InvalidCard from './commands/InvalidCard';
 import * as Layout from './commands/Layout';
 import * as Localization from './commands/Localization';
 import * as Markdown from './commands/Markdown';
@@ -40,13 +43,16 @@ export default [
   { pattern: 'audio', ...Audio },
   { pattern: 'audiocard', ...AudioCard },
   { pattern: 'carousel', ...Carousel },
+  { pattern: 'document-data-uri', ...DocumentDataURI },
   { pattern: 'document-plain', ...DocumentPlain },
   { pattern: 'document-word', ...DocumentWord },
   { pattern: 'emptycard', ...EmptyCard },
+  { pattern: 'empty-with-suggestions', ...EmptyWithSuggestions },
   { pattern: 'file', ...File },
   { pattern: 'herocard', ...HeroCard },
   { pattern: 'image', ...Image },
   { pattern: 'image-svg', ...ImageSVG },
+  { pattern: 'invalidcard', ...InvalidCard },
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...Layout },
   { pattern: 'localization', ...Localization },
   { pattern: 'markdown', ...Markdown },
