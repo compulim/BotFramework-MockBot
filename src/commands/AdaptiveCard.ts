@@ -48,9 +48,6 @@ function getCardJSON(name: string = ''): any {
     case 'review':
       return Review();
 
-    case 'review':
-      return [Review()];
-
     case 'simple':
       return Simple();
 
