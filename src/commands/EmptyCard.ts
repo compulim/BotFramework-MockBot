@@ -4,7 +4,7 @@ const name = 'Empty card';
 
 function help() {
   return {
-    'empty': 'Show a empty message with suggested actions'
+    'emptycard': 'Show a empty message with suggested actions'
   };
 }
 
@@ -12,6 +12,7 @@ async function processor(context: TurnContext) {
   const { PUBLIC_URL } = process.env;
 
   await context.sendActivity({
+    text: '',
     type: 'message',
     suggestedActions: {
       actions: [{
