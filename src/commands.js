@@ -8,7 +8,6 @@ import * as DocumentDataURI from './commands/DocumentDataURI';
 import * as DocumentPlain from './commands/DocumentPlain';
 import * as DocumentWord from './commands/DocumentWord';
 import * as EmptyCard from './commands/EmptyCard';
-import * as EmptyWithSuggestions from './commands/EmptyWithSuggestions';
 import * as File from './commands/File';
 import * as HeroCard from './commands/HeroCard';
 import * as Image from './commands/Image';
@@ -47,7 +46,6 @@ export default [
   { pattern: 'document-plain', ...DocumentPlain },
   { pattern: 'document-word', ...DocumentWord },
   { pattern: 'emptycard', ...EmptyCard },
-  { pattern: 'empty-with-suggestions', ...EmptyWithSuggestions },
   { pattern: 'file', ...File },
   { pattern: 'herocard', ...HeroCard },
   { pattern: 'image', ...Image },
