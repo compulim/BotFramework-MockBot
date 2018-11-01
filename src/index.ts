@@ -204,10 +204,14 @@ server.post('/api/messages/', (req, res) => {
       && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
-    } else if (context.activity.type === 'event' && context.activity.name === 'tokens/response') {
-      // Special handling for OAuth token exchange
-      // This event is sent thru the non-magic code flow
-      await OAuthCard.processor(context);
+    } else if (context.activity.type === 'event') {
+      if (context.activity.name === 'tokens/response') {
+        // Special handling for OAuth token exchange
+        // This event is sent thru the non-magic code flow
+        await OAuthCard.processor(context);
+      } else if (context.activity.name === 'webchat/join') {
+        await context.sendActivity(`Got \`webchat/join\` event, your language is \`${ (context.activity.value || {}).language }\``);
+      }
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
