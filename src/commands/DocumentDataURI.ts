@@ -4,7 +4,7 @@ const name = 'Document Data URI';
 
 function help() {
   return {
-    'document-data-uri': 'open attachment'
+    'document-data-uri': 'Attachment with Data URI as the content'
   };
 }
 
