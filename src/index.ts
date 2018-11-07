@@ -68,6 +68,7 @@ server.get('/health.txt', async (req, res) => {
 function trustedOrigin(origin) {
   return (
     /^https?:\/\/localhost([\/:]|$)/.test(origin)
+    || /^https?:\/\/webchat([\/:]|$)/.test(origin)
     || /^https?:\/\/[\d\w]+\.ngrok\.io([\/:]|$)/.test(origin)
     || /^https?:\/\/webchat-playground\.azurewebsites\.net([\/:]|$)/.test(origin)
     || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
