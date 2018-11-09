@@ -9,7 +9,6 @@ function help() {
 }
 
 async function processor(context: TurnContext) {
-  console.log('Start');
   await context.sendActivity({
     type: 'message',
     attachments: [{
@@ -18,7 +17,6 @@ async function processor(context: TurnContext) {
       name: 'dot.png'
     }]
   });
-  console.log('Succeeded');
 }
 
 export { help, name, processor }
