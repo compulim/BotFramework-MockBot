@@ -4,7 +4,7 @@ const name = 'Invalid adaptive card';
 
 function help() {
   return {
-    'invalid': 'This is an invalid card and should fail to display.'
+    'invalidCard': 'This is an invalid card and should fail to display.'
   };
 }
 
