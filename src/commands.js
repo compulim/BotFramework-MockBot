@@ -8,6 +8,7 @@ import * as ChannelData from './commands/ChannelData';
 import * as DocumentDataURI from './commands/DocumentDataURI';
 import * as DocumentPlain from './commands/DocumentPlain';
 import * as DocumentWord from './commands/DocumentWord';
+import * as Echo from './commands/Echo';
 import * as EmptyCard from './commands/EmptyCard';
 import * as File from './commands/File';
 import * as HeroCard from './commands/HeroCard';
@@ -47,6 +48,7 @@ export default [
   { pattern: 'document-data-uri', ...DocumentDataURI },
   { pattern: 'document-plain', ...DocumentPlain },
   { pattern: 'document-word', ...DocumentWord },
+  { pattern: /^echo\s/, ...Echo },
   { pattern: 'emptycard', ...EmptyCard },
   { pattern: 'file', ...File },
   { pattern: 'herocard', ...HeroCard },

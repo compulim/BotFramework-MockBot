@@ -219,10 +219,14 @@ server.post('/api/messages/', (req, res) => {
       const command = commands.find(({ pattern }) => pattern.test(cleanedText));
 
       if (command) {
-        const { pattern, processor } = command;
+        const { mode, pattern, processor } = command;
         const match = pattern.exec(cleanedText);
 
-        await processor(context, ...[].slice.call(match, 1));
+        if (mode === 'line') {
+          await processor(context, cleanedText);
+        } else {
+          await processor(context, ...[].slice.call(match, 1), cleanedText);
+        }
       } else if (/^echo-typing$/i.test(cleanedText)) {
         echoTyping = !echoTyping;
 
