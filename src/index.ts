@@ -150,7 +150,7 @@ server.post('/directline/token', async (req, res) => {
   }
 });
 
-server.post('/speech/token', async (req, res) => {
+server.post('/bingspeech/token', async (req, res) => {
   const origin = req.header('origin');
 
   if (!trustedOrigin(origin)) {
@@ -160,7 +160,34 @@ server.post('/speech/token', async (req, res) => {
   console.log(`Requesting speech token for ${ origin }`);
 
   const cres = await fetch('https://api.cognitive.microsoft.com/sts/v1.0/issueToken', {
-    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_API_KEY },
+    headers: { 'Ocp-Apim-Subscription-Key': process.env.BING_SPEECH_SUBSCRIPTION_KEY },
+    method: 'POST'
+  });
+
+  if (cres.status === 200) {
+    res.send({
+      token: await cres.text()
+    }, {
+      'Access-Control-Allow-Origin': '*'
+    });
+  } else {
+    res.send(500, {
+      'Access-Control-Allow-Origin': '*'
+    });
+  }
+});
+
+server.post('/speechservices/token', async (req, res) => {
+  const origin = req.header('origin');
+
+  if (!trustedOrigin(origin)) {
+    return res.send(403, 'not trusted origin');
+  }
+
+  console.log(`Requesting speech token for ${ origin }`);
+
+  const cres = await fetch('https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken', {
+    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_SERVICES_SUBSCRIPTION_KEY },
     method: 'POST'
   });
 
