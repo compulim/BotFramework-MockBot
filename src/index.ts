@@ -193,6 +193,7 @@ server.post('/speechservices/token', async (req, res) => {
 
   if (cres.status === 200) {
     res.send({
+      region: 'westus',
       token: await cres.text()
     }, {
       'Access-Control-Allow-Origin': '*'
