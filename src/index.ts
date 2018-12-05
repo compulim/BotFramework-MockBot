@@ -253,7 +253,7 @@ server.post('/api/messages/', (req, res) => {
         if (mode === 'line') {
           await processor(context, cleanedText);
         } else {
-          await processor(context, ...[].slice.call(match, 1), cleanedText);
+          await processor(context, ...[].slice.call(match, 1));
         }
       } else if (/^echo-typing$/i.test(cleanedText)) {
         echoTyping = !echoTyping;
