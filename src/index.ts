@@ -74,6 +74,7 @@ function trustedOrigin(origin) {
     || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
     || /^https:\/\/compulim\.github\.io/.test(origin)
     || /^https:\/\/microsoft\.github\.io/.test(origin)
+    || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net/.test(origin)
   );
 }
 
