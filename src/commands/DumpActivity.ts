@@ -42,11 +42,13 @@ async function processor(context: TurnContext) {
     action,
     attachmentLayout,
     attachments: attachments && attachments.map(({
+      content,
       contentType,
       contentUrl,
       name,
       thumbnailUrl
     }) => ({
+      content,
       contentType,
       contentUrl,
       name,
