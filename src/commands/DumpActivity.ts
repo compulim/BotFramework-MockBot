@@ -80,7 +80,7 @@ async function processor(context: TurnContext) {
         type,
         value
       })),
-      to
+      to: suggestedActions.to
     },
     summary,
     text,
