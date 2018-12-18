@@ -2,6 +2,7 @@ export default () => ({
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
+  "speak": "three of five stars, 856 reviews, Extremely Expensive. Steve G said, \"Another day, another airport\"",
   "body": [
     {
       "speak": "",
