@@ -266,7 +266,7 @@ server.post('/api/messages/', (req, res) => {
         await context.sendActivity(`You posted\r\n\r\n\`\`\`\r\n${ JSON.stringify(context.activity.value, null, 2) }\r\n\`\`\``);
       } else {
         await context.sendActivity({
-          speak: `I don't know ${ cleanedText }. You can say "help" to learn more.`,
+          speak: `Unknown command: I don't know ${ cleanedText }. You can say "help" to learn more.`,
           text: `Unknown command: \`${ cleanedText }\`.\r\n\r\nType \`help\` to learn more.`,
           type: 'message'
         });

@@ -18,13 +18,13 @@ async function processor(context: TurnContext) {
       content: {
         title: 'BotFramework Test',
         subtitle: 'audio test',
-        text: 'No buttons, No Image, Autoloop, Autostart, Sharable',
+        text: 'No buttons, No Image, Autoloop, Sharable',
         media: [{
           profile: 'audiocard',
           url: `${ PUBLIC_URL }assets/bftest.mp3`
         }],
         autoloop: true,
-        autostart: true
+        autostart: false
       }
     }]
   });

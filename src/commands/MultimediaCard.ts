@@ -24,34 +24,34 @@ async function processor(context: TurnContext) {
           { url: `${ PUBLIC_URL }assets/surface_anim.gif`, profile: 'animation2' }
         ],
         autoloop: true,
-        autostart: true
+        autostart: false
       }
     }, {
       contentType: 'application/vnd.microsoft.card.audio',
       content: {
         title: 'BotFramework Test',
         subtitle: 'audio test',
-        text: 'No buttons, No Image, Autoloop, Autostart, Sharable',
+        text: 'No buttons, No Image, Autoloop, Sharable',
         media: [
           { url: `${ PUBLIC_URL }assets/bftest.mp3`, profile: 'audiocard' },
           { url: `${ PUBLIC_URL }assets/bftest.mp3`, profile: 'audiocard2' }
         ],
         autoloop: true,
-        autostart: true
+        autostart: false
       }
     }, {
       contentType: 'application/vnd.microsoft.card.video',
       content: {
         title: 'Microsoft Band',
         subtitle: 'Large Video',
-        text: 'No buttons, No Image, Autoloop, Autostart, No Sharable',
+        text: 'No buttons, No Image, Autoloop, No Sharable',
         media: [
           { url: `${ PUBLIC_URL }assets/msband.mp4`, profile: 'videocard' },
           { url: `${ PUBLIC_URL }assets/msband.mp4`, profile: 'videocard2' }
         ],
         image: { url: `${ PUBLIC_URL }assets/ms-band1.jpg` },
         autoloop: true,
-        autostart: true
+        autostart: false
       }
     }]
   });
