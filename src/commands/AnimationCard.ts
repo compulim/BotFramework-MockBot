@@ -18,13 +18,13 @@ async function processor(context: TurnContext) {
       content: {
         title: 'title',
         subtitle: 'animation',
-        text: 'No buttons, No Image, Autoloop, Sharable',
+        text: 'No buttons, No Image, Autoloop, Autostart, Sharable',
         media: [{
           profile: 'animation',
           url: `${ PUBLIC_URL }assets/surface_anim.gif`,
         }],
         autoloop: true,
-        autostart: false
+        autostart: true
       }
     }]
   });

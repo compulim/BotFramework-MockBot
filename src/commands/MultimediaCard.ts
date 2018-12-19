@@ -24,7 +24,7 @@ async function processor(context: TurnContext) {
           { url: `${ PUBLIC_URL }assets/surface_anim.gif`, profile: 'animation2' }
         ],
         autoloop: true,
-        autostart: false
+        autostart: true
       }
     }, {
       contentType: 'application/vnd.microsoft.card.audio',
