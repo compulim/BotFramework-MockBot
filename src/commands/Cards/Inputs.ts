@@ -4,7 +4,7 @@ export default () => ({
   "$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
-  "speak": "<s>The forecast for Seattle January 20 is mostly clear with a High of 51 degrees and Low of 40 degrees</s>",
+  "speak": "<s>Adaptive Card inputs example</s>",
   "body": [
     {
       "type": "TextBlock",
