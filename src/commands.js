@@ -15,6 +15,7 @@ import * as File from './commands/File';
 import * as HeroCard from './commands/HeroCard';
 import * as Image from './commands/Image';
 import * as ImageSVG from './commands/ImageSVG';
+import * as InputHint from './commands/InputHint';
 import * as InvalidCard from './commands/InvalidCard';
 import * as Layout from './commands/Layout';
 import * as Localization from './commands/Localization';
@@ -57,6 +58,7 @@ export default [
   { pattern: 'herocard', ...HeroCard },
   { pattern: 'image', ...Image },
   { pattern: 'image-svg', ...ImageSVG },
+  { pattern: /^input[\-\s]hint(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: 'invalidcard', ...InvalidCard },
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...Layout },
   { pattern: 'localization', ...Localization },
