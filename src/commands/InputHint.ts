@@ -14,8 +14,8 @@ async function processor(context: TurnContext, line: string) {
   switch ((line || '').trim().substr(0, 1)) {
     case 'a':
       await context.sendActivity({
-        inputHint: 'acceptinginput',
-        text: 'This activity contains input hint of "accepting input."',
+        inputHint: 'acceptingInput',
+        text: 'This activity is accepting input.',
         type: 'message'
       });
 
@@ -23,8 +23,8 @@ async function processor(context: TurnContext, line: string) {
 
     case 'e':
       await context.sendActivity({
-        inputHint: 'expectinginput',
-        text: 'This activity contains input hint of "expecting input."',
+        inputHint: 'expectingInput',
+        text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
         type: 'message'
       });
 
@@ -32,8 +32,8 @@ async function processor(context: TurnContext, line: string) {
 
     default:
       await context.sendActivity({
-        inputHint: 'ignoringinput',
-        text: 'This activity contains input hint of "ignoring input."',
+        inputHint: 'ignoringInput',
+        text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
         type: 'message'
       });
 
