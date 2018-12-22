@@ -18,7 +18,7 @@ async function processor(context: TurnContext) {
       content: {
         title: 'Microsoft Band',
         subtitle: 'Large Video',
-        text: 'No buttons, No Image, Autoloop, Autostart, No Sharable',
+        text: 'No buttons, No Image, Autoloop, No Sharable',
         media: [{
           url: `${ PUBLIC_URL }assets/msband.mp4`,
           profile: 'videocard'

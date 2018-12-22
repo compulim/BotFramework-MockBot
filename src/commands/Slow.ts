@@ -22,19 +22,19 @@ async function processor(context: TurnContext, ...args: string[]) {
         attachments: [{
           contentType: 'image/jpg',
           contentUrl: `${ PUBLIC_URL }assets/surface1.jpg?slow`,
-          name: 'Microsoft Surface'
+          name: 'Microsoft Surface Front View'
         }, {
           contentType: 'image/jpg',
           contentUrl: `${ PUBLIC_URL }assets/surface2.jpg?slow`,
-          name: 'Microsoft Surface'
+          name: 'Microsoft Surface Back View'
         }, {
           contentType: 'image/jpg',
           contentUrl: `${ PUBLIC_URL }assets/surface3.jpg?slow`,
-          name: 'Microsoft Surface'
+          name: 'Microsoft Surface Side Zoom'
         }, {
           contentType: 'image/jpg',
           contentUrl: `${ PUBLIC_URL }assets/surface4.jpg?slow`,
-          name: 'Microsoft Surface'
+          name: 'Microsoft Surface Keyboard Zoom'
         }]
       });
 
