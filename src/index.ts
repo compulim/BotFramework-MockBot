@@ -39,7 +39,7 @@ const adapter = new BotFrameworkAdapter({
 // adapter.use(new BotStateSet(convoState, userState));
 
 let numActivities = 0;
-let echoTyping = true;
+let echoTypingConversations = new Set();
 const up = Date.now();
 
 server.get('/', async (req, res) => {
@@ -257,12 +257,15 @@ server.post('/api/messages/', (req, res) => {
           await processor(context, ...[].slice.call(match, 1));
         }
       } else if (/^echo-typing$/i.test(cleanedText)) {
-        echoTyping = !echoTyping;
+        // We should "echoTyping" in a per-conversation basis
+        const { id: conversationID } = context.activity.conversation;
 
-        if (echoTyping) {
-          await context.sendActivity('Will echo `"typing"` event');
-        } else {
+        if (echoTypingConversations.has(conversationID)) {
+          echoTypingConversations.delete(conversationID);
           await context.sendActivity('Will stop echoing `"typing"` event');
+        } else {
+          echoTypingConversations.add(conversationID);
+          await context.sendActivity('Will echo `"typing"` event');
         }
       } else if (/^help$/i.test(cleanedText)) {
         const attachments = commands.map(({ help, name }) => {
@@ -304,7 +307,7 @@ server.post('/api/messages/', (req, res) => {
           type: 'message'
         });
       }
-    } else if (context.activity.type === 'typing' && echoTyping) {
+    } else if (context.activity.type === 'typing' && echoTypingConversations.has(context.activity.conversation.id)) {
       await context.sendActivity({ type: 'typing' });
     }
   });
