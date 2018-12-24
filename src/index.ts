@@ -39,7 +39,7 @@ const adapter = new BotFrameworkAdapter({
 // adapter.use(new BotStateSet(convoState, userState));
 
 let numActivities = 0;
-let echoTyping = false;
+let echoTyping = true;
 const up = Date.now();
 
 server.get('/', async (req, res) => {
