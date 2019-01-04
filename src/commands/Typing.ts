@@ -39,7 +39,7 @@ async function processor(context: TurnContext, arg: string = '') {
 
       await context.sendActivity({
         type: 'message',
-        text: 'This message should stop the typing indcator.'
+        text: 'This message should stop the typing indicator.'
       });
 
       return;
