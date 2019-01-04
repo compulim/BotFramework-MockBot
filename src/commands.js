@@ -22,7 +22,6 @@ import * as Localization from './commands/Localization';
 import * as Markdown from './commands/Markdown';
 import * as MultimediaCard from './commands/MultimediaCard';
 import * as OAuthCard from './commands/OAuthCard2';
-import * as Postback from './commands/Postback';
 import * as Proactive from './commands/Proactive';
 import * as ReceiptCard from './commands/ReceiptCard';
 import * as SampleBackchannel from './commands/SampleBackchannel';
@@ -64,8 +63,7 @@ export default [
   { pattern: 'localization', ...Localization },
   { pattern: 'markdown', ...Markdown },
   { pattern: 'content-multimedia', ...MultimediaCard },
-  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/i, ...OAuthCard },
-  { pattern: /^postback(\s+[\d\w\-]+)?$/i, ...Postback },
+  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, ...OAuthCard },
   { pattern: 'proactive', ...Proactive },
   { pattern: 'receiptcard', ...ReceiptCard },
   { pattern: 'sample:backchannel', ...SampleBackchannel },

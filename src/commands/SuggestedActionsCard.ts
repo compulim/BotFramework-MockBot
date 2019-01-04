@@ -14,34 +14,56 @@ async function processor(context: TurnContext, arg: string) {
   if (arg) {
     await context.sendActivity({
       type: 'message',
-      text: `You selected "${ arg.trim() }"`
+      text: `You submitted "${ arg.trim() }"`
     });
   } else {
     await context.sendActivity({
       type: 'message',
       textFormat: 'plain',
-      text: 'Message Text',
+      text: 'Please select one of the actions below',
       suggestedActions: {
         actions: [
           {
+            image: `${ PUBLIC_URL }assets/square-icon.png`,
+            title: 'IM back as string',
             type: 'imBack',
-            title: 'Blue',
-            value: 'suggested-actions Blue',
-            image: `${ PUBLIC_URL }assets/square-icon.png`
+            value: 'postback imback-string',
           },
           {
-            type: 'imBack',
-            title: 'Red',
-            value: 'suggested-actions Red',
-            image: `${ PUBLIC_URL }assets/square-icon-red.png`
+            image: `${ PUBLIC_URL }assets/square-icon-red.png`,
+            title: 'Post back as string',
+            type: 'postBack',
+            value: 'postback postback-string',
           },
           {
-            type: 'imBack',
-            title: 'Green',
-            value: 'suggested-actions Green',
-            image: `${ PUBLIC_URL }assets/square-icon-green.png`
+            image: `${ PUBLIC_URL }assets/square-icon-green.png`,
+            title: 'Post back as JSON',
+            text: 'Some text',
+            type: 'postBack',
+            value: {
+              hello: 'World!'
+            },
+          },
+          {
+            image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            displayText: 'say Hello World!',
+            title: 'Message back as JSON with display text',
+            text: 'Some text',
+            type: 'messageBack',
+            value: {
+              hello: 'World!'
+            },
+          },
+          {
+            image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            title: 'Message back as JSON without display text',
+            type: 'messageBack',
+            value: {
+              hello: 'World!'
+            },
           }
         ],
+        // TODO: Should we fill in the "to"?
         to: []
       }
     });
