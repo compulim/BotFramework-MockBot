@@ -63,7 +63,7 @@ export default [
   { pattern: 'localization', ...Localization },
   { pattern: 'markdown', ...Markdown },
   { pattern: 'content-multimedia', ...MultimediaCard },
-  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/, ...OAuthCard },
+  { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/i, ...OAuthCard },
   { pattern: 'proactive', ...Proactive },
   { pattern: 'receiptcard', ...ReceiptCard },
   { pattern: 'sample:backchannel', ...SampleBackchannel },
