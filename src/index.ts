@@ -299,7 +299,25 @@ server.post('/api/messages/', (req, res) => {
 
         await processor(context, attachments);
       } else if (context.activity.value) {
-        await context.sendActivity(`You posted\r\n\r\n\`\`\`\r\n${ JSON.stringify(context.activity.value, null, 2) }\r\n\`\`\``);
+
+        const { text, value } = context.activity;
+        const attachments = [];
+
+        text && attachments.push({
+          content: text,
+          contentType: 'text/plain'
+        });
+
+        value && attachments.push({
+          content: `\`\`\`\r\n${ value }\r\n\`\`\``,
+          contentType: 'text/markdown'
+        });
+
+        await context.sendActivity({
+          text: 'You posted',
+          type: 'message',
+          attachments
+        });
       } else {
         await context.sendActivity({
           speak: `Unknown command: I don't know ${ cleanedText }. You can say "help" to learn more.`,

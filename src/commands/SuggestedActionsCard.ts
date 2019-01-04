@@ -61,6 +61,16 @@ async function processor(context: TurnContext, arg: string) {
             value: {
               hello: 'World!'
             },
+          },
+          {
+            displayText: 'Aloha',
+            image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            text: 'echo Hello',
+            title: 'Message back as string with display text',
+            type: 'messageBack',
+
+            // TODO: Remove value after bumping DLJS
+            value: null
           }
         ],
         // TODO: Should we fill in the "to"?
