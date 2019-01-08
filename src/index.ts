@@ -299,7 +299,6 @@ server.post('/api/messages/', (req, res) => {
 
         await processor(context, attachments);
       } else if (context.activity.value) {
-
         const { text, value } = context.activity;
         const attachments = [];
 
