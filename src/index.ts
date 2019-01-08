@@ -309,7 +309,7 @@ server.post('/api/messages/', (req, res) => {
         });
 
         value && attachments.push({
-          content: `\`\`\`\r\n${ value }\r\n\`\`\``,
+          content: `\`\`\`\r\n${ JSON.stringify(value, null, 2) }\r\n\`\`\``,
           contentType: 'text/markdown'
         });
 
