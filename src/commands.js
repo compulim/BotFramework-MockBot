@@ -26,6 +26,7 @@ import * as Proactive from './commands/Proactive';
 import * as ReceiptCard from './commands/ReceiptCard';
 import * as SampleBackchannel from './commands/SampleBackchannel';
 import * as SampleGitHubRepository from './commands/SampleGitHubRepository';
+import * as SamplePasswordInput from './commands/SamplePasswordInput';
 import * as SampleReduxMiddleware from './commands/SampleReduxMiddleware';
 import * as SignInCard from './commands/SignInCard';
 import * as Slow from './commands/Slow';
@@ -64,6 +65,7 @@ export default [
   { pattern: 'markdown', ...Markdown },
   { pattern: 'content-multimedia', ...MultimediaCard },
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/i, ...OAuthCard },
+  { pattern: 'sample:password-input', ...SamplePasswordInput },
   { pattern: 'proactive', ...Proactive },
   { pattern: 'receiptcard', ...ReceiptCard },
   { pattern: 'sample:backchannel', ...SampleBackchannel },
