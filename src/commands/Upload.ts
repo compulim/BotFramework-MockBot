@@ -24,12 +24,16 @@ async function fetchJSON(url) {
 function isTrustedAttachmentURL(url) {
   return (
     /^https:\/\/directline.botframework.com\//i.test(url) ||
+    /^https:\/\/webchat.botframework.com\//i.test(url) ||
     /^https?:\/\/localhost(:\d+)?\//i.test(url)
   );
 }
 
 async function echoAttachment({ contentType, contentUrl, name }) {
-  if (contentType === 'application/json' && isTrustedAttachmentURL(contentUrl)) {
+  if (
+    contentType === 'application/json'
+    && isTrustedAttachmentURL(contentUrl)
+  ) {
     // We only fetch content from trusted source, so we don't DDoS anyone.
 
     return {
