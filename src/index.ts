@@ -99,11 +99,12 @@ server.post('/directline/token', async (req, res) => {
 
   const userID = await createUserID();
   const { token } = req.query;
+  const { DIRECT_LINE_SECRET } = process.env;
 
   if (token) {
     console.log(`Refreshing Direct Line token for ${ origin }`);
   } else {
-    console.log(`Requesting Direct Line token for ${ origin }`);
+    console.log(`Requesting Direct Line token for ${ origin } using secret "${ DIRECT_LINE_SECRET.substr(0, 3) }...${ DIRECT_LINE_SECRET.substr(-3) }"`);
   }
 
   try {
@@ -123,7 +124,7 @@ server.post('/directline/token', async (req, res) => {
         // body: JSON.stringify({ TrustedOrigins: [origin] }),
         body: JSON.stringify({ User: { Id: userID } }),
         headers: {
-          authorization: `Bearer ${ process.env.DIRECT_LINE_SECRET }`,
+          authorization: `Bearer ${ DIRECT_LINE_SECRET }`,
           'Content-Type': 'application/json'
         },
         method: 'POST'
@@ -231,7 +232,7 @@ server.post('/api/messages/', (req, res) => {
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
     if (
       context.activity.type === 'conversationUpdate'
-      && !/^webchat\-mockbot/.test(context.activity.membersAdded[0].id)
+      && (context.activity.membersAdded || []).some(({ id }) => id !== context.activity.recipient.id)
     ) {
       await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
     } else if (context.activity.type === 'event') {
