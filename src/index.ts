@@ -234,7 +234,7 @@ server.post('/api/messages/', (req, res) => {
       context.activity.type === 'conversationUpdate'
       && (context.activity.membersAdded || []).some(({ id }) => id !== context.activity.recipient.id)
     ) {
-      await context.sendActivity(`Welcome to Mockbot v4, ${ context.activity.membersAdded.map(({ id }) => id).join(', ') }!`);
+      await context.sendActivity(`Welcome to Mockbot v4!`);
     } else if (context.activity.type === 'event') {
       if (context.activity.name === 'tokens/response') {
         // Special handling for OAuth token exchange

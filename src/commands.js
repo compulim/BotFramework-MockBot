@@ -36,6 +36,7 @@ import * as Timestamp from './commands/Timestamp';
 import * as Typing from './commands/Typing';
 import * as Unknown from './commands/Unknown';
 import * as Upload from './commands/Upload';
+import * as UserID from './commands/UserID';
 import * as Video from './commands/Video';
 import * as VideoCard from './commands/VideoCard';
 import * as Xml from './commands/Xml';
@@ -79,6 +80,7 @@ export default [
   { pattern: /^typing(\s+[\d\w]+)?/i, ...Typing },
   { pattern: /^unknown(\s+[\d\w]+)?/i, ...Unknown },
   { pattern: 'upload', ...Upload },
+  { pattern: 'userid', ...UserID },
   { pattern: /^video(\s+([\d\w]+))?$/i, ...Video },
   { pattern: 'videocard', ...VideoCard },
   { pattern: 'xml', ...Xml }
