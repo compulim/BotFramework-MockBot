@@ -242,6 +242,8 @@ server.post('/api/messages/', (req, res) => {
         await OAuthCard.processor(context);
       } else if (context.activity.name === 'webchat/join') {
         await context.sendActivity(`Got \`webchat/join\` event, your language is \`${ (context.activity.value || {}).language }\``);
+      } else if (context.activity.name === 'webchat/ping') {
+        await context.sendActivity({ type: 'event', name: 'webchat/pong', value: context.activity.value });
       }
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
