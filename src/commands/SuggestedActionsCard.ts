@@ -11,7 +11,23 @@ function help() {
 async function processor(context: TurnContext, arg: string) {
   const { PUBLIC_URL } = process.env;
 
-  if (arg) {
+  if ((arg || '').toLowerCase().trim() === 'others') {
+    // Related to #1057
+
+    await context.sendActivity({
+      type: 'message',
+      textFormat: 'plain',
+      text: 'This activity should not display any suggested actions.',
+      suggestedActions: {
+        actions: [{
+          title: 'This button should not appear',
+          type: 'imBack',
+          value: 'suggested-actions this-button-should-not-appear',
+        }],
+        to: ['some-other-id']
+      }
+    });
+  } else if (arg) {
     await context.sendActivity({
       type: 'message',
       text: `You submitted "${ arg.trim() }"`
