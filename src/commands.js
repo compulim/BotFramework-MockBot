@@ -3,6 +3,7 @@ import * as AdaptiveCard from './commands/AdaptiveCard';
 import * as AnimationCard from './commands/AnimationCard';
 import * as Audio from './commands/Audio';
 import * as AudioCard from './commands/AudioCard';
+import * as CardActions from './commands/CardActions';
 import * as Carousel from './commands/Carousel';
 import * as ChannelData from './commands/ChannelData';
 import * as DocumentDataURI from './commands/DocumentDataURI';
@@ -48,6 +49,7 @@ export default [
   { pattern: 'animationcard', ...AnimationCard },
   { pattern: 'audio', ...Audio },
   { pattern: 'audiocard', ...AudioCard },
+  { pattern: 'card-actions', ...CardActions },
   { pattern: 'carousel', ...Carousel },
   { pattern: 'channel-data', ...ChannelData },
   { pattern: 'document-data-uri', ...DocumentDataURI },
