@@ -13,9 +13,11 @@ import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
 
-import commands from './commands';
 import * as OAuthCard from './commands/OAuthCard2';
+import commands from './commands';
 import reduceMap from './reduceMap';
+
+const LOG_LENGTH = 20;
 
 // Create server
 const server = restify.createServer();
@@ -41,8 +43,9 @@ const adapter = new BotFrameworkAdapter({
 let numActivities = 0;
 let echoTypingConversations = new Set();
 const up = Date.now();
+const logs = [];
 
-server.get('/', async (req, res) => {
+server.get('/', async (_, res) => {
   const message = `MockBot v4 is up since ${ prettyMs(Date.now() - up) } ago, processed ${ numActivities } activities.`;
   const separator = new Array(message.length).fill('-').join('');
 
@@ -58,6 +61,42 @@ server.get('/', async (req, res) => {
       up
     }
   }, null, 2));
+});
+
+server.get('/logs', async (req, res) => {
+  res.set('Content-Type', 'text/plain');
+
+  if (req.query.format === 'simple') {
+    res.send(JSON.stringify({
+      logs: logs.map(log => {
+        const { activity: { name, text, type, value } } = log;
+
+        switch (type) {
+          case 'event':
+            return {
+              ...log,
+              activity: { type, name, value }
+            };
+
+          case 'message':
+            return {
+              ...log,
+              activity: { type, text }
+            };
+
+          default:
+            return {
+              ...log,
+              activity: { type }
+            };
+        }
+      })
+    }, null, 2));
+  } else {
+    res.send(JSON.stringify({
+      logs
+    }, null, 2));
+  }
 });
 
 server.get('/health.txt', async (req, res) => {
@@ -227,6 +266,35 @@ server.get('/public/*', async (req, res) => {
 // Listen for incoming requests
 server.post('/api/messages/', (req, res) => {
   adapter.processActivity(req, res, async context => {
+    const sendActivity = context.sendActivity.bind(context);
+
+    logs.push({
+      direction: 'incoming',
+      now: new Date().toISOString(),
+      activity: context.activity,
+    });
+
+    context.sendActivity = (...args) => {
+      let activity = args[0];
+
+      if (typeof activity === 'string') {
+        activity = {
+          type: 'message',
+          text: activity
+        };
+      }
+
+      logs.push({
+        direction: 'outgoing',
+        now: new Date().toISOString(),
+        activity
+      });
+
+      return sendActivity(...args);
+    };
+
+    logs.splice(0, Math.max(0, logs.length - LOG_LENGTH));
+
     numActivities++;
 
     // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
