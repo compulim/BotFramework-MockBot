@@ -114,6 +114,7 @@ function trustedOrigin(origin) {
     || /^https:\/\/compulim\.github\.io/.test(origin)
     || /^https:\/\/microsoft\.github\.io/.test(origin)
     || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net/.test(origin)
+    || /^https:\/\/webchattest\.blob\.core\.windows\.net/.test(origin)
   );
 }
 
