@@ -5,7 +5,6 @@ config();
 
 import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { join } from 'path';
-import { randomBytes } from 'crypto';
 import createAutoResetEvent from 'auto-reset-event';
 import delay from 'delay';
 import fetch from 'node-fetch';
@@ -16,6 +15,9 @@ import serveHandler from 'serve-handler';
 import * as OAuthCard from './commands/OAuthCard2';
 import commands from './commands';
 import reduceMap from './reduceMap';
+
+import generateDirectLineToken from './generateDirectLineToken';
+import renewDirectLineToken from './renewDirectLineToken';
 
 const LOG_LENGTH = 20;
 
@@ -118,18 +120,6 @@ function trustedOrigin(origin) {
   );
 }
 
-async function createUserID() {
-  return new Promise((resolve, reject) => {
-    randomBytes(16, (err, buffer) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(`dl_${ buffer.toString('hex') }`);
-      }
-    })
-  });
-}
-
 server.post('/directline/token', async (req, res) => {
   const origin = req.header('origin');
 
@@ -137,58 +127,24 @@ server.post('/directline/token', async (req, res) => {
     return res.send(403, 'not trusted origin');
   }
 
-  const userID = await createUserID();
   const { token } = req.query;
+
+  try {
+    if (token) {
+      res.send(await renewDirectLineToken(token), { 'Access-Control-Allow-Origin': '*' });
+    } else {
+      res.send(await generateDirectLineToken(), { 'Access-Control-Allow-Origin': '*' });
+    }
+  } catch (err) {
+    res.send(500, err.message, { 'Access-Control-Allow-Origin': '*' });
+  }
+
   const { DIRECT_LINE_SECRET } = process.env;
 
   if (token) {
     console.log(`Refreshing Direct Line token for ${ origin }`);
   } else {
     console.log(`Requesting Direct Line token for ${ origin } using secret "${ DIRECT_LINE_SECRET.substr(0, 3) }...${ DIRECT_LINE_SECRET.substr(-3) }"`);
-  }
-
-  try {
-    let cres;
-
-    if (token) {
-      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/refresh', {
-        // body: JSON.stringify({ TrustedOrigins: [origin] }),
-        headers: {
-          authorization: `Bearer ${ token }`,
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      });
-    } else {
-      cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-        // body: JSON.stringify({ TrustedOrigins: [origin] }),
-        body: JSON.stringify({ User: { Id: userID } }),
-        headers: {
-          authorization: `Bearer ${ DIRECT_LINE_SECRET }`,
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      });
-    }
-
-    if (cres.status === 200) {
-      const json = await cres.json();
-
-      if ('error' in json) {
-        res.send(500, { 'Access-Control-Allow-Origin': '*' });
-      } else {
-        // TODO: In latest build of Web Chat, we get user ID out of the token via JWT.decode
-        //       We can safely remove userID from the response
-        res.send({
-          ...json,
-          userID
-        }, { 'Access-Control-Allow-Origin': '*' });
-      }
-    } else {
-      res.send(500, `Direct Line service returned ${ cres.status } while exchanging for token`, { 'Access-Control-Allow-Origin': '*' });
-    }
-  } catch (err) {
-    res.send(500);
   }
 });
 
@@ -400,4 +356,42 @@ server.post('/api/messages/', (req, res) => {
       await context.sendActivity({ type: 'typing' });
     }
   });
+});
+
+const pregeneratedTokens = [];
+
+setInterval(async () => {
+  const now = Date.now();
+  const { conversationId: conversationID, expires_in: expiresIn, token } = await generateDirectLineToken();
+  const expiresAt = now + expiresIn * 1000;
+
+  pregeneratedTokens.push({
+    conversationID,
+    expiresIn,
+    expiresAt,
+    token
+  });
+}, 60000);
+
+server.get('/directline/tokens', async (_, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.set('Cache-Control', 'no-cache');
+
+  res.send(JSON.stringify({
+    tokens: pregeneratedTokens.map(token => {
+      const message1 = `This token will expires at ${ new Date(token.expiresAt).toISOString() }`;
+      const message2 = `Or in about ${ ~~((token.expiresAt - Date.now()) / 1000) } seconds`;
+      const separator = new Array(Math.max(message1.length, message2.length)).fill('-').join('');
+
+      return {
+        human: [
+          separator,
+          message1,
+          message2,
+          separator
+        ],
+        ...token
+      };
+    })
+  }, null, 2));
 });
