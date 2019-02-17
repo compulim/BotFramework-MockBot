@@ -358,7 +358,8 @@ server.post('/api/messages/', (req, res) => {
   });
 });
 
-const pregeneratedTokens = [];
+let pregeneratedTokens = [];
+const PREGENERATE_TOKEN_INTERVAL = 60000;
 
 setInterval(async () => {
   const now = Date.now();
@@ -371,7 +372,9 @@ setInterval(async () => {
     expiresAt,
     token
   });
-}, 60000);
+
+  pregeneratedTokens = pregeneratedTokens.filter(token => token.expiresAt > Date.now() - PREGENERATE_TOKEN_INTERVAL);
+}, PREGENERATE_TOKEN_INTERVAL);
 
 server.get('/directline/tokens', async (_, res) => {
   res.set('Content-Type', 'text/plain');
@@ -380,7 +383,7 @@ server.get('/directline/tokens', async (_, res) => {
   res.send(JSON.stringify({
     tokens: pregeneratedTokens.map(token => {
       const message1 = `This token will expires at ${ new Date(token.expiresAt).toISOString() }`;
-      const message2 = `Or in about ${ ~~((token.expiresAt - Date.now()) / 1000) } seconds`;
+      const message2 = Date.now() > token.expiresAt ? 'And is expired.' : `Or in about ${ ~~((token.expiresAt - Date.now()) / 1000) } seconds`;
       const separator = new Array(Math.max(message1.length, message2.length)).fill('-').join('');
 
       return {
