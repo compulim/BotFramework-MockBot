@@ -41,12 +41,6 @@ async function processor(context: TurnContext, arg: string) {
         actions: [
           {
             image: `${ PUBLIC_URL }assets/square-icon.png`,
-            title: 'Suggested actions',
-            type: 'imBack',
-            value: 'suggested-actions',
-          },
-          {
-            image: `${ PUBLIC_URL }assets/square-icon.png`,
             title: 'IM back as string',
             type: 'imBack',
             value: 'postback imback-string',
