@@ -14,7 +14,7 @@ async function processor(context: TurnContext) {
   await context.sendActivity({
     type: 'message',
     attachments: [{
-      contentType: 'image/jpg',
+      contentType: 'image/jpeg',
       contentUrl: `${ PUBLIC_URL }assets/surface1.jpg`,
       name: 'Microsoft Surface'
     }]
