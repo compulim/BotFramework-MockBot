@@ -13,6 +13,7 @@ import Restaurant from './Cards/Restaurant';
 import Review from './Cards/Review';
 import RichMessage from './Cards/RichMessage';
 import Simple from './Cards/Simple';
+import SportsClub from './Cards/SportsClub';
 import UnorderedList from './Cards/UnorderedList';
 import Weather from './Cards/Weather';
 
@@ -65,6 +66,9 @@ function getCardJSON(name: string = ''): any {
     case 'simple':
       return Simple();
 
+    case 'sportsclub':
+      return SportsClub();
+
     case 'ul':
       return UnorderedList();
 
@@ -91,6 +95,7 @@ function help() {
     'card review': 'Show review using Adaptive Card',
     'card richmessage': 'Show a rich message using Adaptive Card',
     'card simple': 'Show a simple Adaptive Card',
+    'card sportsclub': 'Show a comprehensive sports club POI using Adaptive Card',
     'card ul': 'Show an unordered list with Markdown',
     'card weather': 'Show weather forecast using Adaptive Card'
   };
