@@ -361,7 +361,13 @@ server.post('/api/messages/', (req, res) => {
 let pregeneratedTokens = [];
 const PREGENERATE_TOKEN_INTERVAL = 60000;
 
-setInterval(async () => {
+function setIntervalAndImmediate(fn, ms) {
+  setImmediate(fn);
+
+  return setInterval(fn, ms);
+}
+
+setIntervalAndImmediate(async () => {
   const now = Date.now();
   const { conversationId: conversationID, expires_in: expiresIn, token } = await generateDirectLineToken();
   const expiresAt = now + expiresIn * 1000;

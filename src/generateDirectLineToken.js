@@ -1,5 +1,7 @@
 import createUserID from './createUserID';
 
+const { DIRECT_LINE_URL = 'https://directline.botframework.com/' } = process.env
+
 export default async function (userID) {
   const { DIRECT_LINE_SECRET } = process.env;
 
@@ -9,8 +11,8 @@ export default async function (userID) {
 
   let cres;
 
-  cres = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
-    body: JSON.stringify({ User: { Id: userID || await createUserID() } }),
+  cres = await fetch(`${ DIRECT_LINE_URL }v3/directline/tokens/generate`, {
+    body: JSON.stringify({ User: { Id: userID } }),
     headers: {
       authorization: `Bearer ${ DIRECT_LINE_SECRET }`,
       'Content-Type': 'application/json'
@@ -24,7 +26,7 @@ export default async function (userID) {
     if ('error' in json) {
       throw new Error(`Direct Line service responded ${ JSON.stringify(json.error) } while generating new token`);
     } else {
-      return json;
+      return { ...json, userID };
     }
   } else {
     throw new Error(`Direct Line service returned ${ cres.status } while generating new token`);
