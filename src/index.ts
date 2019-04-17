@@ -34,7 +34,7 @@ server.use(restify.plugins.queryParser());
 const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD,
-  openIdMetadata: process.env.OPEN_ID_METADATA
+  openIdMetadata: process.env.OPENID_METADATA
 });
 
 // const storage = new MemoryStorage();
