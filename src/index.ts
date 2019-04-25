@@ -4,6 +4,7 @@ import config from './config';
 config();
 
 import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
+import { MicrosoftAppCredentials } from 'botframework-connector';
 import { join } from 'path';
 import createAutoResetEvent from 'auto-reset-event';
 import delay from 'delay';
@@ -30,10 +31,19 @@ server.listen(process.env.PORT, () => {
 
 server.use(restify.plugins.queryParser());
 
+MicrosoftAppCredentials.trustServiceUrl('https://api.scratch.botframework.com');
+MicrosoftAppCredentials.trustServiceUrl('https://state.scratch.botframework.com');
+MicrosoftAppCredentials.trustServiceUrl('https://token.scratch.botframework.com');
+
+MicrosoftAppCredentials.trustServiceUrl('https://api.ppe.botframework.com');
+MicrosoftAppCredentials.trustServiceUrl('https://state.ppe.botframework.com');
+MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
+
 // Create adapter
 const adapter = new BotFrameworkAdapter({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD,
+  oAuthEndpoint: process.env.OAUTH_ENDPOINT,
   openIdMetadata: process.env.OPENID_METADATA
 });
 
