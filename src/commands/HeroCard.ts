@@ -56,8 +56,12 @@ async function processor(context: TurnContext) {
           value: `${ PUBLIC_URL }testurl2.html`
         },
         subtitle: 'This is the subtitle',
-        text: 'Price: $XXX.XX USD',
-        title: 'Details about image 1',
+        text: '**Price: $XXX.XX USD**\r\n------\n Additional details\r\n' +
+
+        '1. List item 1 \n' +
+        '2. List item 2 \n' +
+        '3. List item 3',
+        title: '[Details about image 1](https://microsoft.com)',
       }
     }],
   });
