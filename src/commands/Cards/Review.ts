@@ -43,7 +43,7 @@ export default () => ({
           "items": [
             {
               "type": "Image",
-              "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Deltalax_%28cropped%29.jpg",
+              "url": "http://adaptivecards.io/content/airplane.png",
               "size": "auto"
             }
           ]
