@@ -223,10 +223,6 @@ let lastGetVersionResponse = null;
 const VERSION_REQUEST_VALID_FOR = 60000;
 
 server.get('/versions/botframework-webchat', async (req, res) => {
-  if (!trustedOrigin(req.header('origin'))) {
-    return res.send(403, 'not trusted origin');
-  }
-
   const now = Date.now();
 
   if (now - lastGetVersionAt > VERSION_REQUEST_VALID_FOR) {
@@ -264,7 +260,13 @@ server.get('/versions/botframework-webchat', async (req, res) => {
     lastGetVersionAt = now;
   }
 
-  res.send(lastGetVersionResponse, { 'Access-Control-Allow-Origin': '*' });
+  res.send(
+    lastGetVersionResponse,
+    trustedOrigin(req.header('origin')) ?
+      { 'Access-Control-Allow-Origin': '*' }
+    :
+      {}
+  );
 });
 
 const acquireSlowQueue = createAutoResetEvent();
