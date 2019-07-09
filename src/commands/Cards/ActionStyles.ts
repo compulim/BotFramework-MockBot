@@ -2,19 +2,19 @@ export default () => ({
   "type": "AdaptiveCard",
   "actions": [
       {
-          "type": "Action.Submit",
-          "title": "Positive",
-          "style": "positive"
+        "style": "positive",
+        "title": "Positive",
+        "type": "Action.Submit"
       },
-      {
-        "type": "Action.Submit",
+      {        
+        "style": "default",
         "title": "Default",
-        "style": "default"
+        "type": "Action.Submit"
       },
       {
-        "type": "Action.Submit",
+        "style": "destructive",
         "title": "Destructive",
-        "style": "destructive"
+        "type": "Action.Submit"
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
