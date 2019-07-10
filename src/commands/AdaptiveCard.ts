@@ -1,5 +1,6 @@
 import { TurnContext } from 'botbuilder';
 
+import ActionStyles from './Cards/ActionStyles';
 import BingSports from './Cards/BingSports';
 import Breakfast from './Cards/Breakfast';
 import Broken from './Cards/Broken';
@@ -19,6 +20,9 @@ import Weather from './Cards/Weather';
 
 function getCardJSON(name: string = ''): any {
   switch (name.trim().toLowerCase()) {
+    case 'actionstyles':
+      return ActionStyles();
+
     case 'bingsports':
     case 'sports':
       return BingSports();

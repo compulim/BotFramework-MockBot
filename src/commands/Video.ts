@@ -29,8 +29,8 @@ async function processor(context: TurnContext, _: string, provider: string) {
         type: 'message',
         attachments: [{
           contentType: 'video/mp4',
-          contentUrl: 'https://www.youtube.com/watch?v=krRRskzHWFE',
-          name: 'Introducing Microsoft Surface Go'
+          contentUrl: 'https://www.youtube.com/watch?v=rIJRFHDr1QE',
+          name: 'Vision Keynote Highlights // Microsoft Build 2019'
         }]
       });
 

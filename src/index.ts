@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import '@babel/polyfill';
 import config from './config';
 
 config();
@@ -214,6 +214,61 @@ server.post('/speechservices/token', async (req, res) => {
   }
 });
 
+function objectValues(map) {
+  return Object.keys(map).map(x => map[x]);
+}
+
+let lastGetVersionAt = 0;
+let lastGetVersionResponse = null;
+const VERSION_REQUEST_VALID_FOR = 60000;
+
+server.get('/versions/botframework-webchat', async (req, res) => {
+  const now = Date.now();
+
+  if (now - lastGetVersionAt > VERSION_REQUEST_VALID_FOR) {
+    let json;
+
+    try {
+      const res = await fetch('https://registry.npmjs.org/botframework-webchat/', {
+        headers: {
+          accept: 'application/json'
+        }
+      });
+
+      json = await res.json();
+    } catch (err) {
+      if (err) {
+        return alert('Failed to fetch version list from NPMJS. Please check network trace for details.');
+      }
+    }
+
+    const { time, versions } = json;
+
+    lastGetVersionResponse = {
+      refresh: new Date(now).toISOString(),
+      versions: objectValues(versions).sort((x, y) => {
+        x = new Date(time[x.version]);
+        y = new Date(time[y.version]);
+
+        return x > y ? -1 : x < y ? 1 : 0;
+      }).map(({ version }) => ({
+        time: time[version],
+        version: version
+      }))
+    };
+
+    lastGetVersionAt = now;
+  }
+
+  res.send(
+    lastGetVersionResponse,
+    trustedOrigin(req.header('origin')) ?
+      { 'Access-Control-Allow-Origin': '*' }
+    :
+      {}
+  );
+});
+
 const acquireSlowQueue = createAutoResetEvent();
 
 server.get('/public/*', async (req, res) => {
@@ -232,7 +287,7 @@ server.get('/public/*', async (req, res) => {
 });
 
 // Listen for incoming requests
-server.post('/api/messages/', (req, res) => {
+server.post('/api/messages', (req, res) => {
   adapter.processActivity(req, res, async context => {
     const sendActivity = context.sendActivity.bind(context);
 
