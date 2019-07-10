@@ -60,6 +60,7 @@ export default [
   { pattern: 'emptycard', ...EmptyCard },
   { pattern: 'file', ...File },
   { pattern: 'herocard', ...HeroCard },
+  { pattern: /^hint(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: 'image', ...Image },
   { pattern: 'image-svg', ...ImageSVG },
   { pattern: /^input[\-\s]hint(\s+[\d\w]+)?/i, ...InputHint },
