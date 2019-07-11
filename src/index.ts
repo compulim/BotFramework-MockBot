@@ -320,13 +320,7 @@ server.post('/api/messages', (req, res) => {
 
     numActivities++;
 
-    // On "conversationUpdate"-type activities this bot will send a greeting message to users joining the conversation.
-    if (
-      context.activity.type === 'conversationUpdate'
-      && (context.activity.membersAdded || []).some(({ id }) => id !== context.activity.recipient.id)
-    ) {
-      await context.sendActivity(`Welcome to Mockbot v4!`);
-    } else if (context.activity.type === 'event') {
+    if (context.activity.type === 'event') {
       if (context.activity.name === 'tokens/response') {
         // Special handling for OAuth token exchange
         // This event is sent thru the non-magic code flow
