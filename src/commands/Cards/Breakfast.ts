@@ -41,6 +41,7 @@ export default () => ({
                     "text": "Snooze for"
                 },
                 {
+                    "id": "time",
                     "type": "Input.ChoiceSet",
                     "value": "10m",
                     "placeholder": "Placeholder text",

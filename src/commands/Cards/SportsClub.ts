@@ -27,7 +27,6 @@ export default () => ({
                       "items": [
                         {
                           "color": "light",
-                          "id": "Name",
                           "separation": "none",
                           "size": "large",
                           "spacing": "none",
@@ -57,7 +56,6 @@ export default () => ({
       "items": [
         {
           "color": "accent",
-          "id": "Name",
           "separation": "none",
           "size": "medium",
           "spacing": "none",
