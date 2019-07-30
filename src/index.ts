@@ -342,7 +342,6 @@ server.post('/api/messages', (req, res) => {
         type: 'message',
         attachments
       });
-
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
