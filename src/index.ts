@@ -330,6 +330,19 @@ server.post('/api/messages', (req, res) => {
       } else if (context.activity.name === 'webchat/ping') {
         await context.sendActivity({ type: 'event', name: 'webchat/pong', value: context.activity.value });
       }
+    } else if (context.activity.type === 'messageReaction') {
+      const { activity: { reactionsAdded = [], reactionsRemoved = [] }} = context;
+      const attachments = [...reactionsAdded, ...reactionsRemoved].map(reaction => ({
+        content: `\`\`\`\n${ JSON.stringify(reaction, null, 2) }\n\`\`\``,
+        contentType: 'text/markdown'
+      }));
+
+      await context.sendActivity({
+        text: 'You posted',
+        type: 'message',
+        attachments
+      });
+
     } else if (context.activity.type === 'message') {
       const { activity: { attachments = [], text } } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
