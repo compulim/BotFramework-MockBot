@@ -64,7 +64,7 @@ export default [
   { pattern: /^hint(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: 'image', ...Image },
   { pattern: 'image-svg', ...ImageSVG },
-  { pattern: /^input[\-\s]hint(\s+[\d\w]+)?/i, ...InputHint },
+  { pattern: /^input[\-\s]hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: 'invalidcard', ...InvalidCard },
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...Layout },
   { pattern: 'localization', ...Localization },

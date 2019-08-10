@@ -1,3 +1,4 @@
+import { BotFrameworkAdapter } from 'botbuilder';
 import { TurnContext } from 'botbuilder';
 
 const name = 'Input hint';
@@ -10,9 +11,14 @@ function help() {
   };
 }
 
-async function processor(context: TurnContext, line: string) {
-  await Promise.all(line.split(/\s+/u).map(async line => {
-    switch ((line || '').trim().substr(0, 1)) {
+async function sendInputHint(reference, inputHint) {
+  const adapter = new BotFrameworkAdapter({
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
+  });
+
+  await adapter.continueConversation(reference, async context => {
+    switch ((inputHint || '').trim().substr(0, 1)) {
       case 'a':
         await context.sendActivity({
           inputHint: 'acceptingInput',
@@ -39,9 +45,17 @@ async function processor(context: TurnContext, line: string) {
         });
 
         break;
-
     }
-  }));
+  });
+}
+
+async function processor(context: TurnContext, ...inputHints: string[]) {
+  (async function (reference) {
+    // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
+    while (inputHints.length) {
+      await sendInputHint(reference, inputHints.shift());
+    }
+  })(TurnContext.getConversationReference(context.activity));
 }
 
 export { help, name, processor }
