@@ -61,7 +61,7 @@ export default [
   { pattern: 'file', ...File },
   { pattern: 'herocard', ...HeroCard },
   { pattern: /^herocard(\s+([\d\w]+))?(\s+([\d\w]+))?$/i, ...HeroCard },
-  { pattern: /^hint(\s+[\d\w]+)?/i, ...InputHint },
+  { pattern: /^hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: 'image', ...Image },
   { pattern: 'image-svg', ...ImageSVG },
   { pattern: /^input[\-\s]hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
