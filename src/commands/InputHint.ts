@@ -11,35 +11,37 @@ function help() {
 }
 
 async function processor(context: TurnContext, line: string) {
-  switch ((line || '').trim().substr(0, 1)) {
-    case 'a':
-      await context.sendActivity({
-        inputHint: 'acceptingInput',
-        text: 'This activity is accepting input.',
-        type: 'message'
-      });
+  await Promise.all(line.split(/\s+/u).map(async line => {
+    switch ((line || '').trim().substr(0, 1)) {
+      case 'a':
+        await context.sendActivity({
+          inputHint: 'acceptingInput',
+          text: 'This activity is accepting input.',
+          type: 'message'
+        });
 
-      break;
+        break;
 
-    case 'e':
-      await context.sendActivity({
-        inputHint: 'expectingInput',
-        text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
-        type: 'message'
-      });
+      case 'e':
+        await context.sendActivity({
+          inputHint: 'expectingInput',
+          text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
+          type: 'message'
+        });
 
-      break;
+        break;
 
-    default:
-      await context.sendActivity({
-        inputHint: 'ignoringInput',
-        text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
-        type: 'message'
-      });
+      default:
+        await context.sendActivity({
+          inputHint: 'ignoringInput',
+          text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
+          type: 'message'
+        });
 
-      break;
+        break;
 
-  }
+    }
+  }));
 }
 
 export { help, name, processor }
