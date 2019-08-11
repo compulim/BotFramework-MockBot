@@ -53,7 +53,9 @@ async function processor(context: TurnContext, ...inputHints: string[]) {
   (async function (reference) {
     // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
     while (inputHints.length) {
-      await sendInputHint(reference, inputHints.shift());
+      const inputHint = inputHints.shift();
+
+      inputHint && await sendInputHint(reference, inputHint);
     }
   })(TurnContext.getConversationReference(context.activity));
 }
