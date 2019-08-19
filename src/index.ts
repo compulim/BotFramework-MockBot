@@ -195,14 +195,14 @@ server.post('/speechservices/token', async (req, res) => {
 
   console.log(`Requesting speech token for ${ origin }`);
 
-  const cres = await fetch('https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken', {
+  const cres = await fetch(`https://${ process.env.SPEECH_SERVICES_REGION }.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
     headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_SERVICES_SUBSCRIPTION_KEY },
     method: 'POST'
   });
 
   if (cres.status === 200) {
     res.send({
-      region: 'westus',
+      region: process.env.SPEECH_SERVICES_REGION,
       token: await cres.text()
     }, {
       'Access-Control-Allow-Origin': '*'
