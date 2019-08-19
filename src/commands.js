@@ -31,6 +31,7 @@ import * as SamplePasswordInput from './commands/SamplePasswordInput';
 import * as SampleReduxMiddleware from './commands/SampleReduxMiddleware';
 import * as SignInCard from './commands/SignInCard';
 import * as Slow from './commands/Slow';
+import * as Speech from './commands/Speech';
 import * as SuggestedActionsCard from './commands/SuggestedActionsCard';
 import * as Text from './commands/Text';
 import * as ThumbnailCard from './commands/ThumbnailCard';
@@ -79,7 +80,9 @@ export default [
   { pattern: /^sample:redux-middleware(\s+[\d\w\-]+)*$/i, ...SampleReduxMiddleware },
   { pattern: 'signin', ...SignInCard },
   { pattern: /^slow(\s+[\d\w]+)?/i, ...Slow },
+  { pattern: 'speech', ...Speech },
   { pattern: /^suggested\-actions(\s+[\d\w]+)?/i, ...SuggestedActionsCard },
+  { pattern: /Tell.*?story/iu, ...Speech },
   { pattern: 'text', ...Text },
   { pattern: /^thumbnailcard(\s+([\d\w]+))?(\s+([\d\w]+))?$/i, ...ThumbnailCard },
   { pattern: /^timestamp(\s+[\d\w]+)?/i, ...Timestamp },
