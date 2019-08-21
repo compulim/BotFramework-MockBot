@@ -18,6 +18,23 @@ async function processor(context: TurnContext) {
     locale: 'zh-HK',
     text: '一天，悶悶不樂的愛麗絲跟姊姊同坐於河畔。',
     type: 'message'
+  }, {
+    locale: 'en-US',
+    speak: `<speak
+  version="1.0"
+  xmlns="https://www.w3.org/2001/10/synthesis"
+  xmlns:mstts="https://www.w3.org/2001/mstts"
+  xml:lang="en-US"
+>
+  <voice name="en-US-JessaNeural">
+    <mstts:express-as type="cheerful">That'd be just amazing!</mstts:express-as>
+  </voice>
+  <voice name="zh-HK-TracyRUS">
+    <prosody pitch="+150%">太神奇啦！</prosody>
+  </voice>
+</speak>`,
+    text: 'That\'d be just amazing! 太神奇啦！',
+    type: 'message'
   }]);
 }
 
