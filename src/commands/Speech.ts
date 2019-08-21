@@ -29,11 +29,11 @@ async function processor(context: TurnContext) {
   <voice name="en-US-JessaNeural">
     <mstts:express-as type="cheerful">That'd be just amazing!</mstts:express-as>
   </voice>
-  <voice name="zh-HK-TracyRUS">
-    <prosody pitch="+150%">太神奇啦！</prosody>
+  <voice name="ja-JP-Ayumi-Apollo">
+    <prosody pitch="+150%">素晴らしい!</prosody>
   </voice>
 </speak>`,
-    text: 'That\'d be just amazing! 太神奇啦！',
+    text: 'That\'d be just amazing! 素晴らしい!',
     type: 'message'
   }]);
 }
