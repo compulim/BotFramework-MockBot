@@ -120,17 +120,18 @@ server.get('/health.txt', async (req, res) => {
 function trustedOrigin(origin) {
   return (
     /^https?:\/\/localhost([\/:]|$)/.test(origin)
-    || /^https?:\/\/webchat([\/:]|$)/.test(origin)
-    || /^https?:\/\/[\d\w]+\.ngrok\.io([\/:]|$)/.test(origin)
-    || /^https?:\/\/webchat-playground\.azurewebsites\.net([\/:]|$)/.test(origin)
-    || /^https?:\/\/([\d\w]+\.)+botframework\.com([\/:]|$)/.test(origin)
-    || /^https:\/\/compulim\.github\.io/.test(origin)
-    || /^https:\/\/microsoft\.github\.io/.test(origin)
-    || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net/.test(origin)
-    || /^https:\/\/webchattest\.blob\.core\.windows\.net/.test(origin)
+    // || /^https?:\/\/webchat([\/:]|$)/.test(origin)
+    || /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin)
+    || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
+    || /^https?:\/\/([\d\w]+\.)+botframework\.com(\/|$)/.test(origin)
+    || /^https:\/\/compulim\.github\.io(\/|$)/.test(origin)
+    || /^https:\/\/microsoft\.github\.io(\/|$)/.test(origin)
+    || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net(\/|$)/.test(origin)
+    || /^https:\/\/webchattest\.blob\.core\.windows\.net(\/|$)/.test(origin)
 
     // This is CodePen
-    || /^https:\/\/cdpn.io/.test(origin)
+    || /^https:\/\/cdpn\.io(\/|$)/.test(origin)
+    || /^https:\/\/s\.codepen\.io(\/|$)/.test(origin)
   );
 }
 
