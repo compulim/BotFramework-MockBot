@@ -26,7 +26,7 @@ export default () => ({
               "items": [
                 {
                   "type": "Image",
-                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-seahawks.png",
+                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-panthers.png",
                   "size": "small",
                   "horizontalAlignment": "center",
                   "selectAction": {
@@ -77,7 +77,7 @@ export default () => ({
               "items": [
                 {
                   "type": "Image",
-                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-panthers.png",
+                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-seahawks.png",
                   "size": "small",
                   "horizontalAlignment": "center"
                 },
