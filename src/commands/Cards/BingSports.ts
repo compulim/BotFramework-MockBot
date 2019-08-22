@@ -26,7 +26,7 @@ export default () => ({
               "items": [
                 {
                   "type": "Image",
-                  "url": "https://www.bing.com/th?id=AR_3934aff63dd6ff941034090a4b9d12e1&w=50&h=50&dpr=2&pid=AppEx",
+                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-seahawks.png",
                   "size": "small",
                   "horizontalAlignment": "center",
                   "selectAction": {
@@ -77,7 +77,7 @@ export default () => ({
               "items": [
                 {
                   "type": "Image",
-                  "url": "https://www.bing.com/th?id=AR_95e44d654968e8de2336993a1cf8a3cf&w=50&h=50&dpr=2&pid=AppEx",
+                  "url": "https://webchat-mockbot.azurewebsites.net/public/assets/sports-panthers.png",
                   "size": "small",
                   "horizontalAlignment": "center"
                 },
