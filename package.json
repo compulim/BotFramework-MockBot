@@ -31,15 +31,18 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "auto-reset-event": "^1.0.0",
-    "botbuilder": "^4.5.0-RC4",
-    "botbuilder-dialogs": "^4.5.0-RC4",
+    "botbuilder": "^4.6.0-preview.76616",
+    "botbuilder-dialogs": "^4.6.0-preview.76616",
+    "botbuilder-streaming-extensions": "^4.6.0-preview.76590",
+    "botframework-streaming-extensions": "^4.6.0-preview.76590",
     "delay": "^4.3.0",
     "dotenv": "^8.0.0",
     "node-fetch": "^2.6.0",
     "on-error-resume-next": "^1.1.0",
     "pretty-ms": "^5.0.0",
     "restify": "^7.7.0",
-    "serve-handler": "^3.6.1"
+    "serve-handler": "^3.6.1",
+    "watershed": "^0.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
