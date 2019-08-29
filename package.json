@@ -29,7 +29,10 @@
   "author": "Microsoft Corporation",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.5.5",
     "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.5.5",
     "auto-reset-event": "^1.0.0",
     "botbuilder": "^4.6.0-preview.76616",
@@ -47,9 +50,6 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/preset-typescript": "^7.3.3",
     "@types/node": "^12.6.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
