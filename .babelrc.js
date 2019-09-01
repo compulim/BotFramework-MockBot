@@ -1,5 +1,4 @@
 module.exports = {
-  extensions: ['.js', '.ts'],
   plugins: [
     '@babel/proposal-object-rest-spread'
   ],
