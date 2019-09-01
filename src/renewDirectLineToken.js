@@ -1,11 +1,11 @@
-const { DIRECT_LINE_URL = 'https://directline.botframework.com/' } = process.env
+const { DIRECT_LINE_DOMAIN = 'https://directline.botframework.com/v3/directline/' } = process.env
 
-export default async function ({ domain = DIRECT_LINE_URL, token }) {
+export default async function ({ domain = DIRECT_LINE_DOMAIN, token }) {
   console.log(`Renewing Direct Line token using token "${ token.substr(0, 3) }...${ token.substr(-3) }"`);
 
   let cres;
 
-  cres = await fetch(`${ domain }v3/directline/tokens/refresh`, {
+  cres = await fetch(`${ domain }tokens/refresh`, {
     headers: {
       authorization: `Bearer ${ token }`,
       'Content-Type': 'application/json'
