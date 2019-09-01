@@ -2,7 +2,7 @@ import createUserID from './createUserID';
 
 const { DIRECT_LINE_URL = 'https://directline.botframework.com/' } = process.env
 
-export default async function (userID) {
+export default async function ({ domain = DIRECT_LINE_URL, userID }) {
   const { DIRECT_LINE_SECRET } = process.env;
 
   userID || (userID = await createUserID());
@@ -11,7 +11,7 @@ export default async function (userID) {
 
   let cres;
 
-  cres = await fetch(`${ DIRECT_LINE_URL }v3/directline/tokens/generate`, {
+  cres = await fetch(`${ domain }v3/directline/tokens/generate`, {
     body: JSON.stringify({ User: { Id: userID } }),
     headers: {
       authorization: `Bearer ${ DIRECT_LINE_SECRET }`,

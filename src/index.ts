@@ -181,9 +181,9 @@ server.post('/directline/token', async (req, res) => {
 
   try {
     if (token) {
-      res.send(await renewDirectLineToken(token), { 'Access-Control-Allow-Origin': '*' });
+      res.send(await renewDirectLineToken({ domain: 'https://webchat-mockbot-se.azurewebsites.net/.bot', token }), { 'Access-Control-Allow-Origin': '*' });
     } else {
-      res.send(await generateDirectLineToken(), { 'Access-Control-Allow-Origin': '*' });
+      res.send(await generateDirectLineToken({ domain: 'https://webchat-mockbot-se.azurewebsites.net/.bot' }), { 'Access-Control-Allow-Origin': '*' });
     }
   } catch (err) {
     res.send(500, err.message, { 'Access-Control-Allow-Origin': '*' });
