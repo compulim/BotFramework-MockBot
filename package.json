@@ -10,8 +10,8 @@
     "build:typecheck": "tsc",
     "clean": "rimraf lib",
     "postinstall": "npm run build",
-    "start": "concurrently --allow-restart --names \"babel,start,typecheck\" \"npm run build:babel -- --watch\" \"node-dev --no-notify --respawn .\" \"npm run build:typecheck -- --preserveWatchOutput --watch\"",
-    "watch": "echo Error: \"npm run watch\" has been renamed to \"npm run start\"."
+    "watch": "concurrently --allow-restart --names \"babel,start,typecheck\" \"npm run build:babel -- --watch\" \"node-dev --no-notify --respawn .\" \"npm run build:typecheck -- --preserveWatchOutput --watch\"",
+    "watch:old": "echo Error: \"npm run watch\" has been renamed to \"npm run start\"."
   },
   "jest": {
     "moduleFileExtensions": [
