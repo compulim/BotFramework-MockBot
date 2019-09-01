@@ -1,3 +1,25 @@
 #!/bin/bash
-echo "$DOCKER_PASSWORD" | docker login webchat.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-docker push webchat.azurecr.io/mockbot
+
+# Set the following environment variables in your CI/CD pipeline
+# ACR_NAME
+# AZURE_SP_PASSWORD
+# AZURE_SP_USERNAME
+# AZURE_WEBAPP_NAME
+# AZURE_WEBAPP_RESOURCE_GROUP
+# DOCKER_IMAGE_NAME
+
+# Log into Azure
+az login --service-principal --username $AZURE_SP_USERNAME --password $AZURE_SP_PASSWORD --tenant $AZURE_SP_TENANT
+
+# Docker log into Azure Container Registry
+az acr login --name $ACR_NAME
+
+# Push container Azure Container Registry
+docker push $ACR_NAME.azurecr.io/$DOCKER_IMAGE_NAME:$TRAVIS_COMMIT
+
+# Obtain Docker credentials from Azure Container Registry
+ACR_PASSWORD=`az acr credential show --name $ACR_NAME | jq -r '.passwords[0].value'`
+ACR_USERNAME=`az acr credential show --name $ACR_NAME | jq -r '.username'`
+
+# Deploy the container to Azure Web App
+az webapp config container set --docker-custom-image-name $ACR_NAME.azurecr.io/$DOCKER_IMAGE_NAME:$TRAVIS_COMMIT --docker-registry-server-password $ACR_PASSWORD --docker-registry-server-url https://$ACR_NAME.azurecr.io --docker-registry-server-user $ACR_USERNAME --name $AZURE_WEBAPP_NAME --resource-group $AZURE_WEBAPP_RESOURCE_GROUP
