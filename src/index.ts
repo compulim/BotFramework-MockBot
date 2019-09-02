@@ -5,19 +5,16 @@ config();
 
 import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { BotFrameworkStreamingAdapter } from 'botbuilder-streaming-extensions';
-import { MicrosoftAppCredentials } from 'botframework-connector';
 import { join } from 'path';
+import { MicrosoftAppCredentials } from 'botframework-connector';
+import { NodeWebSocket } from 'botframework-streaming-extensions';
 import createAutoResetEvent from 'auto-reset-event';
 import delay from 'delay';
 import fetch from 'node-fetch';
 import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
-
-import { NodeWebSocket } from 'botframework-streaming-extensions';
-import { request } from 'http';
-import { URL } from 'url';
-import { Watershed } from 'watershed';
+import WebSocket from 'ws';
 
 import Bot from './Bot';
 
@@ -69,7 +66,8 @@ if (USE_STREAMING_EXTENSIONS) {
     adapter.connectNamedPipe();
   } else {
     console.log('Running with streaming extension running via proxy.');
-    connectToASEViaWebSocketProxy(adapter);
+    // connectToASEViaWebSocketProxy(adapter);
+    connectToASEViaWebSocketProxy2(adapter);
   }
 } else {
   console.log('Running without streaming extension.');
@@ -387,41 +385,32 @@ server.get('/directline/tokens', async (_, res) => {
 //   return await adapter.connectWebSocket(req, res, ADAPTER_SETTINGS);
 // });
 
-function connectToASEViaWebSocketProxy(adapter, urlString = 'https://webchat-mockbot-proxy.azurewebsites.net/') {
-  const url = new URL(urlString);
-
+function connectToASEViaWebSocketProxy2(adapter, urlString = 'https://webchat-mockbot-proxy.azurewebsites.net/') {
   return new Promise((resolve, reject) => {
-    const ws = new Watershed();
-    const key = ws.generateKey();
-    const req = request({
-      headers: {
-        connection: 'upgrade',
-        upgrade: 'websocket',
-        'sec-websocket-key': key,
-        'sec-websocket-version': '13'
-      },
-      hostname: url.hostname,
-      port: url.port || 80
+    console.log('Connecting to proxy.');
+
+    const socket = new WebSocket(urlString);
+    const originalSend = socket.send.bind(socket);
+
+    socket.send = buffer => {
+      console.log(`OUTGOING: ${ buffer ? typeof buffer === 'string' ? buffer : buffer.toString() : '<ping>' }`);
+
+      return originalSend(buffer);
+    }
+
+    socket.on('open', async () => {
+      console.log('Connected to proxy.');
+      socket.send();
+      await adapter.startWebSocket(new NodeWebSocket(socket));
+      resolve();
     });
 
-    req.on('upgrade', async (res, socket, head) => {
-      console.log(`Connected Web Socket to proxy`);
+    socket.on('message', buffer => {
+      console.log(`INCOMING: ${ buffer.toString() }`);
 
-      const wsc = ws.connect(res, socket, head, key);
-
-      await adapter.startWebSocket(new NodeWebSocket(wsc));
-
-      socket.on('close', hadError => !hadError && resolve());
-      socket.on('error', reject);
+      socket.emit('binary', buffer);
     });
 
-    req.on('error', err => {
-      console.error(err);
-      reject(err);
-    });
-
-    req.end();
-
-    console.log(`Connecting Web Socket to ${ url }`);
+    socket.on('error', reject);
   });
 }
