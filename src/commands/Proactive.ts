@@ -22,15 +22,10 @@ async function processor(context: TurnContext) {
     }]
   });
 
-  (async function (reference) {
+  (async function (adapter, reference) {
     // We specifically write this block of code to show how proactive message should work.
     // This block of code should run under another process and it will only have knowledge of adapter setup and conversation reference.
     await sleep(WAIT_INTERVAL);
-
-    const adapter = new BotFrameworkAdapter({
-      appId: process.env.MICROSOFT_APP_ID,
-      appPassword: process.env.MICROSOFT_APP_PASSWORD
-    });
 
     await adapter.continueConversation(reference, async continuedContext => {
       await continuedContext.sendActivity({
@@ -38,7 +33,7 @@ async function processor(context: TurnContext) {
         type: 'message'
       });
     });
-  })(reference);
+  })(context.adapter, reference);
 }
 
 function sleep(ms) {

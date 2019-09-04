@@ -11,12 +11,7 @@ function help() {
   };
 }
 
-async function sendInputHint(reference, inputHint) {
-  const adapter = new BotFrameworkAdapter({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-  });
-
+async function sendInputHint(adapter, reference, inputHint) {
   await adapter.continueConversation(reference, async context => {
     switch ((inputHint || '').trim().substr(0, 1)) {
       case 'a':
@@ -50,14 +45,14 @@ async function sendInputHint(reference, inputHint) {
 }
 
 async function processor(context: TurnContext, ...inputHints: string[]) {
-  (async function (reference) {
+  (async function (adapter, reference) {
     // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
     while (inputHints.length) {
       const inputHint = inputHints.shift();
 
-      inputHint && await sendInputHint(reference, inputHint);
+      inputHint && await sendInputHint(adapter, reference, inputHint);
     }
-  })(TurnContext.getConversationReference(context.activity));
+  })(context.adapter, TurnContext.getConversationReference(context.activity));
 }
 
 export { help, name, processor }
