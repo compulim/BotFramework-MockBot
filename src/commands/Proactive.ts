@@ -1,4 +1,3 @@
-import { BotFrameworkAdapter } from 'botbuilder';
 import { TurnContext } from 'botbuilder';
 
 const name = 'Proactive message';

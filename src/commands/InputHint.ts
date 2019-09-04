@@ -1,4 +1,3 @@
-import { BotFrameworkAdapter } from 'botbuilder';
 import { TurnContext } from 'botbuilder';
 
 const name = 'Input hint';
@@ -45,12 +44,21 @@ async function sendInputHint(adapter, reference, inputHint) {
 }
 
 async function processor(context: TurnContext, ...inputHints: string[]) {
-  (async function (adapter, reference) {
-    // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
-    while (inputHints.length) {
-      const inputHint = inputHints.shift();
+  console.log('input hint: processor');
 
-      inputHint && await sendInputHint(adapter, reference, inputHint);
+  (async function (adapter, reference) {
+    console.log(adapter);
+    console.log(reference);
+
+    try {
+      // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
+      while (inputHints.length) {
+        const inputHint = inputHints.shift();
+
+        inputHint && await sendInputHint(adapter, reference, inputHint);
+      }
+    } catch (err) {
+      console.error(err);
     }
   })(context.adapter, TurnContext.getConversationReference(context.activity));
 }
