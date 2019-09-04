@@ -16,68 +16,41 @@ function sleep(ms = 1000) {
 
 async function sendInputHint(adapter, reference, inputHint) {
   await adapter.continueConversation(reference, async context => {
-    await sleep(1000);
+    await sleep(0);
 
-    try {
-      switch ((inputHint || '').trim().substr(0, 1)) {
-        case 'a':
-          console.log({
-            inputHint: 'acceptingInput',
-            text: 'This activity is accepting input.',
-            type: 'message'
-          });
+    switch ((inputHint || '').trim().substr(0, 1)) {
+      case 'a':
+        await context.sendActivity({
+          inputHint: 'acceptingInput',
+          text: 'This activity is accepting input.',
+          type: 'message'
+        });
 
-          await context.sendActivity({
-            inputHint: 'acceptingInput',
-            text: 'This activity is accepting input.',
-            type: 'message'
-          });
+        break;
 
-          break;
+      case 'e':
+        await context.sendActivity({
+          inputHint: 'expectingInput',
+          text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
+          type: 'message'
+        });
 
-        case 'e':
-          console.log({
-            inputHint: 'expectingInput',
-            text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
-            type: 'message'
-          });
+        break;
 
-          await context.sendActivity({
-            inputHint: 'expectingInput',
-            text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
-            type: 'message'
-          });
+      default:
+        await context.sendActivity({
+          inputHint: 'ignoringInput',
+          text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
+          type: 'message'
+        });
 
-          break;
-
-        default:
-          console.log({
-            inputHint: 'ignoringInput',
-            text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
-            type: 'message'
-          });
-
-          await context.sendActivity({
-            inputHint: 'ignoringInput',
-            text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
-            type: 'message'
-          });
-
-          break;
-      }
-    } catch (err) {
-      console.error(err);
+        break;
     }
   });
 }
 
 async function processor(context: TurnContext, ...inputHints: string[]) {
-  console.log('input hint: processor');
-
   (async function (adapter, reference) {
-    console.log(adapter);
-    console.log(reference);
-
     // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
     while (inputHints.length) {
       const inputHint = inputHints.shift();
