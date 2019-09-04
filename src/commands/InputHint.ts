@@ -16,7 +16,9 @@ function sleep(ms = 1000) {
 
 async function sendInputHint(adapter, reference, inputHint) {
   await adapter.continueConversation(reference, async context => {
-    await sleep(0);
+    // HACK: Resume conversation too fast will fail in streaming extensions
+    //       https://github.com/microsoft/botbuilder-js/issues/1142
+    await sleep(1000);
 
     switch ((inputHint || '').trim().substr(0, 1)) {
       case 'a':
