@@ -10,8 +10,14 @@ function help() {
   };
 }
 
+function sleep(ms = 1000) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function sendInputHint(adapter, reference, inputHint) {
   await adapter.continueConversation(reference, async context => {
+    await sleep(1000);
+
     try {
       switch ((inputHint || '').trim().substr(0, 1)) {
         case 'a':
