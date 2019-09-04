@@ -182,12 +182,15 @@ export default class Bot extends ActivityHandler {
       await next();
     });
 
-    this.on('typing', async (context, next) => {
-      context = patchContext(context);
-      logActivity(context);
+    this.onUnrecognizedActivityType(async (context, next) => {
+      if (context.activity.type === 'typing') {
+        context = patchContext(context);
+        logActivity(context);
 
-      if (echoTypingConversations.has(context.activity.conversation.id)) {
-        await context.sendActivity({ type: 'typing' });
+        if (echoTypingConversations.has(context.activity.conversation.id)) {
+          await context.sendActivity({ type: 'typing' });
+        }
+
       }
 
       await next();
