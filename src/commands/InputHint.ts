@@ -12,33 +12,55 @@ function help() {
 
 async function sendInputHint(adapter, reference, inputHint) {
   await adapter.continueConversation(reference, async context => {
-    switch ((inputHint || '').trim().substr(0, 1)) {
-      case 'a':
-        await context.sendActivity({
-          inputHint: 'acceptingInput',
-          text: 'This activity is accepting input.',
-          type: 'message'
-        });
+    try {
+      switch ((inputHint || '').trim().substr(0, 1)) {
+        case 'a':
+          console.log({
+            inputHint: 'acceptingInput',
+            text: 'This activity is accepting input.',
+            type: 'message'
+          });
 
-        break;
+          await context.sendActivity({
+            inputHint: 'acceptingInput',
+            text: 'This activity is accepting input.',
+            type: 'message'
+          });
 
-      case 'e':
-        await context.sendActivity({
-          inputHint: 'expectingInput',
-          text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
-          type: 'message'
-        });
+          break;
 
-        break;
+        case 'e':
+          console.log({
+            inputHint: 'expectingInput',
+            text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
+            type: 'message'
+          });
 
-      default:
-        await context.sendActivity({
-          inputHint: 'ignoringInput',
-          text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
-          type: 'message'
-        });
+          await context.sendActivity({
+            inputHint: 'expectingInput',
+            text: 'This activity is expecting input.\n\nIt should start the microphone if it was from a microphone.',
+            type: 'message'
+          });
 
-        break;
+          break;
+
+        default:
+          console.log({
+            inputHint: 'ignoringInput',
+            text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
+            type: 'message'
+          });
+
+          await context.sendActivity({
+            inputHint: 'ignoringInput',
+            text: 'This activity is ignoring input.\n\nIt should not start the microphone.',
+            type: 'message'
+          });
+
+          break;
+      }
+    } catch (err) {
+      console.error(err);
     }
   });
 }
@@ -50,15 +72,11 @@ async function processor(context: TurnContext, ...inputHints: string[]) {
     console.log(adapter);
     console.log(reference);
 
-    try {
-      // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
-      while (inputHints.length) {
-        const inputHint = inputHints.shift();
+    // This loop is intentionally executed in a serial manner (instead of using Promise.all for parallelism)
+    while (inputHints.length) {
+      const inputHint = inputHints.shift();
 
-        inputHint && await sendInputHint(adapter, reference, inputHint);
-      }
-    } catch (err) {
-      console.error(err);
+      inputHint && await sendInputHint(adapter, reference, inputHint);
     }
   })(context.adapter, TurnContext.getConversationReference(context.activity));
 }
