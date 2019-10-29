@@ -39,7 +39,7 @@
     "on-error-resume-next": "^1.1.0",
     "pretty-ms": "^5.0.0",
     "restify": "^7.7.0",
-    "serve-handler": "^3.6.1"
+    "serve-handler": "^5.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
