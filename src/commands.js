@@ -1,7 +1,7 @@
 import * as Accessibility from "./commands/Accessibility";
 import * as AdaptiveCard from "./commands/AdaptiveCard";
 import * as AnimationCard from "./commands/AnimationCard";
-import * as All from "./commands/All";
+// import * as All from "./commands/All";
 import * as Audio from "./commands/Audio";
 import * as AudioCard from "./commands/AudioCard";
 import * as CardActions from "./commands/CardActions";
@@ -51,7 +51,7 @@ export default [
     pattern: /^card(\s+[\d\w:]+)(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?/i,
     ...AdaptiveCard
   },
-  { pattern: /all/i, ...All },
+  // { pattern: /all/i, ...All },
   { pattern: "animationcard", ...AnimationCard },
   { pattern: "audio", ...Audio },
   { pattern: "audiocard", ...AudioCard },
