@@ -74,7 +74,7 @@ export default [
   { pattern: "invalidcard", ...InvalidCard },
   { pattern: /^layout(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...Layout },
   { pattern: "localization", ...Localization },
-  { pattern: "markdown", ...Markdown },
+  { pattern: /^markdown(\s+([\d\w]+))?(\s+([\d\w]+))?$/i, ...Markdown },
   { pattern: "content-multimedia", ...MultimediaCard },
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/i, ...OAuthCard },
   { pattern: "sample:password-input", ...SamplePasswordInput },
