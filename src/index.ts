@@ -20,10 +20,12 @@ import reduceMap from './reduceMap';
 import generateDirectLineToken from './generateDirectLineToken';
 import renewDirectLineToken from './renewDirectLineToken';
 
+const DEFAULT_LOG_LENGTH = 20;
+
 const {
   BING_SPEECH_SUBSCRIPTION_KEY,
   DIRECT_LINE_SECRET,
-  LOG_LENGTH = 20,
+  LOG_LENGTH,
   MICROSOFT_APP_ID,
   MICROSOFT_APP_PASSWORD,
   OAUTH_ENDPOINT = undefined,
@@ -332,7 +334,7 @@ server.post('/api/messages', (req, res) => {
       return sendActivity(...args);
     };
 
-    logs.splice(0, Math.max(0, logs.length - LOG_LENGTH));
+    logs.splice(0, Math.max(0, logs.length - (+LOG_LENGTH || DEFAULT_LOG_LENGTH)));
 
     numActivities++;
 

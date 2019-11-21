@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import conversationState from '../singletonConversationState';
 
 const dialogState = conversationState['createProperty']('dialogState');
-const dialogs = new DialogSet(dialogState);
+const dialogs = new DialogSet(dialogState as any);
 
 dialogs.add(new ChoicePrompt('CONFIRM_PROMPT'));
 
