@@ -3,7 +3,7 @@ import config from './config';
 
 config();
 
-import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
+import { ActivityHandler, BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { MicrosoftAppCredentials } from 'botframework-connector';
 import { join } from 'path';
 import createAutoResetEvent from 'auto-reset-event';
@@ -460,6 +460,12 @@ server.get('/api/messages', (req, res) => {
 
   adapter.processActivity(req, res, handleApiMessages);
 });
+
+if (DIRECT_LINE_EXTENSION_KEY) {
+  console.log('Running with streaming extension running via Direct Line ASE.');
+
+  adapter.useNamedPipe(undefined, new ActivityHandler());
+}
 
 let pregeneratedTokens = [];
 const PREGENERATE_TOKEN_INTERVAL = 60000;
