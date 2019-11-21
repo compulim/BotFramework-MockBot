@@ -20,12 +20,23 @@ import reduceMap from './reduceMap';
 import generateDirectLineToken from './generateDirectLineToken';
 import renewDirectLineToken from './renewDirectLineToken';
 
-const LOG_LENGTH = 20;
+const {
+  BING_SPEECH_SUBSCRIPTION_KEY,
+  DIRECT_LINE_SECRET,
+  LOG_LENGTH = 20,
+  MICROSOFT_APP_ID,
+  MICROSOFT_APP_PASSWORD,
+  OAUTH_ENDPOINT = undefined,
+  OPENID_METADATA = undefined,
+  PORT = 3978,
+  SPEECH_SERVICES_REGION: COGNITIVE_SERVICE_REGION,
+  SPEECH_SERVICES_SUBSCRIPTION_KEY: COGNITIVE_SERVICE_KEY
+} = process.env;
 
 // Create server
 const server = restify.createServer();
 
-server.listen(process.env.PORT, () => {
+server.listen(PORT, () => {
   console.log(`${ server.name } listening to ${ server.url }`);
 });
 
@@ -41,10 +52,10 @@ MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
 
 // Create adapter
 const adapter = new BotFrameworkAdapter({
-  appId: process.env.MICROSOFT_APP_ID,
-  appPassword: process.env.MICROSOFT_APP_PASSWORD,
-  oAuthEndpoint: process.env.OAUTH_ENDPOINT,
-  openIdMetadata: process.env.OPENID_METADATA
+  appId: MICROSOFT_APP_ID,
+  appPassword: MICROSOFT_APP_PASSWORD,
+  oAuthEndpoint: OAUTH_ENDPOINT,
+  openIdMetadata: OPENID_METADATA
 });
 
 // const storage = new MemoryStorage();
@@ -157,8 +168,6 @@ server.post('/directline/token', async (req, res) => {
     res.send(500, err.message, { 'Access-Control-Allow-Origin': '*' });
   }
 
-  const { DIRECT_LINE_SECRET } = process.env;
-
   if (token) {
     console.log(`Refreshing Direct Line token for ${ origin }`);
   } else {
@@ -176,7 +185,7 @@ server.post('/bingspeech/token', async (req, res) => {
   console.log(`Requesting speech token for ${ origin }`);
 
   const cres = await fetch('https://api.cognitive.microsoft.com/sts/v1.0/issueToken', {
-    headers: { 'Ocp-Apim-Subscription-Key': process.env.BING_SPEECH_SUBSCRIPTION_KEY },
+    headers: { 'Ocp-Apim-Subscription-Key': BING_SPEECH_SUBSCRIPTION_KEY },
     method: 'POST'
   });
 
@@ -202,14 +211,14 @@ server.post('/speechservices/token', async (req, res) => {
 
   console.log(`Requesting speech token for ${ origin }`);
 
-  const cres = await fetch(`https://${ process.env.SPEECH_SERVICES_REGION }.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
-    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_SERVICES_SUBSCRIPTION_KEY },
+  const cres = await fetch(`https://${ COGNITIVE_SERVICE_REGION }.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
+    headers: { 'Ocp-Apim-Subscription-Key': COGNITIVE_SERVICE_KEY },
     method: 'POST'
   });
 
   if (cres.status === 200) {
     res.send({
-      region: process.env.SPEECH_SERVICES_REGION,
+      region: COGNITIVE_SERVICE_REGION,
       token: await cres.text()
     }, {
       'Access-Control-Allow-Origin': '*'

@@ -31,8 +31,12 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "auto-reset-event": "^1.0.0",
-    "botbuilder": "^4.6.0-rc1",
+    "botbuilder": "file:external/botbuilder-4.1.6-a0db677.tgz",
+    "botbuilder-core": "file:external/botbuilder-core-4.1.6-a0db677.tgz",
     "botbuilder-dialogs": "^4.6.0-rc1",
+    "botframework-connector": "file:external/botframework-connector-4.1.6-a0db677.tgz",
+    "botframework-schema": "file:external/botframework-schema-4.1.6-a0db677.tgz",
+    "botframework-streaming": "file:external/botframework-streaming-4.1.6-a0db677.tgz",
     "delay": "^4.3.0",
     "dotenv": "^8.0.0",
     "node-fetch": "^2.6.0",
