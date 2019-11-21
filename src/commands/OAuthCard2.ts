@@ -4,49 +4,53 @@ import fetch from 'node-fetch';
 
 import conversationState from '../singletonConversationState';
 
+const { OAUTH_CONNECTION_NAME } = process.env;
+
 const dialogState = conversationState['createProperty']('dialogState');
 const dialogs = new DialogSet(dialogState as any);
 
-dialogs.add(new ChoicePrompt('CONFIRM_PROMPT'));
+if (OAUTH_CONNECTION_NAME) {
+  dialogs.add(new ChoicePrompt('CONFIRM_PROMPT'));
 
-dialogs.add(new OAuthPrompt('OAUTH_PROMPT', {
-  connectionName: process.env.OAUTH_CONNECTION_NAME,
-  text: 'Sign into GitHub',
-  title: 'Sign in'
-}));
+  dialogs.add(new OAuthPrompt('OAUTH_PROMPT', {
+    connectionName: OAUTH_CONNECTION_NAME,
+    text: 'Sign into GitHub',
+    title: 'Sign in'
+  }));
 
-dialogs.add(new WaterfallDialog('AUTH_DIALOG', [
-  async step => await step.prompt('OAUTH_PROMPT', {}),
-  async step => {
-    if (step.result) {
-      await step.context.sendActivity('You have now logged in.');
+  dialogs.add(new WaterfallDialog('AUTH_DIALOG', [
+    async step => await step.prompt('OAUTH_PROMPT', {}),
+    async step => {
+      if (step.result) {
+        await step.context.sendActivity('You have now logged in.');
 
-      return await step.next(step.result);
-    } else {
-      await step.context.sendActivity('Failed to login, please try again.');
+        return await step.next(step.result);
+      } else {
+        await step.context.sendActivity('Failed to login, please try again.');
+
+        return await step.endDialog();
+      }
+    },
+    async step => {
+      await step.context.sendActivity('Please wait while I am bringing up your GitHub profile.');
+
+      step.context.sendActivity({ type: 'typing' });
+
+      const { result: { token } } = step;
+      const res = await fetch(`https://api.github.com/user?access_token=${ encodeURIComponent(token) }`);
+
+      if (res.ok) {
+        const json = await res.json();
+
+        await step.context.sendActivity(`![${ json.login }](${ json.avatar_url })\r\n# \`${ json.login }\``);
+      } else {
+        await step.context.sendActivity(`Failed to bring up your profile, GitHub server returned \`${ res.status }\`.`);
+      }
 
       return await step.endDialog();
     }
-  },
-  async step => {
-    await step.context.sendActivity('Please wait while I am bringing up your GitHub profile.');
-
-    step.context.sendActivity({ type: 'typing' });
-
-    const { result: { token } } = step;
-    const res = await fetch(`https://api.github.com/user?access_token=${ encodeURIComponent(token) }`);
-
-    if (res.ok) {
-      const json = await res.json();
-
-      await step.context.sendActivity(`![${ json.login }](${ json.avatar_url })\r\n# \`${ json.login }\``);
-    } else {
-      await step.context.sendActivity(`Failed to bring up your profile, GitHub server returned \`${ res.status }\`.`);
-    }
-
-    return await step.endDialog();
-  }
-]));
+  ]));
+}
 
 function help() {
   return {
