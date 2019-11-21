@@ -26,7 +26,7 @@ const {
   BING_SPEECH_SUBSCRIPTION_KEY,
   COGNITIVE_SERVICE_KEY,
   COGNITIVE_SERVICE_REGION,
-  DIRECT_LINE_EXTENSION_KEY,
+  DIRECTLINEEXTENSIONKEY,
   DIRECT_LINE_SECRET,
   LOG_LENGTH,
   MICROSOFT_APP_ID,
@@ -461,7 +461,7 @@ server.get('/api/messages', (req, res) => {
   adapter.processActivity(req, res, handleApiMessages);
 });
 
-if (DIRECT_LINE_EXTENSION_KEY) {
+if (DIRECTLINEEXTENSIONKEY) {
   console.log('Running with streaming extension running via Direct Line ASE.');
 
   adapter.useNamedPipe(undefined, new ActivityHandler());
