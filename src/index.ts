@@ -37,7 +37,7 @@ const {
 } = process.env;
 
 // Create server
-const server = restify.createServer();
+const server = restify.createServer({ handleUpgrades: true });
 
 server.listen(PORT, () => {
   console.log(`${ server.name } listening to ${ server.url }`);
