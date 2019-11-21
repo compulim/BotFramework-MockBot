@@ -57,6 +57,7 @@ MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
 const adapter = new BotFrameworkAdapter({
   appId: MICROSOFT_APP_ID,
   appPassword: MICROSOFT_APP_PASSWORD,
+  enableWebSockets: true,
   oAuthEndpoint: OAUTH_ENDPOINT,
   openIdMetadata: OPENID_METADATA
 });
