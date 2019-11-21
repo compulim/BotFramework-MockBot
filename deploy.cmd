@@ -100,8 +100,9 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  REM call :ExecuteCmd !NPM_CMD! install --production
-  call :ExecuteCmd !NPM_CMD! ci
+  REM MOCKBOT: We are removing --production to make sure our build scripts run properly
+  REM          We cannot use "npm ci" because Azure Web Apps are very slow on removing /node_modules/, which is the first step for "npm ci"
+  call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
