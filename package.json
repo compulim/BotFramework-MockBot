@@ -23,12 +23,18 @@
   "author": "Microsoft Corporation",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
     "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.7.0",
+    "@types/node": "^12.6.1",
     "auto-reset-event": "^1.0.0",
-    "botbuilder": "file:external/botbuilder-4.1.6-a0db677.tgz",
+    "babel-jest": "^24.8.0",
     "botbuilder-core": "file:external/botbuilder-core-4.1.6-a0db677.tgz",
     "botbuilder-dialogs": "^4.6.2",
+    "botbuilder": "file:external/botbuilder-4.1.6-a0db677.tgz",
     "botframework-connector": "file:external/botframework-connector-4.1.6-a0db677.tgz",
     "botframework-schema": "file:external/botframework-schema-4.1.6-a0db677.tgz",
     "botframework-streaming": "file:external/botframework-streaming-4.1.6-a0db677.tgz",
@@ -38,21 +44,10 @@
     "on-error-resume-next": "^1.1.0",
     "pretty-ms": "^5.0.0",
     "restify": "^7.7.0",
-    "serve-handler": "^5.0.3"
+    "serve-handler": "^5.0.3",
+    "typescript": "^3.5.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/preset-typescript": "^7.3.3",
-    "@types/node": "^12.6.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.8.0",
-    "concurrently": "^4.1.1",
-    "jest": "^24.8.0",
-    "node-dev": "^3.1.3",
-    "rimraf": "^2.6.3",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.3"
+    "node-dev": "^4.0.0"
   }
 }
