@@ -1,5 +1,6 @@
-import { BotFrameworkAdapter } from 'botbuilder';
 import { TurnContext } from 'botbuilder';
+
+import createBotFrameworkAdapter from '../createBotFrameworkAdapter';
 
 const name = 'Proactive message';
 const WAIT_INTERVAL = 5000;
@@ -25,19 +26,28 @@ async function processor(context: TurnContext) {
   (async function (reference) {
     // We specifically write this block of code to show how proactive message should work.
     // This block of code should run under another process and it will only have knowledge of adapter setup and conversation reference.
+
+    // HACK: Currently, in DLSpeech, proactive messaging only works on single process (same Web Socket connection), and we need a hack to get it work.
+    const streamingServer = context.adapter['streamingServer'];
+
     await sleep(WAIT_INTERVAL);
 
-    const adapter = new BotFrameworkAdapter({
-      appId: process.env.MICROSOFT_APP_ID,
-      appPassword: process.env.MICROSOFT_APP_PASSWORD
-    });
+    const adapter = createBotFrameworkAdapter();
 
-    await adapter.continueConversation(reference, async continuedContext => {
-      await continuedContext.sendActivity({
-        text: 'This is a proactive message.',
-        type: 'message'
+    adapter['streamingServer'] = streamingServer;
+
+    try {
+      await adapter.continueConversation(reference, async continuedContext => {
+        await continuedContext.sendActivity({
+          text: 'This is a proactive message.',
+          type: 'message'
+        });
       });
-    });
+
+    } finally {
+      // We need to release "streamingServer" reference because adapter will call addEventListener on the setter.
+      adapter['streamingServer'] = null;
+    }
   })(reference);
 }
 

@@ -3,7 +3,6 @@ import config from './config';
 
 config();
 
-import { ActivityHandler, BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 import { MicrosoftAppCredentials } from 'botframework-connector';
 import { join } from 'path';
 import createAutoResetEvent from 'auto-reset-event';
@@ -17,6 +16,7 @@ import * as OAuthCard from './commands/OAuthCard2';
 import commands from './commands';
 import reduceMap from './reduceMap';
 
+import createBotFrameworkAdapter from './createBotFrameworkAdapter';
 import generateDirectLineToken from './generateDirectLineToken';
 import renewDirectLineToken from './renewDirectLineToken';
 
@@ -28,10 +28,6 @@ const {
   COGNITIVE_SERVICE_REGION,
   DIRECT_LINE_SECRET,
   LOG_LENGTH,
-  MICROSOFT_APP_ID,
-  MICROSOFT_APP_PASSWORD,
-  OAUTH_ENDPOINT = undefined,
-  OPENID_METADATA = undefined,
   PORT = 3978
 } = process.env;
 
@@ -53,13 +49,7 @@ MicrosoftAppCredentials.trustServiceUrl('https://state.ppe.botframework.com');
 MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
 
 // Create adapter
-const adapter = new BotFrameworkAdapter({
-  appId: MICROSOFT_APP_ID,
-  appPassword: MICROSOFT_APP_PASSWORD,
-  enableWebSockets: true,
-  oAuthEndpoint: OAUTH_ENDPOINT,
-  openIdMetadata: OPENID_METADATA
-});
+const adapter = createBotFrameworkAdapter();
 
 // const storage = new MemoryStorage();
 // const convoState = new ConversationState(storage);
