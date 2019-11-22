@@ -2,16 +2,10 @@
   "name": "mockbot",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "server.js",
   "private": true,
   "scripts": {
-    "build": "concurrently --names \"babel,typecheck\" \"npm run build:babel\" \"npm run build:typecheck\"",
-    "build:babel": "babel --extensions .js,.ts,.tsx --ignore **/*.spec.js,**/*.spec.ts,**/*.spec.tsx,**/*.test.js,**/*.test.ts,**/*.test.tsx,__test__/**/*.js,__test__/**/*.ts,__test__/**/*.tsx --out-dir lib --source-maps inline --verbose src",
-    "build:typecheck": "echo Temporarily disable \"tsc\" until we bump Bot Builder SDK.",
-    "clean": "rimraf lib",
-    "postinstall": "npm run build",
-    "start": "concurrently --allow-restart --names \"babel,start,typecheck\" \"npm run build:babel -- --watch\" \"node-dev --no-notify --respawn .\" \"npm run build:typecheck -- --preserveWatchOutput --watch\"",
-    "watch": "echo Error: \"npm run watch\" has been renamed to \"npm run start\"."
+    "start": "node-dev --no-notify --respawn ."
   },
   "jest": {
     "moduleFileExtensions": [
@@ -30,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@babel/register": "^7.7.0",
     "auto-reset-event": "^1.0.0",
     "botbuilder": "file:external/botbuilder-4.1.6-a0db677.tgz",
     "botbuilder-core": "file:external/botbuilder-core-4.1.6-a0db677.tgz",
