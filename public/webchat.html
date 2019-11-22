@@ -9,7 +9,6 @@
     -->
     <!-- <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script> -->
     <script src="webchat.js"></script>
-    <script src="directlinespeech.development.js"></script>
     <style>
       html,
       body {
@@ -37,14 +36,12 @@
         const res = await fetch('/speechservices/token', {
           method: 'POST'
         });
-        // const res = await fetch('https://webchat-waterbottle.azurewebsites.net/token/speechservices', { method: 'GET' });
+
         const { region, token } = await res.json();
-        console.log({ region, token });
-        const adapters = window.DirectLineSpeech.createAdapters({
-          // const adapters = window.WebChat.createDirectLineSpeechAdapters({
+
+        const adapters = window.WebChat.createDirectLineSpeechAdapters({
           speechServicesAuthorizationToken: token,
           speechServicesRegion: region
-          // speechServicesSubscriptionKey: 'f4e974b3d3884d928c934612333069ee'
         });
 
         window.WebChat.renderWebChat(
