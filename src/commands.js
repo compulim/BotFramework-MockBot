@@ -51,6 +51,10 @@ export default [
     pattern: /^card(\s+[\d\w:]+)(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?(\s+[\d\w:]+)?/i,
     ...AdaptiveCard
   },
+  {
+    pattern: /^what.*?weather/i,
+    ...AdaptiveCard
+  },
   // { pattern: /all/i, ...All },
   { pattern: "animationcard", ...AnimationCard },
   { pattern: "audio", ...Audio },
