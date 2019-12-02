@@ -106,6 +106,25 @@ function help() {
 }
 
 async function processor(context: TurnContext, ...names: string[]) {
+  if (/^what/iu.test(names[0])) {
+    await context.sendActivity({
+      type: 'message',
+      attachmentLayout: 'carousel',
+      attachments: [{
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: Weather()
+      }, {
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: FlightUpdate()
+      }, {
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: RichMessage()
+      }]
+    });
+
+    return;
+  }
+
   const contents = names.filter(name => name).map(name => getCardJSON(name));
 
   if (contents && contents.length) {
