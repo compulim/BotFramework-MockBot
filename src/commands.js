@@ -52,7 +52,7 @@ export default [
     ...AdaptiveCard
   },
   {
-    pattern: /^what.*?weather/i,
+    pattern: /^(what).*?weather/i,
     ...AdaptiveCard
   },
   // { pattern: /all/i, ...All },
