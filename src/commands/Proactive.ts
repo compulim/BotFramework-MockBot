@@ -15,6 +15,7 @@ async function processor(context: TurnContext) {
   const reference = TurnContext.getConversationReference(context.activity);
 
   await context.sendActivity({
+    speak: 'Will send a proactive message soon.',
     type: 'message',
     text: `Will send a proactive message after ${ WAIT_INTERVAL / 1000 } seconds. Attached is the JSON of the conversation \`reference\` that will be used to reinstantiate the \`TurnContext\`.`,
     attachments: [{
@@ -39,6 +40,7 @@ async function processor(context: TurnContext) {
     try {
       await adapter.continueConversation(reference, async continuedContext => {
         await continuedContext.sendActivity({
+          speak: 'This is a proactive message.',
           text: 'This is a proactive message.',
           type: 'message'
         });
