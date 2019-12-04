@@ -109,6 +109,7 @@ async function processor(context: TurnContext, ...names: string[]) {
   if (/^what/iu.test(names[0])) {
     await context.sendActivity({
       type: 'message',
+      speak: 'Here is the forecast for this week.',
       attachmentLayout: 'carousel',
       attachments: [{
         contentType: 'application/vnd.microsoft.card.adaptive',
