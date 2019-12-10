@@ -38,7 +38,7 @@
     "node-fetch": "^2.6.0",
     "on-error-resume-next": "^1.1.0",
     "pretty-ms": "^5.0.0",
-    "restify": "^7.7.0",
+    "restify": "^8.5.0",
     "serve-handler": "^5.0.3"
   },
   "devDependencies": {
