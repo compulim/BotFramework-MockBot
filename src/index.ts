@@ -3,8 +3,9 @@ import config from './config';
 
 config();
 
-import { MicrosoftAppCredentials } from 'botframework-connector';
+import { BotFrameworkAdapter } from 'botbuilder';
 import { join } from 'path';
+import { MicrosoftAppCredentials } from 'botframework-connector';
 import createAutoResetEvent from 'auto-reset-event';
 import delay from 'delay';
 import fetch from 'node-fetch';
@@ -12,22 +13,16 @@ import prettyMs from 'pretty-ms';
 import restify from 'restify';
 import serveHandler from 'serve-handler';
 
-import * as OAuthCard from './commands/OAuthCard2';
-import commands from './commands';
-import reduceMap from './reduceMap';
+import Bot from './Bot';
 
-import createBotFrameworkAdapter from './createBotFrameworkAdapter';
 import generateDirectLineToken from './generateDirectLineToken';
 import renewDirectLineToken from './renewDirectLineToken';
-
-const DEFAULT_LOG_LENGTH = 20;
 
 const {
   BING_SPEECH_SUBSCRIPTION_KEY,
   COGNITIVE_SERVICE_KEY,
   COGNITIVE_SERVICE_REGION,
   DIRECT_LINE_SECRET,
-  LOG_LENGTH,
   PORT = 3978
 } = process.env;
 
@@ -48,8 +43,23 @@ MicrosoftAppCredentials.trustServiceUrl('https://api.ppe.botframework.com');
 MicrosoftAppCredentials.trustServiceUrl('https://state.ppe.botframework.com');
 MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
 
+// const {
+//   DIRECTLINE_EXTENSION_VERSION
+// } = process.env;
+
+const ADAPTER_SETTINGS = {
+  appId: process.env.MICROSOFT_APP_ID,
+  appPassword: process.env.MICROSOFT_APP_PASSWORD,
+  enableWebSockets: true,
+  oAuthEndpoint: process.env.OAUTH_ENDPOINT,
+  openIdMetadata: process.env.OPENID_METADATA
+};
+
+// Create bot
+const bot = new Bot();
+
 // Create adapter
-const adapter = createBotFrameworkAdapter();
+const adapter = new BotFrameworkAdapter(ADAPTER_SETTINGS);
 
 // const storage = new MemoryStorage();
 // const convoState = new ConversationState(storage);
@@ -57,13 +67,10 @@ const adapter = createBotFrameworkAdapter();
 
 // adapter.use(new BotStateSet(convoState, userState));
 
-let numActivities = 0;
-let echoTypingConversations = new Set();
 const up = Date.now();
-const logs = [];
 
 server.get('/', async (_, res) => {
-  const message = `MockBot v4 is up since ${ prettyMs(Date.now() - up) } ago, processed ${ numActivities } activities.`;
+  const message = `MockBot v4 is up since ${ prettyMs(Date.now() - up) } ago, processed ${ bot.numActivities } activities.`;
   const separator = new Array(message.length).fill('-').join('');
 
   res.set('Content-Type', 'text/plain');
@@ -74,7 +81,7 @@ server.get('/', async (_, res) => {
       separator
     ],
     computer: {
-      numActivities,
+      numActivities: bot.numActivities,
       up
     }
   }, null, 2));
@@ -85,7 +92,7 @@ server.get('/logs', async (req, res) => {
 
   if (req.query.format === 'simple') {
     res.send(JSON.stringify({
-      logs: logs.map(log => {
+      logs: bot.logs.map(log => {
         const { activity: { name, text, type, value } } = log;
 
         switch (type) {
@@ -111,7 +118,7 @@ server.get('/logs', async (req, res) => {
     }, null, 2));
   } else {
     res.send(JSON.stringify({
-      logs
+      logs: bot.logs
     }, null, 2));
   }
 });
@@ -296,159 +303,15 @@ server.get('/public/*', async (req, res) => {
   });
 });
 
-async function handleApiMessages(context) {
-  const sendActivity = context.sendActivity.bind(context);
-
-  logs.push({
-    direction: 'incoming',
-    now: new Date().toISOString(),
-    activity: context.activity,
-  });
-
-  context.sendActivity = (...args) => {
-    let activity = args[0];
-
-    if (typeof activity === 'string') {
-      activity = {
-        type: 'message',
-        text: activity
-      };
-    }
-
-    logs.push({
-      direction: 'outgoing',
-      now: new Date().toISOString(),
-      activity
-    });
-
-    return sendActivity(...args);
-  };
-
-  logs.splice(0, Math.max(0, logs.length - (+LOG_LENGTH || DEFAULT_LOG_LENGTH)));
-
-  numActivities++;
-
-  if (context.activity.type === 'event') {
-    if (context.activity.name === 'tokens/response') {
-      // Special handling for OAuth token exchange
-      // This event is sent thru the non-magic code flow
-      await OAuthCard.processor(context);
-    } else if (context.activity.name === 'webchat/join') {
-      await context.sendActivity(`Got \`webchat/join\` event, your language is \`${ (context.activity.value || {}).language }\``);
-    } else if (context.activity.name === 'webchat/ping') {
-      await context.sendActivity({ type: 'event', name: 'webchat/pong', value: context.activity.value });
-    }
-  } else if (context.activity.type === 'messageReaction') {
-    const { activity: { reactionsAdded = [], reactionsRemoved = [] }} = context;
-    const attachments = [...reactionsAdded, ...reactionsRemoved].map(reaction => ({
-      content: `\`\`\`\n${ JSON.stringify(reaction, null, 2) }\n\`\`\``,
-      contentType: 'text/markdown'
-    }));
-
-    await context.sendActivity({
-      text: 'You posted',
-      type: 'message',
-      attachments
-    });
-  } else if (context.activity.type === 'message') {
-    const { activity: { attachments = [], text } } = context;
-    const cleanedText = (text || '').trim().replace(/\.$/, '');
-    const command = commands.find(({ pattern }) => pattern.test(cleanedText));
-
-    if (command) {
-      const { mode, pattern, processor } = command;
-      const match = pattern.exec(cleanedText);
-
-      if (mode === 'line') {
-        await processor(context, cleanedText);
-      } else {
-        await processor(context, ...[].slice.call(match, 1));
-      }
-    } else if (/^echo-typing$/i.test(cleanedText)) {
-      // We should "echoTyping" in a per-conversation basis
-      const { id: conversationID } = context.activity.conversation;
-
-      if (echoTypingConversations.has(conversationID)) {
-        echoTypingConversations.delete(conversationID);
-        await context.sendActivity('Will stop echoing `"typing"` event');
-      } else {
-        echoTypingConversations.add(conversationID);
-        await context.sendActivity('Will echo `"typing"` event');
-      }
-    } else if (/^help$/i.test(cleanedText)) {
-      const attachments = commands.map(({ help, name }) => {
-        return {
-          contentType: 'application/vnd.microsoft.card.thumbnail',
-          content: {
-            buttons: reduceMap(
-              help(),
-              (result: [], title: string, value: string) => [
-                ...result,
-                {
-                  title,
-                  type: 'imBack',
-                  value
-                }
-              ],
-              []
-            ).sort(({ title: x }, { title: y }) => x > y ? 1 : x < y ? -1 : 0),
-            title: name
-          }
-        };
-      });
-
-      await context.sendActivity({
-        attachments: attachments.sort(({ content: { title: x } }, { content: { title: y } }) => x > y ? 1 : x < y ? -1 : 0)
-      });
-    } else if (/^help simple$/i.test(cleanedText)) {
-      await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
-    } else if (attachments.length) {
-      const { processor } = commands.find(({ pattern }) => pattern.test('upload'));
-
-      await processor(context, attachments);
-    } else if (context.activity.value) {
-      const { text, value } = context.activity;
-      const attachments = [];
-
-      text && attachments.push({
-        content: text,
-        contentType: 'text/plain'
-      });
-
-      value && attachments.push({
-        content: `\`\`\`\n${ JSON.stringify(value, null, 2) }\n\`\`\``,
-        contentType: 'text/markdown'
-      });
-
-      await context.sendActivity({
-        text: 'You posted',
-        type: 'message',
-        attachments
-      });
-    } else {
-      await context.sendActivity({
-        speak: `Unknown command: I don't know ${ cleanedText }. You can say "help" to learn more.`,
-        text: `Unknown command: \`${ cleanedText }\`.\r\n\r\nType \`help\` to learn more.`,
-        type: 'message'
-      });
-    }
-  } else if (context.activity.type === 'typing' && echoTypingConversations.has(context.activity.conversation.id)) {
-    await context.sendActivity({ type: 'typing' });
-  }
-}
-
 // Listen for incoming requests
-server.post('/api/messages', (req, res) => {
-  console.log(`POST /api/messages`);
-
-  adapter.processActivity(req, res, handleApiMessages);
+server.get('/api/messages', (req, res) => {
+  console.log(`GET /api/messages`);
+  adapter.processActivity(req, res, context => bot.run(context));
+  // adapter.connectWebSocket(req, res, ADAPTER_SETTINGS);
 });
 
-// This endpoint is for Direct Line Speech channel
-server.get('/api/messages', (req, res) => {
-  console.log(`GET /api/messages(isUpgradeRequest=${ req.isUpgradeRequest() })`);
-
-  adapter.processActivity(req, res, handleApiMessages);
+server.post('/api/messages', (req, res) => {
+  adapter.processActivity(req, res, context => bot.run(context));
 });
 
 let pregeneratedTokens = [];
