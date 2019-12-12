@@ -29,10 +29,6 @@ const {
 // Create server
 const server = restify.createServer({ handleUpgrades: true });
 
-server.listen(PORT, () => {
-  console.log(`${ server.name } listening to ${ server.url }`);
-});
-
 server.use(restify.plugins.queryParser());
 
 MicrosoftAppCredentials.trustServiceUrl('https://api.scratch.botframework.com');
@@ -306,8 +302,12 @@ server.get('/public/*', async (req, res) => {
 // Listen for incoming requests
 server.get('/api/messages', (req, res) => {
   console.log(`GET /api/messages`);
-  adapter.processActivity(req, res, context => bot.run(context));
-  // adapter.connectWebSocket(req, res, ADAPTER_SETTINGS);
+
+  // adapter.processActivity(req, res, context => bot.run(context));
+
+  const upgrade = res.claimUpgrade();
+
+  adapter.useWebSocket(req, upgrade.socket, upgrade.head, context => bot.run(context));
 });
 
 server.post('/api/messages', (req, res) => {
@@ -359,4 +359,8 @@ server.get('/directline/tokens', async (_, res) => {
       };
     })
   }, null, 2));
+});
+
+server.listen(PORT, () => {
+  console.log(`${ server.name } listening to ${ server.url }`);
 });
