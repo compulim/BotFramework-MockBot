@@ -208,9 +208,12 @@ server.post('/speechservices/token', async (req, res) => {
   });
 
   if (cres.status === 200) {
+    const authorizationToken = await cres.text();
+
     res.send({
+      authorizationToken,
       region: process.env.SPEECH_SERVICES_REGION,
-      token: await cres.text()
+      token: authorizationToken
     }, {
       'Access-Control-Allow-Origin': '*'
     });
