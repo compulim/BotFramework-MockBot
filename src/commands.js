@@ -3,6 +3,9 @@ import * as AdaptiveCard from "./commands/AdaptiveCard";
 import * as AnimationCard from "./commands/AnimationCard";
 // import * as All from "./commands/All";
 import * as Audio from "./commands/Audio";
+import * as ArabicCarousel from "./commands/ArabicCarousel";
+import * as ArabicFile from "./commands/ArabicFile";
+import * as ArabicMarkdown from './commands/ArabicMarkdown';
 import * as AudioCard from "./commands/AudioCard";
 import * as CardActions from "./commands/CardActions";
 import * as Carousel from "./commands/Carousel";
@@ -58,6 +61,9 @@ export default [
   // { pattern: /all/i, ...All },
   { pattern: "animationcard", ...AnimationCard },
   { pattern: "audio", ...Audio },
+  { pattern: /^arabic carousel/i, ...ArabicCarousel },
+  { pattern: /^arabic file$/i, ...ArabicFile },
+  { pattern: /arabic markdown$/i, ...ArabicMarkdown},
   { pattern: "audiocard", ...AudioCard },
   { pattern: "card-actions", ...CardActions },
   { pattern: "carousel", ...Carousel },
