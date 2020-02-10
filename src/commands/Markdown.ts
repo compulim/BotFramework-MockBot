@@ -5,7 +5,6 @@ const name = "Markdown";
 function help() {
   return {
     markdown: "Show a Markdown-formatted message",
-    "markdown arabic": "Show a Markdown-formatted message with Arabic text"
   };
 }
 
@@ -13,13 +12,6 @@ async function processor(context: TurnContext, arg: string = "") {
   const { PUBLIC_URL } = process.env;
   // console.log(arg);
   switch (context.activity.text) {
-    case "markdown arabic":
-      await context.sendActivity({
-        type: "message",
-        textFormat: "markdown",
-        text: `\r\n # صباح الخير \r\n\r\n *صباح الخير* \n**صباح الخير**\r\r\nصباح الخير\r\n\r\n* صباح الخير\r\n* صباح الخير\r\n* صباح الخير\r\n* صباح الخير`
-      });
-      break;
     default: {
       await context.sendActivity({
         type: "message",

@@ -7,6 +7,7 @@ import Broken from './Cards/Broken';
 import CalendarReminder from './Cards/CalendarReminder';
 import FlightTracking from './Cards/FlightTracking';
 import FlightUpdate from './Cards/FlightUpdate';
+import ArabicGreeting from './Cards/ArabicGreeting';
 import Inputs from './Cards/Inputs';
 import Markdown from './Cards/Markdown';
 import OrderedList from './Cards/OrderedList';
@@ -49,6 +50,10 @@ function getCardJSON(name: string = ''): any {
     case 'flighttracking':
       return FlightTracking();
 
+      case 'arabicgreeting':
+      case 'rtlgreeting':
+      case '(Hello in Arabic string)': // UPDATE WITH ARABIC
+        return ArabicGreeting();
     case 'inputs':
       return Inputs();
 
@@ -91,6 +96,7 @@ function help() {
     'card broken': 'Show an Adaptive Card that is broken because of invalid version',
     'card flight': 'Show flight update using Adaptive Card',
     'card flighttracking': 'Show flight tracking using Adaptive Card',
+    'card greeting Arabic': 'Show a greeting in Arabic (for RTL)',
     'card inputs': 'Show an Adaptive Card with all types of inputs',
     'card ol': 'Show an ordered list with Markdown',
     'card markdown': 'Show Markdown using Adaptive Card',
