@@ -50,10 +50,11 @@ function getCardJSON(name: string = ''): any {
     case 'flighttracking':
       return FlightTracking();
 
-      case 'arabicgreeting':
-      case 'rtlgreeting':
-      case '(Hello in Arabic string)': // UPDATE WITH ARABIC
-        return ArabicGreeting();
+    case 'arabicgreeting':
+    case 'rtlgreeting':
+    case 'رحب بالقارئ':
+      return ArabicGreeting();
+
     case 'inputs':
       return Inputs();
 
@@ -96,7 +97,7 @@ function help() {
     'card broken': 'Show an Adaptive Card that is broken because of invalid version',
     'card flight': 'Show flight update using Adaptive Card',
     'card flighttracking': 'Show flight tracking using Adaptive Card',
-    'card greeting Arabic': 'Show a greeting in Arabic (for RTL)',
+    'card arabicgreeting': 'Show a greeting in Arabic (for RTL)',
     'card inputs': 'Show an Adaptive Card with all types of inputs',
     'card ol': 'Show an ordered list with Markdown',
     'card markdown': 'Show Markdown using Adaptive Card',
@@ -118,15 +119,31 @@ async function processor(context: TurnContext, ...names: string[]) {
       speak: 'Here is the forecast for this week.',
       attachmentLayout: 'carousel',
       attachments: [{
-        contentType: 'application/vnd.microsoft.card.adaptive',
-        content: Weather()
-      }, {
-        contentType: 'application/vnd.microsoft.card.adaptive',
-        content: FlightUpdate()
-      }, {
-        contentType: 'application/vnd.microsoft.card.adaptive',
-        content: RichMessage()
-      }]
+          contentType: 'application/vnd.microsoft.card.adaptive',
+          content: Weather()
+        }, {
+          contentType: 'application/vnd.microsoft.card.adaptive',
+          content: FlightUpdate()
+        }, {
+          contentType: 'application/vnd.microsoft.card.adaptive',
+          content: RichMessage()
+        }]
+    });
+
+    return;
+  }
+
+  if (/^arabic greeting|^arabicgreeting|رحب بالقارئ/iu.test(context.activity.text)) {
+    const content = getCardJSON('arabicgreeting');
+
+    await context.sendActivity({
+      type: 'message',
+      attachments: [
+        {
+          contentType: 'application/vnd.microsoft.card.adaptive',
+          content
+        }
+      ]
     });
 
     return;
@@ -149,7 +166,7 @@ async function processor(context: TurnContext, ...names: string[]) {
   } else {
     await context.sendActivity({
       type: 'message',
-      text: `No card named "${ name }"`
+      text: `No card named '${ name }'`
     });
   }
 }

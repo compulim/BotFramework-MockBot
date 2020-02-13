@@ -1,6 +1,6 @@
 import { TurnContext } from 'botbuilder';
 
-const name = 'Arabic carousel'
+const name = 'Arabic carousel';
 const help = () => ({
   'arabic carousel': 'Show a carousel of product details'
 });
@@ -16,9 +16,9 @@ async function processor(context: TurnContext) {
       {
         contentType: 'application/vnd.microsoft.card.hero',
         content: {
-          title: 'Arabic<Details about image 1>',
-          subtitle: 'Arabic<This is the subtitle>',
-          text: 'Arabic<Price: $XXX.XX USD>',
+          title: 'تفاصيل عن الصورة 1',
+          subtitle: 'هذا عنوان فرعي',
+          text: 'السعر: $###.## دولار امريكي',
           images: [
             {
               url: `${PUBLIC_URL}assets/surface1.jpg`
@@ -27,13 +27,13 @@ async function processor(context: TurnContext) {
           buttons: [
             {
               type: 'imBack',
-              value: 'Arabic<Place to buy>',
-              title: 'Arabic<Places To Buy>'
+              value: 'مكان الشراء',
+              title: 'اماكن الشراء'
             },
             {
               type: 'imBack',
-              value: 'Arabic<Related Products>',
-              title: 'Arabic<Related Products>'
+              value: 'المنتجات ذات الصلة',
+              title: 'المنتجات ذات الصلة'
             }
           ]
         }
@@ -41,9 +41,9 @@ async function processor(context: TurnContext) {
       {
         contentType: 'application/vnd.microsoft.card.hero',
         content: {
-          title: 'Arabic<Details about image 2>',
-          subtitle: 'Arabic<This is the subtitle>',
-          text: 'Arabic<Price: $XXX.XX USD>',
+          title: 'تفاصيل عن الصورة 2',
+          subtitle: 'هذا عنوان فرعي',
+          text: 'السعر: $###.## دولار امريكي',
           images: [
             {
               url: `${PUBLIC_URL}assets/surface2.jpg`
@@ -52,13 +52,13 @@ async function processor(context: TurnContext) {
           buttons: [
             {
               type: 'imBack',
-              value: 'Arabic<Place to buy>',
-              title: 'Arabic<Places To Buy>'
+              value: 'مكان الشراء',
+              title: 'اماكن الشراء'
             },
             {
               type: 'imBack',
-              value: 'Arabic<Related Products>',
-              title: 'Arabic<Related Products>'
+              value: 'المنتجات ذات الصلة',
+              title: 'المنتجات ذات الصلة'
             }
           ]
         }
@@ -66,9 +66,9 @@ async function processor(context: TurnContext) {
       {
         contentType: 'application/vnd.microsoft.card.hero',
         content: {
-          title: 'Arabic<Details about image 3>',
-          subtitle: 'Arabic<This is the subtitle>',
-          text: 'Arabic<Price: $XXX.XX USD>',
+          title: 'تفاصيل عن الصورة 3',
+          subtitle: 'هذا عنوان فرعي',
+          text: 'السعر: $###.## دولار امريكي',
           images: [
             {
               url: `${PUBLIC_URL}assets/surface3.jpg`
@@ -77,13 +77,13 @@ async function processor(context: TurnContext) {
           buttons: [
             {
               type: 'imBack',
-              value: 'Arabic<Place to buy>',
-              title: 'Arabic<Places To Buy>'
+              value: 'مكان الشراء',
+              title: 'اماكن الشراء'
             },
             {
               type: 'imBack',
-              value: 'Arabic<Related Products>',
-              title: 'Arabic<Related Products>'
+              value: 'المنتجات ذات الصلة',
+              title: 'المنتجات ذات الصلة'
             }
           ]
         }
@@ -91,9 +91,9 @@ async function processor(context: TurnContext) {
       {
         contentType: 'application/vnd.microsoft.card.hero',
         content: {
-          title: 'Arabic<Details about image 4>',
-          subtitle: 'Arabic<This is the subtitle>',
-          text: 'Arabic<Price: $XXX.XX USD>',
+          title: 'تفاصيل عن الصورة 4',
+          subtitle: 'هذا عنوان فرعي',
+          text: 'السعر: $###.## دولار امريكي',
           images: [
             {
               url: `${PUBLIC_URL}assets/surface4.jpg`
@@ -102,23 +102,19 @@ async function processor(context: TurnContext) {
           buttons: [
             {
               type: 'imBack',
-              value: 'Arabic<Place to buy>',
-              title: 'Arabic<Places To Buy>'
+              value: 'مكان الشراء',
+              title: 'اماكن الشراء'
             },
             {
               type: 'imBack',
-              value: 'Arabic<Related Products>',
-              title: 'Arabic<Related Products>'
+              value: 'المنتجات ذات الصلة',
+              title: 'المنتجات ذات الصلة'
             }
           ]
         }
       }
     ]
   });
-};
+}
 
-export {
-  help,
-  name,
-  processor
-};
+export { help, name, processor };
