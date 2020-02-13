@@ -2,7 +2,7 @@ import { TurnContext } from 'botbuilder-core';
 
 const name = 'Arabic file attachments'
 const help = () => ({
-  file: 'Show a message with a text file and Word document attachments'
+  'arabic file': 'Show a message with a text file and Word document attachments'
 });
 
 async function processor(context: TurnContext) {
@@ -10,17 +10,17 @@ async function processor(context: TurnContext) {
 
   await context.sendActivity({
     type: 'message',
-    text: 'Arabic<The reports are ready, see attached.>',
+    text: 'التقارير جاهزة، إطَّلع على الملف الملحق',
     attachments: [
       {
         contentType: 'application/octet-stream',
         contentUrl: `${PUBLIC_URL}assets/test.txt`,
-        name: 'Arabic<Plain text>'
+        name: 'نص صِرف'
       },
       {
         contentType: 'application/octet-stream',
         contentUrl: `${PUBLIC_URL}assets/test.docx`,
-        name: 'Arabic<Word document>'
+        name: 'Word مستند'
       }
     ]
   });

@@ -58,12 +58,16 @@ export default [
     pattern: /^(what).*?weather/i,
     ...AdaptiveCard
   },
+  {
+    pattern: /^arabic greeting|^arabicgreeting|رحب بالقارئ/i,
+    ...AdaptiveCard
+  },
   // { pattern: /all/i, ...All },
   { pattern: "animationcard", ...AnimationCard },
   { pattern: "audio", ...Audio },
-  { pattern: /^arabic carousel/i, ...ArabicCarousel },
-  { pattern: /^arabic file$/i, ...ArabicFile },
-  { pattern: /arabic markdown$/i, ...ArabicMarkdown},
+  { pattern: /^arabic carousel|يشترى/i, ...ArabicCarousel },
+  { pattern: /^arabic file$|تحميل/i, ...ArabicFile },
+  { pattern: /arabic markdown$|نص/i, ...ArabicMarkdown},
   { pattern: "audiocard", ...AudioCard },
   { pattern: "card-actions", ...CardActions },
   { pattern: "carousel", ...Carousel },
