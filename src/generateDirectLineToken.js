@@ -26,7 +26,9 @@ export default async function (userID) {
     if ('error' in json) {
       throw new Error(`Direct Line service responded ${ JSON.stringify(json.error) } while generating new token`);
     } else {
-      return { ...json, userID };
+      const { conversationId: conversationID, ...otherJSON } = json;
+
+      return { ...otherJSON, conversationID, userID };
     }
   } else {
     throw new Error(`Direct Line service returned ${ cres.status } while generating new token`);
