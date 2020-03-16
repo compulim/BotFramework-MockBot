@@ -129,6 +129,7 @@ function trustedOrigin(origin) {
     || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
     || /^https?:\/\/([\d\w]+\.)+botframework\.com(\/|$)/.test(origin)
     || /^https:\/\/compulim\.github\.io(\/|$)/.test(origin)
+    || /^https:\/\/corinagum\.github\.io(\/|$)/.test(origin)
     || /^https:\/\/microsoft\.github\.io(\/|$)/.test(origin)
     || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net(\/|$)/.test(origin)
     || /^https:\/\/webchattest\.blob\.core\.windows\.net(\/|$)/.test(origin)
