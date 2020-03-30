@@ -18,6 +18,7 @@ import * as Echo from "./commands/Echo";
 import * as EmptyCard from "./commands/EmptyCard";
 import * as File from "./commands/File";
 import * as HeroCard from "./commands/HeroCard";
+import * as HeroCardActions from "./commands/HeroCardActions";
 import * as Image from "./commands/Image";
 import * as ImageSVG from "./commands/ImageSVG";
 import * as InputHint from "./commands/InputHint";
@@ -81,6 +82,7 @@ export default [
   { pattern: "file", ...File },
   { pattern: "herocard", ...HeroCard },
   { pattern: /^herocard(\s+([\d\w]+))?(\s+([\d\w]+))?$/i, ...HeroCard },
+  { pattern: /^herocarda/i, ...HeroCardActions },
   { pattern: /^hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: "image", ...Image },
   { pattern: "image-svg", ...ImageSVG },
