@@ -45,7 +45,10 @@ async function processor(context: TurnContext) {
             {
               text: 'text',
               title: 'messageBack (displayText + text)',
-              type: 'messageBack'
+              type: 'messageBack',
+
+              // There is a bug in DLJS that prevented it to send the activity without "value" field set
+              value: null
             },
             {
               title: 'messageBack (value)',
