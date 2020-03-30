@@ -37,14 +37,14 @@ async function processor(context: TurnContext) {
             },
             {
               displayText: 'displayText',
-              text: 'text',
+              text: '"text"',
               title: 'messageBack (displayText + text + value)',
               type: 'messageBack',
               value: { value: 'value' }
             },
             {
               displayText: 'displayText',
-              text: 'text',
+              text: '"text"',
               title: 'messageBack (displayText + text)',
               type: 'messageBack',
 
