@@ -43,6 +43,7 @@ async function processor(context: TurnContext) {
               value: { value: 'value' }
             },
             {
+              displayText: 'displayText',
               text: 'text',
               title: 'messageBack (displayText + text)',
               type: 'messageBack',
