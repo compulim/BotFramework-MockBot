@@ -56,14 +56,14 @@ async function processor(context: TurnContext) {
               type: 'messageBack',
               value: { value: 'value' }
             },
-            {
-              title: 'postBack (empty)',
-              type: 'postBack'
-            },
-            {
-              title: 'messageBack (empty)',
-              type: 'messageBack'
-            }
+            // {
+            //   title: 'postBack (empty)',
+            //   type: 'postBack'
+            // },
+            // {
+            //   title: 'messageBack (empty)',
+            //   type: 'messageBack'
+            // }
           ],
           title: 'Hero Card Actions'
         }
