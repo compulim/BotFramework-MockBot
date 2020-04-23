@@ -120,6 +120,7 @@ server.get('/health.txt', async (req, res) => {
 function trustedOrigin(origin) {
   return (
     /^https?:\/\/localhost([\/:]|$)/.test(origin)
+    || /^https?:\/\/192\.168\.(0|1)\.\d{1,3}([\/:]|$)/.test(origin)
     || origin === 'null' // This is for file://index.html
 
     // This is for Docker tests, dotless domain
