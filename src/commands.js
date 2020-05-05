@@ -81,7 +81,7 @@ export default [
   { pattern: "emptycard", ...EmptyCard },
   { pattern: "file", ...File },
   { pattern: "herocard", ...HeroCard },
-  { pattern: /^herocard(\s+([\d\w]+))?(\s+([\d\w]+))?$/i, ...HeroCard },
+  { pattern: /^herocard(\s+([\d\w]+))*$/i, ...HeroCard },
   { pattern: /^herocarda/i, ...HeroCardActions },
   { pattern: /^hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
   { pattern: "image", ...Image },

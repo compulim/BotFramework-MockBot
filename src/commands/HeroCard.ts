@@ -7,7 +7,8 @@ const mode = 'line';
 function help() {
   return {
     herocard: 'Show a hero card',
-    'herocard long title': 'Show a hero card with a long title'
+    'herocard long title': 'Show a hero card with a long title',
+    'herocard qna': 'Show two hero cards with two sets of questions and answers',
   };
 }
 
@@ -94,17 +95,24 @@ async function processor(context: TurnContext, args: string) {
                 {
                   title: 'English',
                   type: 'imBack',
-                  value: 'I speak English.'
+                  value: 'herocard qna 3 I speak English.'
                 },
                 {
                   title: 'Cantonese',
                   type: 'imBack',
-                  value: 'I speak Cantonese.'
+                  value: 'herocard qna 3 I speak Cantonese.'
                 }
               ]
             }
           }
         ]
+      });
+    }
+
+    if (command.startsWith('herocard qna 3')) {
+      await context.sendActivity({
+        type: 'message',
+        text: 'Thank you.'
       });
     }
   } else {
