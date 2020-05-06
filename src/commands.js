@@ -94,7 +94,7 @@ export default [
   { pattern: "content-multimedia", ...MultimediaCard },
   { pattern: /^(oauth(\s+[\d\w]+)?|\d{6})$/i, ...OAuthCard },
   { pattern: "sample:password-input", ...SamplePasswordInput },
-  { pattern: "proactive", ...Proactive },
+  { pattern: /^proactive(\s+([\d\w]+))*/, ...Proactive },
   { pattern: "receiptcard", ...ReceiptCard },
   { pattern: "sample:backchannel", ...SampleBackchannel },
   { pattern: "sample:github-repository", ...SampleGitHubRepository },
