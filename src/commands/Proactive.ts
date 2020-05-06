@@ -13,6 +13,9 @@ function help() {
 async function processor(context: TurnContext, args: string) {
   const reference = TurnContext.getConversationReference(context.activity);
 
+  console.log(`"${args}"`);
+  console.log(`"${args.trim().toLowerCase()}"`);
+
   await context.sendActivity({
     speak: 'Will send a proactive message soon.',
     type: 'message',
@@ -40,7 +43,7 @@ async function processor(context: TurnContext, args: string) {
     await adapter.continueConversation(reference, async continuedContext => {
       const command = args.trim().toLowerCase();
 
-      if (command === 'proactive card') {
+      if (command === 'card') {
         await continuedContext.sendActivity({
           type: 'message',
           text: 'Where are you from?',
