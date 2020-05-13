@@ -10,11 +10,8 @@ function help() {
   };
 }
 
-async function processor(context: TurnContext, args: string) {
+async function processor(context: TurnContext, args: string = '') {
   const reference = TurnContext.getConversationReference(context.activity);
-
-  console.log(`"${args}"`);
-  console.log(`"${args.trim().toLowerCase()}"`);
 
   await context.sendActivity({
     speak: 'Will send a proactive message soon.',
