@@ -5,7 +5,7 @@ const name = 'File upload';
 
 function help() {
   return {
-    'upload': 'Upload a file'
+    upload: 'Upload a file'
   };
 }
 
@@ -17,7 +17,7 @@ async function fetchJSON(url) {
 
     return JSON.parse(text);
   } else {
-    throw new Error(`Server returned ${ res.status }`);
+    throw new Error(`Server returned ${res.status}`);
   }
 }
 
@@ -30,24 +30,25 @@ function isTrustedAttachmentURL(url) {
 }
 
 async function echoAttachment({ contentType, contentUrl, name }) {
-  if (
-    contentType === 'application/json'
-    && isTrustedAttachmentURL(contentUrl)
-  ) {
+  if (isTrustedAttachmentURL(contentUrl)) {
     // We only fetch content from trusted source, so we don't DDoS anyone.
 
-    return {
-      content: await fetchJSON(contentUrl),
-      contentType: 'application/vnd.microsoft.card.adaptive',
-      name
-    };
-  } else {
-    return {
-      contentType: 'application/octet-stream',
-      contentUrl,
-      name
-    };
+    if (contentType === 'application/json') {
+      return {
+        content: await fetchJSON(contentUrl),
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        name
+      };
+    } else if (/.attachmentjson$/iu.test(name)) {
+      return await fetchJSON(contentUrl);
+    }
   }
+
+  return {
+    contentType: 'application/octet-stream',
+    contentUrl,
+    name
+  };
 }
 
 async function processor(context: TurnContext, attachments: Attachment[] = []) {
@@ -65,4 +66,4 @@ async function processor(context: TurnContext, attachments: Attachment[] = []) {
   }
 }
 
-export { help, name, processor }
+export { help, name, processor };
