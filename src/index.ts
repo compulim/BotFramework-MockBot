@@ -128,6 +128,7 @@ function trustedOrigin(origin) {
 
     || /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin)
     || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
+    || /^https?:\/\/webchat-playground2\.azurewebsites\.net(\/|$)/.test(origin)
     || /^https?:\/\/([\d\w]+\.)+botframework\.com(\/|$)/.test(origin)
     || /^https:\/\/compulim\.github\.io(\/|$)/.test(origin)
     || /^https:\/\/corinagum\.github\.io(\/|$)/.test(origin)
