@@ -5,7 +5,8 @@
   "main": "server.js",
   "private": true,
   "scripts": {
-    "start": "node-dev --no-notify --respawn ."
+    "start": "node server.js",
+    "start:dev": "node-dev --no-notify --respawn ."
   },
   "jest": {
     "moduleFileExtensions": [
