@@ -1,0 +1,76 @@
+# To use this GitHub Actions for deploying the bot, please add a new secret "PUBLISH_PROFILE".
+# This secret is the content of *.PublishSettings file downloaded from your Azure Web Apps.
+
+name: Build and deploy Node.js app to Azure Web App
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.13.0'
+
+      - run: npm ci
+      - run: npm run build --if-preset
+      - run: npm test --if-present
+      - run: npm pack
+      - run: tar xvf *.tgz
+
+      - name: Run zip -1rq ../zipdeploy.zip .
+        run: |
+          zip -1rq zipdeploy.zip node_modules
+          cd package
+          ls -laR
+          zip -1rq ../zipdeploy.zip .
+          cd ..
+
+      - name: Upload artifact (tarball)
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: '*.tgz'
+
+      - name: Upload artifact (Zip Deploy)
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: zipdeploy.zip
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ startsWith(github.ref, 'refs/heads/') }}
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+
+      - name: Deploy to Azure Web App
+        id: deploy
+        uses: azure/webapps-deploy@v1
+        with:
+          slot-name: production
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+          package: zipdeploy.zip
+
+      - name: Ping deployment
+        # We need to sleep because Azure Web Apps need time to pick up changes
+        run: |
+          sleep 5
+          curl -s ${{ steps.deploy.outputs.webapp-url }}/health.txt
+          curl -s ${{ steps.deploy.outputs.webapp-url }}/ready.txt

@@ -1,4 +1,5 @@
 /.env*
+/botframework-mockbot-*.tgz
 /coverage
 /lib
 /node_modules

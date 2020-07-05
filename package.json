@@ -1,8 +1,13 @@
 {
-  "name": "mockbot",
-  "version": "1.0.0",
+  "name": "botframework-mockbot",
+  "version": "0.0.0-0",
   "description": "",
   "main": "lib/index.js",
+  "files": [
+    "lib/**/*",
+    "public/**/*",
+    "web.config"
+  ],
   "private": true,
   "scripts": {
     "build": "concurrently --names \"babel,typecheck\" \"npm run build:babel\" \"npm run build:typecheck\"",
