@@ -35,7 +35,6 @@ jobs:
           cd package
           ls -laR
           zip -1rq ../zipdeploy.zip .
-          cd ..
 
       - name: Upload artifact (tarball)
         uses: actions/upload-artifact@v2
