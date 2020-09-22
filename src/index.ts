@@ -125,7 +125,7 @@ function trustedOrigin(origin) {
     || origin === 'null' // This is for file://index.html
 
     // This is for Docker tests, dotless domain
-    || /^https?:\/\/[\d\w]+([\/:]|$)/.test(origin)
+    || /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin)
 
     || /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin)
     || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
