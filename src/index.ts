@@ -129,7 +129,7 @@ function trustedOrigin(origin) {
     /^https?:\/\/localhost([\/:]|$)/.test(origin)
 
     // This is for Docker tests
-    || /^https?:\/\/webchat([\/:]|$)/.test(origin)
+    || /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin)
 
     || /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin)
     || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
