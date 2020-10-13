@@ -1,6 +1,8 @@
 import { TurnContext } from 'botbuilder';
 
+
 const mode = 'line';
+
 const name = 'Receipt card';
 
 function help() {
@@ -41,6 +43,7 @@ async function processor(context: TurnContext, args: string) {
                   title: 'Data Transfer',
                   price: '$38.45',
                   quantity: 368,
+
                   image: {
                     alt: 'Traffic manager',
                     url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png'
