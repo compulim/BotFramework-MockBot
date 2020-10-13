@@ -1,6 +1,6 @@
 import { TurnContext } from 'botbuilder';
 
-const mode = "line";
+const mode = 'line';
 const name = 'Receipt card';
 
 function help() {
@@ -41,13 +41,19 @@ async function processor(context: TurnContext, args: string) {
                   title: 'Data Transfer',
                   price: '$38.45',
                   quantity: 368,
-                  image: { url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png' }
+                  image: {
+                    alt: 'Traffic manager',
+                    url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png'
+                  }
                 },
                 {
                   title: 'App Service',
                   price: '$45.00',
                   quantity: 720,
-                  image: { url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png' }
+                  image: {
+                    alt: 'Cloud service',
+                    url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png'
+                  }
                 }
               ],
               tax: '$7.50',
