@@ -26,7 +26,7 @@ const LOG_LENGTH = 20;
 const server = restify.createServer();
 
 server.listen(process.env.PORT, () => {
-  console.log(`${ server.name } listening to ${ server.url }`);
+  console.log(`${server.name} listening to ${server.url}`);
 });
 
 server.use(restify.plugins.queryParser());
@@ -59,56 +59,72 @@ const up = Date.now();
 const logs = [];
 
 server.get('/', async (_, res) => {
-  const message = `MockBot v4 is up since ${ prettyMs(Date.now() - up) } ago, processed ${ numActivities } activities.`;
+  const message = `MockBot v4 is up since ${prettyMs(Date.now() - up)} ago, processed ${numActivities} activities.`;
   const separator = new Array(message.length).fill('-').join('');
 
   res.set('Content-Type', 'text/plain');
-  res.send(JSON.stringify({
-    human: [
-      separator,
-      message,
-      separator
-    ],
-    computer: {
-      numActivities,
-      up
-    }
-  }, null, 2));
+  res.send(
+    JSON.stringify(
+      {
+        human: [separator, message, separator],
+        computer: {
+          numActivities,
+          up
+        }
+      },
+      null,
+      2
+    )
+  );
 });
 
 server.get('/logs', async (req, res) => {
   res.set('Content-Type', 'text/plain');
 
   if (req.query.format === 'simple') {
-    res.send(JSON.stringify({
-      logs: logs.map(log => {
-        const { activity: { name, text, type, value } } = log;
+    res.send(
+      JSON.stringify(
+        {
+          logs: logs.map(log => {
+            const {
+              activity: { name, text, type, value }
+            } = log;
 
-        switch (type) {
-          case 'event':
-            return {
-              ...log,
-              activity: { type, name, value }
-            };
+            switch (type) {
+              case 'event':
+                return {
+                  ...log,
+                  activity: { type, name, value }
+                };
 
-          case 'message':
-            return {
-              ...log,
-              activity: { type, text }
-            };
+              case 'message':
+                return {
+                  ...log,
+                  activity: { type, text }
+                };
 
-          default:
-            return {
-              ...log,
-              activity: { type }
-            };
-        }
-      })
-    }, null, 2));
+              default:
+                return {
+                  ...log,
+                  activity: { type }
+                };
+            }
+          })
+        },
+        null,
+        2
+      )
+    );
   } else {
-    res.send(JSON.stringify({
-      logs
-    }, null, 2));
+    res.send(
+      JSON.stringify(
+        {
+          logs
+        },
+        null,
+        2
+      )
+    );
   }
 });
 
@@ -119,27 +135,24 @@ server.get('/health.txt', async (req, res) => {
 
 function trustedOrigin(origin) {
   return (
-    !origin
-    || /^https?:\/\/localhost([\/:]|$)/.test(origin)
-    || /^https?:\/\/192\.168\.(0|1)\.\d{1,3}([\/:]|$)/.test(origin)
-    || origin === 'null' // This is for file://index.html
-
+    !origin ||
+    /^https?:\/\/localhost([\/:]|$)/.test(origin) ||
+    /^https?:\/\/192\.168\.(0|1)\.\d{1,3}([\/:]|$)/.test(origin) ||
+    origin === 'null' || // This is for file://index.html
     // This is for Docker tests, dotless domain
-    || /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin)
-
-    || /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin)
-    || /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin)
-    || /^https?:\/\/webchat-playground2\.azurewebsites\.net(\/|$)/.test(origin)
-    || /^https?:\/\/([\d\w]+\.)+botframework\.com(\/|$)/.test(origin)
-    || /^https:\/\/compulim\.github\.io(\/|$)/.test(origin)
-    || /^https:\/\/corinagum\.github\.io(\/|$)/.test(origin)
-    || /^https:\/\/microsoft\.github\.io(\/|$)/.test(origin)
-    || /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net(\/|$)/.test(origin)
-    || /^https:\/\/webchattest\.blob\.core\.windows\.net(\/|$)/.test(origin)
-
+    /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin) ||
+    /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin) ||
+    /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin) ||
+    /^https?:\/\/webchat-playground2\.azurewebsites\.net(\/|$)/.test(origin) ||
+    /^https?:\/\/([\d\w]+\.)+botframework\.com(\/|$)/.test(origin) ||
+    /^https:\/\/compulim\.github\.io(\/|$)/.test(origin) ||
+    /^https:\/\/corinagum\.github\.io(\/|$)/.test(origin) ||
+    /^https:\/\/microsoft\.github\.io(\/|$)/.test(origin) ||
+    /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net(\/|$)/.test(origin) ||
+    /^https:\/\/webchattest\.blob\.core\.windows\.net(\/|$)/.test(origin) ||
     // This is CodePen
-    || /^https:\/\/cdpn\.io(\/|$)/.test(origin)
-    || /^https:\/\/s\.codepen\.io(\/|$)/.test(origin)
+    /^https:\/\/cdpn\.io(\/|$)/.test(origin) ||
+    /^https:\/\/s\.codepen\.io(\/|$)/.test(origin)
   );
 }
 
@@ -165,9 +178,14 @@ server.post('/directline/token', async (req, res) => {
   const { DIRECT_LINE_SECRET } = process.env;
 
   if (token) {
-    console.log(`Refreshing Direct Line token for ${ origin }`);
+    console.log(`Refreshing Direct Line token for ${origin}`);
   } else {
-    console.log(`Requesting Direct Line token for ${ origin } using secret "${ DIRECT_LINE_SECRET.substr(0, 3) }...${ DIRECT_LINE_SECRET.substr(-3) }"`);
+    console.log(
+      `Requesting Direct Line token for ${origin} using secret "${DIRECT_LINE_SECRET.substr(
+        0,
+        3
+      )}...${DIRECT_LINE_SECRET.substr(-3)}"`
+    );
   }
 });
 
@@ -178,7 +196,7 @@ server.post('/bingspeech/token', async (req, res) => {
     return res.send(403, 'not trusted origin');
   }
 
-  console.log(`Requesting speech token for ${ origin }`);
+  console.log(`Requesting speech token for ${origin}`);
 
   const cres = await fetch('https://api.cognitive.microsoft.com/sts/v1.0/issueToken', {
     headers: { 'Ocp-Apim-Subscription-Key': process.env.BING_SPEECH_SUBSCRIPTION_KEY },
@@ -186,11 +204,14 @@ server.post('/bingspeech/token', async (req, res) => {
   });
 
   if (cres.status === 200) {
-    res.send({
-      token: await cres.text()
-    }, {
-      'Access-Control-Allow-Origin': '*'
-    });
+    res.send(
+      {
+        token: await cres.text()
+      },
+      {
+        'Access-Control-Allow-Origin': '*'
+      }
+    );
   } else {
     res.send(500, {
       'Access-Control-Allow-Origin': '*'
@@ -205,23 +226,29 @@ server.post('/speechservices/token', async (req, res) => {
     return res.send(403, 'not trusted origin');
   }
 
-  console.log(`Requesting speech token for ${ origin }`);
+  console.log(`Requesting speech token for ${origin}`);
 
-  const cres = await fetch(`https://${ process.env.SPEECH_SERVICES_REGION }.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
-    headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_SERVICES_SUBSCRIPTION_KEY },
-    method: 'POST'
-  });
+  const cres = await fetch(
+    `https://${process.env.SPEECH_SERVICES_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`,
+    {
+      headers: { 'Ocp-Apim-Subscription-Key': process.env.SPEECH_SERVICES_SUBSCRIPTION_KEY },
+      method: 'POST'
+    }
+  );
 
   if (cres.status === 200) {
     const authorizationToken = await cres.text();
 
-    res.send({
-      authorizationToken,
-      region: process.env.SPEECH_SERVICES_REGION,
-      token: authorizationToken
-    }, {
-      'Access-Control-Allow-Origin': '*'
-    });
+    res.send(
+      {
+        authorizationToken,
+        region: process.env.SPEECH_SERVICES_REGION,
+        token: authorizationToken
+      },
+      {
+        'Access-Control-Allow-Origin': '*'
+      }
+    );
   } else {
     res.send(500, {
       'Access-Control-Allow-Origin': '*'
@@ -261,27 +288,23 @@ server.get('/versions/botframework-webchat', async (req, res) => {
 
     lastGetVersionResponse = {
       refresh: new Date(now).toISOString(),
-      versions: objectValues(versions).sort((x, y) => {
-        x = new Date(time[x.version]);
-        y = new Date(time[y.version]);
+      versions: objectValues(versions)
+        .sort((x, y) => {
+          x = new Date(time[x.version]);
+          y = new Date(time[y.version]);
 
-        return x > y ? -1 : x < y ? 1 : 0;
-      }).map(({ version }) => ({
-        time: time[version],
-        version: version
-      }))
+          return x > y ? -1 : x < y ? 1 : 0;
+        })
+        .map(({ version }) => ({
+          time: time[version],
+          version: version
+        }))
     };
 
     lastGetVersionAt = now;
   }
 
-  res.send(
-    lastGetVersionResponse,
-    trustedOrigin(req.header('origin')) ?
-      { 'Access-Control-Allow-Origin': '*' }
-    :
-      {}
-  );
+  res.send(lastGetVersionResponse, trustedOrigin(req.header('origin')) ? { 'Access-Control-Allow-Origin': '*' } : {});
 });
 
 const acquireSlowQueue = createAutoResetEvent();
@@ -309,7 +332,7 @@ server.post('/api/messages', (req, res) => {
     logs.push({
       direction: 'incoming',
       now: new Date().toISOString(),
-      activity: context.activity,
+      activity: context.activity
     });
 
     context.sendActivity = (...args) => {
@@ -341,14 +364,18 @@ server.post('/api/messages', (req, res) => {
         // This event is sent thru the non-magic code flow
         await OAuthCard.processor(context);
       } else if (context.activity.name === 'webchat/join') {
-        await context.sendActivity(`Got \`webchat/join\` event, your language is \`${ (context.activity.value || {}).language }\``);
+        await context.sendActivity(
+          `Got \`webchat/join\` event, your language is \`${(context.activity.value || {}).language}\``
+        );
       } else if (context.activity.name === 'webchat/ping') {
         await context.sendActivity({ type: 'event', name: 'webchat/pong', value: context.activity.value });
       }
     } else if (context.activity.type === 'messageReaction') {
-      const { activity: { reactionsAdded = [], reactionsRemoved = [] }} = context;
+      const {
+        activity: { reactionsAdded = [], reactionsRemoved = [] }
+      } = context;
       const attachments = [...reactionsAdded, ...reactionsRemoved].map(reaction => ({
-        content: `\`\`\`\n${ JSON.stringify(reaction, null, 2) }\n\`\`\``,
+        content: `\`\`\`\n${JSON.stringify(reaction, null, 2)}\n\`\`\``,
         contentType: 'text/markdown'
       }));
 
@@ -358,7 +385,9 @@ server.post('/api/messages', (req, res) => {
         attachments
       });
     } else if (context.activity.type === 'message') {
-      const { activity: { attachments = [], text } } = context;
+      const {
+        activity: { attachments = [], text }
+      } = context;
       const cleanedText = (text || '').trim().replace(/\.$/, '');
       const command = commands.find(({ pattern }) => pattern.test(cleanedText));
 
@@ -398,17 +427,24 @@ server.post('/api/messages', (req, res) => {
                   }
                 ],
                 []
-              ).sort(({ title: x }, { title: y }) => x > y ? 1 : x < y ? -1 : 0),
+              ).sort(({ title: x }, { title: y }) => (x > y ? 1 : x < y ? -1 : 0)),
               title: name
             }
           };
         });
 
         await context.sendActivity({
-          attachments: attachments.sort(({ content: { title: x } }, { content: { title: y } }) => x > y ? 1 : x < y ? -1 : 0)
+          attachments: attachments.sort(({ content: { title: x } }, { content: { title: y } }) =>
+            x > y ? 1 : x < y ? -1 : 0
+          )
         });
       } else if (/^help simple$/i.test(cleanedText)) {
-        await context.sendActivity(`### Commands\r\n\r\n${ commands.map(({ pattern }) => `- \`${ pattern.source }\``).sort().join('\r\n') }`);
+        await context.sendActivity(
+          `### Commands\r\n\r\n${commands
+            .map(({ pattern }) => `- \`${pattern.source}\``)
+            .sort()
+            .join('\r\n')}`
+        );
       } else if (attachments.length) {
         const { processor } = commands.find(({ pattern }) => pattern.test('upload'));
 
@@ -417,15 +453,17 @@ server.post('/api/messages', (req, res) => {
         const { text, value } = context.activity;
         const attachments = [];
 
-        text && attachments.push({
-          content: text,
-          contentType: 'text/plain'
-        });
+        text &&
+          attachments.push({
+            content: text,
+            contentType: 'text/plain'
+          });
 
-        value && attachments.push({
-          content: `\`\`\`\n${ JSON.stringify(value, null, 2) }\n\`\`\``,
-          contentType: 'text/markdown'
-        });
+        value &&
+          attachments.push({
+            content: `\`\`\`\n${JSON.stringify(value, null, 2)}\n\`\`\``,
+            contentType: 'text/markdown'
+          });
 
         await context.sendActivity({
           text: 'You posted',
@@ -434,8 +472,8 @@ server.post('/api/messages', (req, res) => {
         });
       } else {
         await context.sendActivity({
-          speak: `Unknown command: I don't know ${ cleanedText }. You can say "help" to learn more.`,
-          text: `Unknown command: \`${ cleanedText }\`.\r\n\r\nType \`help\` to learn more.`,
+          speak: `Unknown command: I don't know ${cleanedText}. You can say "help" to learn more.`,
+          text: `Unknown command: \`${cleanedText}\`.\r\n\r\nType \`help\` to learn more.`,
           type: 'message'
         });
       }
@@ -473,21 +511,25 @@ server.get('/directline/tokens', async (_, res) => {
   res.set('Content-Type', 'text/plain');
   res.set('Cache-Control', 'no-cache');
 
-  res.send(JSON.stringify({
-    tokens: pregeneratedTokens.map(token => {
-      const message1 = `This token will expires at ${ new Date(token.expiresAt).toISOString() }`;
-      const message2 = Date.now() > token.expiresAt ? 'And is expired.' : `Or in about ${ ~~((token.expiresAt - Date.now()) / 1000) } seconds`;
-      const separator = new Array(Math.max(message1.length, message2.length)).fill('-').join('');
+  res.send(
+    JSON.stringify(
+      {
+        tokens: pregeneratedTokens.map(token => {
+          const message1 = `This token will expires at ${new Date(token.expiresAt).toISOString()}`;
+          const message2 =
+            Date.now() > token.expiresAt
+              ? 'And is expired.'
+              : `Or in about ${~~((token.expiresAt - Date.now()) / 1000)} seconds`;
+          const separator = new Array(Math.max(message1.length, message2.length)).fill('-').join('');
 
-      return {
-        human: [
-          separator,
-          message1,
-          message2,
-          separator
-        ],
-        ...token
-      };
-    })
-  }, null, 2));
+          return {
+            human: [separator, message1, message2, separator],
+            ...token
+          };
+        })
+      },
+      null,
+      2
+    )
+  );
 });
