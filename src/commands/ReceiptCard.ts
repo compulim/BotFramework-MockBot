@@ -1,8 +1,6 @@
 import { TurnContext } from 'botbuilder';
 
-
 const mode = 'line';
-
 const name = 'Receipt card';
 
 function help() {
@@ -40,10 +38,14 @@ async function processor(context: TurnContext, args: string) {
               ],
               items: [
                 {
+                  tap: {
+                    type: 'openUrl',
+                    title: 'Open bing',
+                    value: `https://www.bing.com/`
+                  },
                   title: 'Data Transfer',
                   price: '$38.45',
                   quantity: 368,
-
                   image: {
                     alt: 'Traffic manager',
                     url: 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png'
@@ -97,26 +99,26 @@ async function processor(context: TurnContext, args: string) {
                   text:
                     'Surface does more. Just like you. For one device that does everything, you need more than a mobile OS.',
                   image: {
-                    url: `${PUBLIC_URL}assets/surface1.jpg`,
                     alt: 'Microsoft Surface Alt',
                     tap: {
                       type: 'openUrl',
                       title: 'Tapped it!',
                       value: `${PUBLIC_URL}testurl1.html`
-                    }
+                    },
+                    url: `${PUBLIC_URL}assets/surface1.jpg`
                   },
                   price: '$XXX'
                 },
                 {
                   title: 'Surface Pro 4 (2) - No subtitle, No text.',
                   image: {
-                    url: `${PUBLIC_URL}assets/surface2.jpg`,
                     alt: 'Microsoft Surface Alt',
                     tap: {
                       type: 'call',
                       title: 'Call back!',
                       value: '1234567890'
-                    }
+                    },
+                    url: `${PUBLIC_URL}assets/surface2.jpg`
                   },
                   price: '$XXX'
                 },
