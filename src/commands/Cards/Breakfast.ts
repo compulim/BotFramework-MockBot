@@ -2,6 +2,7 @@ export default () => ({
     "$schema": "https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json",
     "version": "1.0",
     "type": "AdaptiveCard",
+    "speak": "Alarm Breakfast 10:00 AM Snooze for",
     "body": [
         {
             "type": "Container",
