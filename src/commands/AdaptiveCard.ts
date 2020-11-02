@@ -12,6 +12,7 @@ import Inputs from './Cards/Inputs';
 import Markdown from './Cards/Markdown';
 import OrderedList from './Cards/OrderedList';
 import Restaurant from './Cards/Restaurant';
+import Repro3560 from './Cards/Repro3560';
 import Review from './Cards/Review';
 import RichMessage from './Cards/RichMessage';
 import Simple from './Cards/Simple';
@@ -84,6 +85,10 @@ function getCardJSON(name: string = ''): any {
 
     case 'weather':
       return Weather();
+
+    case '3560':
+    case 'three five six zero':
+      return Repro3560();
   }
 }
 

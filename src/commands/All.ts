@@ -75,7 +75,8 @@ async function processor(context: TurnContext, options: any) {
   await MultimediaCard.processor(context);
   await OAuthCard.processor(context);
   await Proactive.processor(context, 'proactive');
-  await ReceiptCard.processor(context);
+  await ReceiptCard.processor(context, 'receiptcard');
+  await ReceiptCard.processor(context, 'receiptcard2');
   await SampleBackchannel.processor(context);
   await SignInCard.processor(context);
   await Slow.processor(context);
