@@ -1,27 +1,32 @@
 import { TurnContext } from 'botbuilder';
 
-import ActionStyles from './Cards/ActionStyles';
-import BingSports from './Cards/BingSports';
-import Breakfast from './Cards/Breakfast';
+import ActionStyles from './Cards/1.2/ActionStyles';
+import BingSports from './Cards/1.0/BingSports';
+import Breakfast from './Cards/1.0/Breakfast';
 import Broken from './Cards/Broken';
-import CalendarReminder from './Cards/CalendarReminder';
-import FlightTracking from './Cards/FlightTracking';
+import CalendarReminder from './Cards/1.0/CalendarReminder';
+import FlightTracking from './Cards/1.0/FlightTracking';
 import FlightUpdate from './Cards/FlightUpdate';
-import ArabicGreeting from './Cards/ArabicGreeting';
-import Inputs from './Cards/Inputs';
-import Markdown from './Cards/Markdown';
-import OrderedList from './Cards/OrderedList';
-import Restaurant from './Cards/Restaurant';
-import Repro3560 from './Cards/Repro3560';
-import Review from './Cards/Review';
-import RichMessage from './Cards/RichMessage';
+import ArabicGreeting from './Cards/1.0/ArabicGreeting';
+import Inputs from './Cards/1.0/Inputs';
+import Markdown from './Cards/1.0/Markdown';
+import OrderedList from './Cards/1.0/OrderedList';
+import Restaurant from './Cards/1.0/Restaurant';
+import Repro3560 from './Cards/1.2/Repro3560';
+import Review from './Cards/1.0/Review';
+import RichMessage from './Cards/1.0/RichMessage';
 import Simple from './Cards/Simple';
-import SportsClub from './Cards/SportsClub';
-import UnorderedList from './Cards/UnorderedList';
-import Weather from './Cards/Weather';
+import SportsClub from './Cards/1.0/SportsClub';
+import UnorderedList from './Cards/1.0/UnorderedList';
+import Weather from './Cards/1.0/Weather';
+import ProductVideo from './Cards/1.1/ProductVideo';
+import Agenda from './Cards/1.3/Agenda';
+import CardWizard from './Cards/1.3/CardWizard';
 
 function getCardJSON(name: string = ''): any {
   switch (name.trim().toLowerCase()) {
+    case 'agenda':
+      return Agenda();
     case 'actionstyles':
       return ActionStyles();
 
@@ -44,6 +49,10 @@ function getCardJSON(name: string = ''): any {
     case 'reminder':
       return CalendarReminder();
 
+    case 'cardwizard':
+    case 'wizard':
+      return CardWizard();
+
     case 'flight':
     case 'flightupdate':
       return FlightUpdate();
@@ -64,6 +73,11 @@ function getCardJSON(name: string = ''): any {
 
     case 'ol':
       return OrderedList();
+
+    case 'productvideo':
+    case 'product video':
+    case 'pv':
+      return ProductVideo();
 
     case 'restaurant':
       return Restaurant();
@@ -96,16 +110,17 @@ const name = 'Adaptive Card';
 
 function help() {
   return {
+    'card arabicgreeting': 'Show a greeting in Arabic (for RTL)',
     'card bingsports': 'Show Bing sports using Adaptive Card',
     'card breakfast': 'Show breakfast review using Adaptive Card',
     'card broken:lang': 'Show an Adaptive Card that is broken because of invalid language identifier',
     'card broken': 'Show an Adaptive Card that is broken because of invalid version',
     'card flight': 'Show flight update using Adaptive Card',
     'card flighttracking': 'Show flight tracking using Adaptive Card',
-    'card arabicgreeting': 'Show a greeting in Arabic (for RTL)',
     'card inputs': 'Show an Adaptive Card with all types of inputs',
-    'card ol': 'Show an ordered list with Markdown',
     'card markdown': 'Show Markdown using Adaptive Card',
+    'card ol': 'Show an ordered list with Markdown',
+    'card product video': 'Show a product video using Adaptive Cards',
     'card reminder': 'Show a reminder using Adaptive Card',
     'card restaurant': 'Show restaurant information using Adaptive Card',
     'card review': 'Show review using Adaptive Card',
