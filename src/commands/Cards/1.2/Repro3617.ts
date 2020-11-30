@@ -1,11 +1,8 @@
 export default () => ({
   $schema: 'https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json',
-  contentType: 'application/vnd.microsoft.card.adaptive',
-  contentUrl: null,
   type: 'AdaptiveCard',
   version: '1.2',
-  speak:
-    "<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts'><voice>Would you like **to** reset</voice></speak>",
+  speak: 'Would you like **to** reset',
 
   body: [
     {
