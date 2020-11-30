@@ -13,6 +13,7 @@ import Markdown from './Cards/1.0/Markdown';
 import OrderedList from './Cards/1.0/OrderedList';
 import Restaurant from './Cards/1.0/Restaurant';
 import Repro3560 from './Cards/1.2/Repro3560';
+import Repro3617 from './Cards/1.2/Repro3617';
 import Review from './Cards/1.0/Review';
 import RichMessage from './Cards/1.0/RichMessage';
 import Simple from './Cards/Simple';
@@ -103,6 +104,10 @@ function getCardJSON(name: string = ''): any {
     case '3560':
     case 'three five six zero':
       return Repro3560();
+
+    case '3617':
+    case 'three six one seven':
+      return Repro3617();
   }
 }
 
