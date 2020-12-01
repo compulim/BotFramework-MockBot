@@ -1,7 +1,7 @@
 export default () => ({
   $schema: 'https://microsoft.github.io/AdaptiveCards/schemas/adaptive-card.json',
   type: 'AdaptiveCard',
-  version: '1.0',
+  version: '6.0',
   speak: 'The Seattle Seahawks beat the Carolina Panthers 40-7',
   body: [
     {
