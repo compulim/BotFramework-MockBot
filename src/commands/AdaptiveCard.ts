@@ -23,6 +23,7 @@ import Weather from './Cards/1.0/Weather';
 import ProductVideo from './Cards/1.1/ProductVideo';
 import Agenda from './Cards/1.3/Agenda';
 import CardWizard from './Cards/1.3/CardWizard';
+import ReproParseError from './Cards/1.2/ReproParseError';
 
 function getCardJSON(name: string = ''): any {
   switch (name.trim().toLowerCase()) {
@@ -102,12 +103,12 @@ function getCardJSON(name: string = ''): any {
       return Weather();
 
     case '3560':
-    case 'three five six zero':
       return Repro3560();
 
     case '3617':
-    case 'three six one seven':
       return Repro3617();
+    case 'parse:error':
+      return ReproParseError();
   }
 }
 
