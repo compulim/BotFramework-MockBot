@@ -3,7 +3,7 @@
 
 export default () => ({
   type: 'AdaptiveCard',
-  version: '1.0',
+  version: '1.3',
   body: [
     {
       type: 'TextBlock',
