@@ -59,7 +59,7 @@ export default () => ({
       "placeholder": "Quantity",
       "min": -5,
       "max": 5,
-      "value": 1,
+      "value": "",
       "id": "NumVal",
       "speak": "How many do you want?"
     },
