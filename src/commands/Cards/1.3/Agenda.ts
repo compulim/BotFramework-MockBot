@@ -19,17 +19,6 @@ export default () => ({
                   type: 'Column',
                   items: [
                     {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/LocationGreen_A.png',
-                      altText: 'Location A'
-                    }
-                  ],
-                  width: 'auto'
-                },
-                {
-                  type: 'Column',
-                  items: [
-                    {
                       type: 'TextBlock',
                       text: '**Redmond**',
                       wrap: true
@@ -57,17 +46,6 @@ export default () => ({
               type: 'ColumnSet',
               horizontalAlignment: 'Center',
               columns: [
-                {
-                  type: 'Column',
-                  items: [
-                    {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/LocationBlue_B.png',
-                      altText: 'Location B'
-                    }
-                  ],
-                  width: 'auto'
-                },
                 {
                   type: 'Column',
                   items: [
@@ -103,17 +81,6 @@ export default () => ({
                   type: 'Column',
                   items: [
                     {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/LocationRed_C.png',
-                      altText: 'Location C'
-                    }
-                  ],
-                  width: 'auto'
-                },
-                {
-                  type: 'Column',
-                  items: [
-                    {
                       type: 'TextBlock',
                       text: '**Seattle**',
                       wrap: true
@@ -145,18 +112,6 @@ export default () => ({
               columns: [
                 {
                   type: 'Column',
-                  items: [
-                    {
-                      type: 'Image',
-                      horizontalAlignment: 'Left',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/Conflict.png',
-                      altText: 'Calendar conflict'
-                    }
-                  ],
-                  width: 'auto'
-                },
-                {
-                  type: 'Column',
                   spacing: 'None',
                   items: [
                     {
@@ -181,24 +136,6 @@ export default () => ({
         },
         {
           type: 'Column',
-          backgroundImage: {
-            url: 'https://messagecardplayground.azurewebsites.net/assets/SmallVerticalLineGray.png',
-            fillMode: 'RepeatVertically',
-            horizontalAlignment: 'Center'
-          },
-          items: [
-            {
-              type: 'Image',
-              horizontalAlignment: 'Center',
-              url: 'https://messagecardplayground.azurewebsites.net/assets/CircleGreen_coffee.png',
-              altText: 'Location A: Coffee'
-            }
-          ],
-          width: 'auto',
-          spacing: 'None'
-        },
-        {
-          type: 'Column',
           items: [
             {
               type: 'TextBlock',
@@ -213,17 +150,6 @@ export default () => ({
                   type: 'Column',
                   items: [
                     {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/location_gray.png',
-                      altText: 'Location'
-                    }
-                  ],
-                  width: 'auto'
-                },
-                {
-                  type: 'Column',
-                  items: [
-                    {
                       type: 'TextBlock',
                       text: 'Conf Room Bravern-2/9050',
                       wrap: true
@@ -234,45 +160,9 @@ export default () => ({
               ]
             },
             {
-              type: 'ImageSet',
-              spacing: 'Small',
-              imageSize: 'Small',
-              images: [
-                {
-                  type: 'Image',
-                  url: 'https://messagecardplayground.azurewebsites.net/assets/person_w1.png',
-                  size: 'Small',
-                  altText: 'Person with bangs'
-                },
-                {
-                  type: 'Image',
-                  url: 'https://messagecardplayground.azurewebsites.net/assets/person_m1.png',
-                  size: 'Small',
-                  altText: 'Person with glasses and short hair'
-                },
-                {
-                  type: 'Image',
-                  url: 'https://messagecardplayground.azurewebsites.net/assets/person_w2.png',
-                  size: 'Small',
-                  altText: 'Person smiling'
-                }
-              ]
-            },
-            {
               type: 'ColumnSet',
               spacing: 'Small',
               columns: [
-                {
-                  type: 'Column',
-                  items: [
-                    {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/power_point.png',
-                      altText: 'Powerpoint presentation'
-                    }
-                  ],
-                  width: 'auto'
-                },
                 {
                   type: 'Column',
                   items: [
@@ -301,38 +191,10 @@ export default () => ({
         },
         {
           type: 'Column',
-          backgroundImage: {
-            url: 'https://messagecardplayground.azurewebsites.net/assets/SmallVerticalLineGray.png',
-            fillMode: 'RepeatVertically',
-            horizontalAlignment: 'Center'
-          },
-          items: [
-            {
-              type: 'Image',
-              horizontalAlignment: 'Center',
-              url: 'https://messagecardplayground.azurewebsites.net/assets/Gray_Dot.png'
-            }
-          ],
-          width: 'auto',
-          spacing: 'None'
-        },
-        {
-          type: 'Column',
           items: [
             {
               type: 'ColumnSet',
               columns: [
-                {
-                  type: 'Column',
-                  items: [
-                    {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/car.png',
-                      altText: 'Travel by car'
-                    }
-                  ],
-                  width: 'auto'
-                },
                 {
                   type: 'Column',
                   items: [
@@ -377,19 +239,6 @@ export default () => ({
         },
         {
           type: 'Column',
-          backgroundImage: {
-            url: 'https://messagecardplayground.azurewebsites.net/assets/SmallVerticalLineGray.png',
-            fillMode: 'RepeatVertically',
-            horizontalAlignment: 'Center'
-          },
-          items: [
-            {
-              type: 'Image',
-              horizontalAlignment: 'Center',
-              url: 'https://messagecardplayground.azurewebsites.net/assets/CircleBlue_flight.png',
-              altText: 'Location B: Flight'
-            }
-          ],
           width: 'auto',
           spacing: 'None'
         },
@@ -409,17 +258,6 @@ export default () => ({
                   type: 'Column',
                   items: [
                     {
-                      type: 'Image',
-                      url: 'https://messagecardplayground.azurewebsites.net/assets/location_gray.png',
-                      altText: 'Location'
-                    }
-                  ],
-                  width: 'auto'
-                },
-                {
-                  type: 'Column',
-                  items: [
-                    {
                       type: 'TextBlock',
                       text:
                         'Seattle Tacoma International Airport (17801 International Blvd, Seattle, WA, United States)',
@@ -429,12 +267,6 @@ export default () => ({
                   width: 'stretch'
                 }
               ]
-            },
-            {
-              type: 'Image',
-              url: 'https://messagecardplayground.azurewebsites.net/assets/SeaTacMap.png',
-              size: 'Stretch',
-              altText: 'Map of the Seattle-Tacoma airport'
             }
           ],
           width: 40
