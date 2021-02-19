@@ -36,8 +36,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "auto-reset-event": "^1.0.0",
-    "botbuilder": "4.9.0",
-    "botbuilder-dialogs": "4.9.0",
+    "botbuilder": "4.12.0-rc1",
+    "botbuilder-dialogs": "4.12.0-rc1",
     "delay": "^4.3.0",
     "dotenv": "^8.0.0",
     "node-fetch": "^2.6.1",
