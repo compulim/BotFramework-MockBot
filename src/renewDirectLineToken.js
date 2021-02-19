@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 export default async function (token) {
   console.log(`Renewing Direct Line token using token "${ token.substr(0, 3) }...${ token.substr(-3) }"`);
 
