@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 import createUserID from './createUserID';
 
 const { DIRECT_LINE_URL = 'https://directline.botframework.com/' } = process.env
