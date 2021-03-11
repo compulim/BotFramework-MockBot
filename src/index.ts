@@ -150,6 +150,7 @@ function trustedOrigin(origin) {
     /^https:\/\/microsoft\.github\.io(\/|$)/.test(origin) ||
     /^https:\/\/bfxwebchatfullbundle\.azurewebsites\.net(\/|$)/.test(origin) ||
     /^https:\/\/webchattest\.blob\.core\.windows\.net(\/|$)/.test(origin) ||
+    /^https:\/\/hawo-acs-dev-appserver\.azurewebsites\.net(\/|$)/.test(origin) ||
     // This is CodePen
     /^https:\/\/cdpn\.io(\/|$)/.test(origin) ||
     /^https:\/\/s\.codepen\.io(\/|$)/.test(origin)
