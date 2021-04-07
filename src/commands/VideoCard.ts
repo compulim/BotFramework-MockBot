@@ -1,4 +1,4 @@
-import { TurnContext } from 'botbuilder';
+import { TurnContext, VideoCard } from 'botbuilder';
 
 const name = 'Video card';
 
@@ -23,7 +23,7 @@ async function processor(context: TurnContext) {
           url: `${ PUBLIC_URL }assets/msband.mp4`,
           profile: 'videocard'
         }],
-        image: { url: `${ PUBLIC_URL }assets/ms-band1.jpg` },
+        image: { imageAltText: 'Microsoft Band', url: `${ PUBLIC_URL }assets/ms-band1.jpg` },
         autoloop: true,
         autostart: false
       }

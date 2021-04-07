@@ -8,6 +8,7 @@ export default () => ({
             "items": [
                 {
                     "type": "Image",
+                    "altText": "Picture of pizza",
                     "url": "http://www.thefabliss.com/wp-content/uploads/2013/10/IMG_3938a1.jpg"
                 },
                 {

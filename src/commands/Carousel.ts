@@ -22,7 +22,8 @@ async function processor(context: TurnContext) {
         subtitle: 'This is the subtitle',
         text: 'Price: $XXX.XX USD',
         images: [{
-          url: `${ PUBLIC_URL }assets/surface1.jpg`
+          url: `${ PUBLIC_URL }assets/surface1.jpg`,
+          alt: 'Details about image 1'
         }],
         buttons: [{
           type: 'imBack',
@@ -41,7 +42,8 @@ async function processor(context: TurnContext) {
         subtitle: 'This is the subtitle',
         text: 'Price: $XXX.XX USD',
         images: [{
-          url: `${ PUBLIC_URL }assets/surface2.jpg`
+          url: `${ PUBLIC_URL }assets/surface2.jpg`,
+          alt: 'Details about image 2'
         }],
         buttons: [{
           type: 'imBack',
@@ -60,7 +62,8 @@ async function processor(context: TurnContext) {
         subtitle: 'This is the subtitle',
         text: 'Price: $XXX.XX USD',
         images: [{
-          url: `${ PUBLIC_URL }assets/surface3.jpg`
+          url: `${ PUBLIC_URL }assets/surface3.jpg`,
+          alt: 'Details about image 3'
         }],
         buttons: [{
           type: 'imBack',
@@ -79,7 +82,8 @@ async function processor(context: TurnContext) {
         subtitle: 'This is the subtitle',
         text: 'Price: $XXX.XX USD',
         images: [{
-          url: `${ PUBLIC_URL }assets/surface4.jpg`
+          url: `${ PUBLIC_URL }assets/surface4.jpg`,
+          alt: 'Details about image 4'
         }],
         buttons: [{
           type: 'imBack',

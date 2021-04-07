@@ -46,6 +46,7 @@ export default () => ({
                                 {
                                     "type": "Image",
                                     "style": "Person",
+                                    "altText": "",
                                     "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-sunny.png",
                                     "size": "Medium"
                                 }
@@ -152,6 +153,7 @@ export default () => ({
                     "items": [
                         {
                             "type": "Image",
+                            "altText": "",
                             "horizontalAlignment": "Left",
                             "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-partly-cloudy-day.png",
                             "size": "Small"
@@ -164,6 +166,7 @@ export default () => ({
                     "items": [
                         {
                             "type": "Image",
+                            "altText": "",
                             "horizontalAlignment": "Left",
                             "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-rain-showers-day.png",
                             "size": "Small"
@@ -176,6 +179,7 @@ export default () => ({
                     "items": [
                         {
                             "type": "Image",
+                            "altText": "",
                             "horizontalAlignment": "Left",
                             "url": "https://webchat-mockbot.azurewebsites.net/public/assets/weather-sunny.png",
                             "size": "Small"

@@ -28,6 +28,7 @@ export default () => ({
                                     "items": [
                                         {
                                             "type": "Image",
+                                            "altText": "Airplane image",
                                             "url": "https://webchat-mockbot.azurewebsites.net/public/assets/airplane.png",
                                             "size": "Small"
                                         }

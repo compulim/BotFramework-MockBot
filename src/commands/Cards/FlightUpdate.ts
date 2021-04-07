@@ -14,6 +14,7 @@ export default () => ({
 					"items": [
 						{
 							"type": "Image",
+							"altText": "Airplane image",
 							"size": "small",
 							"url": "http://adaptivecards.io/content/airplane.png"
 						}

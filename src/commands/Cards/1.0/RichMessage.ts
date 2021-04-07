@@ -20,6 +20,7 @@ export default () => ({
                             "items": [
                                 {
                                     "type": "Image",
+                                    "altText": "Image of Jeremy Cristiano",
                                     "style": "Person",
                                     "url": "https://mir-s3-cdn-cf.behance.net/user/276/c5a1422944313.57b74dfe1a48b.jpg",
                                     "size": "Small"

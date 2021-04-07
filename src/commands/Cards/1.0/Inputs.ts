@@ -217,6 +217,7 @@ export default () => ({
                 "items": [
                   {
                     "type": "Image",
+                    "altText": "No image available",
                     "size": "small",
                     "url": "https://www.bing.com/th?id=AR_3934aff63dd6ff941034090a4b9d12e1&w=50&h=50&dpr=2&pid=AppEx",
                     "horizontalAlignment": "center"
@@ -257,6 +258,7 @@ export default () => ({
                 "items": [
                   {
                     "type": "Image",
+                    "altText": "No image available",
                     "size": "small",
                     "url": "https://www.bing.com/th?id=AR_95e44d654968e8de2336993a1cf8a3cf&w=50&h=50&dpr=2&pid=AppEx",
                     "horizontalAlignment": "center"
