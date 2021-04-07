@@ -43,6 +43,7 @@ export default () => ({
                 },
                 {
                     "id": "time",
+                    "label": "Snooze time",
                     "type": "Input.ChoiceSet",
                     "value": "10m",
                     "placeholder": "Placeholder text",

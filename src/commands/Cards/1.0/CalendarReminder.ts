@@ -26,6 +26,7 @@ export default () => ({
 		},
 		{
 			"type": "Input.ChoiceSet",
+			"label": "Snooze time",
 			"id": "snooze",
 			"style":"compact",
 			"choices": [

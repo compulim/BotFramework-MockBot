@@ -83,11 +83,8 @@ export default () => ({
       "horizontalAlignment": "center"
     },
     {
-      "type": "TextBlock",
-      "text": "What color do you want?"
-    },
-    {
       "type": "Input.ChoiceSet",
+      "label": "What color do you want?",
       "style": "compact",
       "choices": [
         {
@@ -107,11 +104,8 @@ export default () => ({
       "id": "SingleSelectVal"
     },
     {
-      "type": "TextBlock",
-      "text": "What color do you want?"
-    },
-    {
       "type": "Input.ChoiceSet",
+      "label": "What color do you want?",
       "choices": [
         {
           "title": "Red",
@@ -130,11 +124,8 @@ export default () => ({
       "id": "CompactSelectVal"
     },
     {
-      "type": "TextBlock",
-      "text": "What colors do you want?"
-    },
-    {
       "type": "Input.ChoiceSet",
+      "label": "What colors do you want?",
       "isMultiSelect": true,
       "choices": [
         {
