@@ -5,6 +5,7 @@ import BingSports from './Cards/1.0/BingSports';
 import Breakfast from './Cards/1.0/Breakfast';
 import Broken from './Cards/Broken';
 import CalendarReminder from './Cards/1.0/CalendarReminder';
+import ContainerStyles from './Cards/1.2/ContainerStyles';
 import FlightTracking from './Cards/1.0/FlightTracking';
 import FlightUpdate from './Cards/FlightUpdate';
 import ArabicGreeting from './Cards/1.0/ArabicGreeting';
@@ -54,6 +55,9 @@ function getCardJSON(name: string = ''): any {
     case 'cardwizard':
     case 'wizard':
       return CardWizard();
+
+    case 'containerstyles':
+      return ContainerStyles();
 
     case 'flight':
     case 'flightupdate':
@@ -122,6 +126,7 @@ function help() {
     'card breakfast': 'Show breakfast review using Adaptive Card',
     'card broken:lang': 'Show an Adaptive Card that is broken because of invalid language identifier',
     'card broken': 'Show an Adaptive Card that is broken because of invalid version',
+    'card containerstyles': 'Show a card with Adaptive Card containers',
     'card flight': 'Show flight update using Adaptive Card',
     'card flighttracking': 'Show flight tracking using Adaptive Card',
     'card inputs': 'Show an Adaptive Card with all types of inputs',
