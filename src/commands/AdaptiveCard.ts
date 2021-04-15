@@ -16,6 +16,7 @@ import Restaurant from './Cards/1.0/Restaurant';
 import Repro3560 from './Cards/1.2/Repro3560';
 import Repro3617 from './Cards/1.2/Repro3617';
 import Review from './Cards/1.0/Review';
+import TextBlockStyle from './Cards/1.0/TextBlockStyle';
 import RichMessage from './Cards/1.0/RichMessage';
 import Simple from './Cards/Simple';
 import SportsClub from './Cards/1.0/SportsClub';
@@ -99,6 +100,10 @@ function getCardJSON(name: string = ''): any {
 
     case 'sportsclub':
       return SportsClub();
+
+    case 'textblockstyle':
+    case 'textstyle':
+      return TextBlockStyle();
 
     case 'ul':
       return UnorderedList();
