@@ -145,14 +145,13 @@ export default () => ({
             {
               "items": [
                 {
-                  "color": "accent",
                   "horizontalAlignment": "center",
                   "size": "medium",
                   "text": "5.5 mi",
                   "type": "TextBlock"
                 }
               ],
-              "style": "emphasis",
+              "style": "accent",
               "type": "Column",
               "verticalContentAlignment": "Center",
               "width": "20"
