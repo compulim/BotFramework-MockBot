@@ -23,7 +23,6 @@ import * as HeroCardActions from './commands/HeroCardActions';
 import * as Image from './commands/Image';
 import * as ImageSVG from './commands/ImageSVG';
 import * as InputHint from './commands/InputHint';
-import * as InputHintRepro3823 from "./commands/InputHintRepro3823";
 import * as InvalidCard from './commands/InvalidCard';
 import * as Layout from './commands/Layout';
 import * as Localization from './commands/Localization';
