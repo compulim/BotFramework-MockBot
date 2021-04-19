@@ -80,22 +80,10 @@ async function processor(context: TurnContext) {
               "value": "no, grazie!"
             }
           ],
-          // to: []
+          to: []
         },
         "attachments": [],
-        "entities": [],
-        "replyToId": "6DuhF2C3ayVmIsJnyfLnK-h|0000006",
-        "DNU": false,
-        "EndConversation": false,
-        "ClientData": "",
-        "NodeType": "",
-        "Node_QuestionType": "ChoiceSuggestion",
-        "MainScenarioName": "Informazioni - Carta di Credito - Costi",
-        "CurrentScenario": "End Dialog",
-        "StartScenario": false,
-        "ActiveNodeStep": 2,
-        "SessionId": "949a8027e5304e568125fc2ee54c9e68",
-        "Node_ID": "00000000-0000-0000-0000-000000000000"
+        "entities": []
       }
     ]);
 }
