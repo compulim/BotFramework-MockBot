@@ -37,10 +37,10 @@ async function sendInputHint(reference, inputHint) {
 
         break;
 
-      case '3823':
-        await context.sendActivities([
-          {
+      case '3':
+        await context.sendActivity({
             "type": "message",
+            "id": "6DuhF2C3ayVmIsJnyfLnK-h|0000013",
             "channelId": "directline",
             "from": {
               "id": "p0tier1bot01",
@@ -67,8 +67,9 @@ async function sendInputHint(reference, inputHint) {
             },
             "attachments": [],
             "entities": []
-          }
-        ]);
+        });
+
+        break;
 
       default:
         await context.sendActivity({
