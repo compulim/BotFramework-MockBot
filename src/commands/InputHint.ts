@@ -37,6 +37,39 @@ async function sendInputHint(reference, inputHint) {
 
         break;
 
+      case '3823':
+        await context.sendActivities([
+          {
+            "type": "message",
+            "channelId": "directline",
+            "from": {
+              "id": "p0tier1bot01",
+              "name": "p0tier1bot01"
+            },
+            "locale": "it-IT",
+            "text": " C'è qualcos'altro che posso fare per te? 🤗",
+            "speak": " C'è qualcos'altro che posso fare per te? 🤗",
+            "inputHint": "expectingInput",
+            "suggestedActions": {
+              "actions": [
+                {
+                  "type": "imBack",
+                  "title": "Sì, grazie!",
+                  "value": "sì, grazie!"
+                },
+                {
+                  "type": "imBack",
+                  "title": "No, grazie!",
+                  "value": "no, grazie!"
+                }
+              ],
+              to: []
+            },
+            "attachments": [],
+            "entities": []
+          }
+        ]);
+
       default:
         await context.sendActivity({
           inputHint: 'ignoringInput',

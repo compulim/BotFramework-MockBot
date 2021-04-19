@@ -87,7 +87,6 @@ export default [
   { pattern: /^herocard(\s+([\d\w]+))*$/i, ...HeroCard },
   { pattern: /^herocarda/i, ...HeroCardActions },
   { pattern: /^hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
-  { pattern: '3823', ...InputHintRepro3823 },
   { pattern: "image", ...Image },
   { pattern: "image-svg", ...ImageSVG },
   { pattern: /^input[\-\s]hint(\s+[\d\w]+)?(\s+[\d\w]+)?/i, ...InputHint },
