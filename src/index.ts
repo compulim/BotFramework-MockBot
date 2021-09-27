@@ -57,6 +57,7 @@ const adapter = new BotFrameworkAdapter({
 
 let numActivities = 0;
 let echoTypingConversations = new Set();
+let echoTypingAsMessageConversations = new Set();
 const up = Date.now();
 const logs = [];
 
@@ -143,8 +144,8 @@ function trustedOrigin(origin) {
     origin === 'null' || // This is for file://index.html
     // This is for Docker tests, dotless domain
     /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin) ||
-    /^https?:\/\/[\d\w]+\.github\.dev(\/|$)/.test(origin) ||
-    /^https?:\/\/[\d\w]+\.githubpreview\.dev(\/|$)/.test(origin) ||
+    /^https?:\/\/[\d\w-]+\.github\.dev(\/|$)/.test(origin) ||
+    /^https?:\/\/[\d\w-]+\.githubpreview\.dev(\/|$)/.test(origin) ||
     /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin) ||
     /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin) ||
     /^https?:\/\/webchat-playground2\.azurewebsites\.net(\/|$)/.test(origin) ||
@@ -417,6 +418,17 @@ server.post('/api/messages', (req, res) => {
           echoTypingConversations.add(conversationID);
           await context.sendActivity('Will echo `"typing"` event');
         }
+      } else if (/^echo-typing-as-message$/i.test(cleanedText)) {
+        // We should "echoTyping" in a per-conversation basis
+        const { id: conversationID } = context.activity.conversation;
+
+        if (echoTypingAsMessageConversations.has(conversationID)) {
+          echoTypingAsMessageConversations.delete(conversationID);
+          await context.sendActivity('Will stop echoing `"typing"` event as message');
+        } else {
+          echoTypingAsMessageConversations.add(conversationID);
+          await context.sendActivity('Will echo `"typing"` event as message');
+        }
       } else if (/^help$/i.test(cleanedText)) {
         const attachments = commands.map(({ help, name }) => {
           return {
@@ -483,8 +495,10 @@ server.post('/api/messages', (req, res) => {
           type: 'message'
         });
       }
-    } else if (context.activity.type === 'typing' && echoTypingConversations.has(context.activity.conversation.id)) {
-      await context.sendActivity({ type: 'typing' });
+    } else if (context.activity.type === 'typing') {
+      echoTypingConversations.has(context.activity.conversation.id) && (await context.sendActivity({ type: 'typing' }));
+      echoTypingAsMessageConversations.has(context.activity.conversation.id) &&
+        (await context.sendActivity(`Received \`typing\` at ${new Date().toLocaleString()}.`));
     }
   });
 });
