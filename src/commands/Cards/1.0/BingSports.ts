@@ -31,9 +31,9 @@ export default () => ({
                   "size": "small",
                   "horizontalAlignment": "center",
                   "selectAction": {
-                    "type": "Action.OpenUrl",
-                    "url": "http://so.cl",
-                    "title": "Image action"
+                    "type":  "Action.OpenUrl",
+                    "url": "http://bing.com/",
+                    "title": "Panthers logo, tap to open Bing.com"
                   }
                 },
                 {
