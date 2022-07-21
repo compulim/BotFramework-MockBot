@@ -72,6 +72,7 @@ function getCardJSON(name: string = ''): any {
     case 'رحب بالقارئ':
       return ArabicGreeting();
 
+    case 'input':
     case 'inputs':
       return Inputs();
 
