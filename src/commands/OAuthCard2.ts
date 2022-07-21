@@ -37,7 +37,7 @@ dialogs.add(new WaterfallDialog('AUTH_DIALOG', [
     const res = await fetch(`https://api.github.com/user?access_token=${ encodeURIComponent(token) }`);
 
     if (res.ok) {
-      const json = await res.json();
+      const json = await res.json() as any;
 
       await step.context.sendActivity(`![${ json.login }](${ json.avatar_url })\r\n# \`${ json.login }\``);
     } else {
