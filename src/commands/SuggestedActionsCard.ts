@@ -41,18 +41,21 @@ async function processor(context: TurnContext, arg: string) {
         actions: [
           {
             image: `${ PUBLIC_URL }assets/square-icon.png`,
+            imageAltText: 'a blue square',
             title: 'IM back as string',
             type: 'imBack',
             value: 'postback imback-string',
           },
           {
             image: `${ PUBLIC_URL }assets/square-icon-red.png`,
+            imageAltText: 'a red square',
             title: 'Post back as string',
             type: 'postBack',
             value: 'postback postback-string',
           },
           {
             image: `${ PUBLIC_URL }assets/square-icon-green.png`,
+            imageAltText: 'a green square',
             title: 'Post back as JSON',
             text: 'Some text',
             type: 'postBack',
@@ -62,6 +65,7 @@ async function processor(context: TurnContext, arg: string) {
           },
           {
             image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            imageAltText: 'a purple square',
             displayText: 'say Hello World!',
             title: 'Message back as JSON with display text',
             text: 'Some text',
@@ -72,6 +76,7 @@ async function processor(context: TurnContext, arg: string) {
           },
           {
             image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            imageAltText: 'a purple square',
             title: 'Message back as JSON without display text',
             type: 'messageBack',
             value: {
@@ -81,6 +86,7 @@ async function processor(context: TurnContext, arg: string) {
           {
             displayText: 'Aloha',
             image: `${ PUBLIC_URL }assets/square-icon-purple.png`,
+            imageAltText: 'a purple square',
             text: 'echo Hello',
             title: 'Message back as string with display text',
             type: 'messageBack',
