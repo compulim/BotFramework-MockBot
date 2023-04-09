@@ -196,7 +196,7 @@ export default () => ({
         "body": [
           {
             "type": "TextBlock",
-            "isSubtle": true,
+            // "isSubtle": true,
             "text": "Seattle vs Panthers"
           },
           {
