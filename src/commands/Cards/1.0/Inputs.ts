@@ -196,6 +196,7 @@ export default () => ({
         "body": [
           {
             "type": "TextBlock",
+            // Subtle should not be used in ShowCard because poor contrast ratio.
             // "isSubtle": true,
             "text": "Seattle vs Panthers"
           },
