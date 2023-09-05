@@ -81,7 +81,7 @@ async function processor(context: TurnContext) {
   `
       },
       {
-        '@id': 'ms-bf-channel-account-id:bot',
+        '@id': `ms-bf-channel-account-id:${context.activity.recipient.id}`,
         '@context': 'https://schema.org/',
         '@type': 'Person',
         type: 'https://schema.org/Person',
