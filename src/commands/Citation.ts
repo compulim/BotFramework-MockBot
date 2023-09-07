@@ -17,7 +17,7 @@ async function processor(context: TurnContext) {
 `,
     entities: [
       {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@id': 'cite:1',
         '@type': 'Claim',
         type: 'https://schema.org/Claim',
@@ -82,14 +82,14 @@ Configuring Proxy Auto-Discovery (PAD) proxy settings is a vital task for networ
 `
       },
       {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@id': 'cite:2',
         '@type': 'Claim',
         type: 'https://schema.org/Claim',
         text: 'Here is some plain text without any Markdown formatting in it.'
       },
       {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@type': 'ReplyAction',
         type: 'https://schema.org/ReplyAction',
 
@@ -102,14 +102,14 @@ Configuring Proxy Auto-Discovery (PAD) proxy settings is a vital task for networ
         }
       },
       {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@type': 'VoteAction',
         type: 'https://schema.org/VoteAction',
 
         actionOption: 'upvote'
       },
       {
-        '@context': 'https://schema.org/',
+        '@context': 'https://schema.org',
         '@type': 'VoteAction',
         type: 'https://schema.org/VoteAction',
 
