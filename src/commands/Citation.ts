@@ -18,10 +18,41 @@ async function processor(context: TurnContext) {
     entities: [
       {
         '@context': 'https://schema.org',
-        '@id': 'cite:1',
+        '@id':
+          'https://support.microsoft.com/en-us/windows/use-a-proxy-server-in-windows-03096c53-0554-4ffe-b6ab-8b1deee8dae1',
         '@type': 'Claim',
         type: 'https://schema.org/Claim',
 
+        claimInterpreter: {
+          '@type': 'Project',
+          slogan: 'Surfaced with Azure OpenAI'
+        },
+        name: 'Use a proxy server in Windows'
+      },
+      {
+        '@context': 'https://schema.org',
+        '@id':
+          'https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/configure-proxy-server-settings',
+        '@type': 'Claim',
+        type: 'https://schema.org/Claim',
+
+        claimInterpreter: {
+          '@type': 'Project',
+          slogan: 'Surfaced with Azure OpenAI'
+        },
+        name: 'Configure proxy server settings - Windows Server'
+      },
+      {
+        '@context': 'https://schema.org',
+        '@id': 'cite:1',
+        '@type': 'Claim',
+        claimInterpreter: {
+          '@type': 'Project',
+          slogan: 'Surfaced with Azure OpenAI'
+        },
+        type: 'https://schema.org/Claim',
+
+        name: 'Introduction Configuring proxy settings is a fundamental aspect...',
         text: `Aute Lorem id laboris Lorem do dolor mollit. Officia dolore dolor do culpa nostrud velit officia magna ut aute pariatur excepteur ut cupidatat. Minim minim sunt enim pariatur incididunt eiusmod esse adipisicing do do nulla consequat minim. Exercitation enim adipisicing esse non pariatur duis deserunt eu magna enim amet irure veniam. Minim labore aliquip velit exercitation Lorem exercitation minim excepteur.
 
 ## Introduction
@@ -85,21 +116,14 @@ Configuring Proxy Auto-Discovery (PAD) proxy settings is a vital task for networ
         '@context': 'https://schema.org',
         '@id': 'cite:2',
         '@type': 'Claim',
-        type: 'https://schema.org/Claim',
-        text: 'Here is some plain text without any Markdown formatting in it.'
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'ReplyAction',
-        type: 'https://schema.org/ReplyAction',
-
-        description: 'Surfaced by Azure OpenAI',
-        provider: {
+        claimInterpreter: {
           '@type': 'Project',
+          slogan: 'Surfaced with Azure OpenAI'
+        },
+        type: 'https://schema.org/Claim',
 
-          name: 'Azure OpenAI',
-          url: 'https://www.microsoft.com/en-us/ai/responsible-ai'
-        }
+        name: 'This citation has no name',
+        text: 'Here is some plain text without any Markdown formatting in it.'
       },
       {
         '@context': 'https://schema.org',
