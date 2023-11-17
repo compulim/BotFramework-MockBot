@@ -141,12 +141,13 @@ function trustedOrigin(origin) {
   return (
     !origin ||
     /^https?:\/\/localhost([\/:]|$)/.test(origin) ||
-    /^https?:\/\/192\.168\.(0|1)\.\d{1,3}([\/:]|$)/.test(origin) ||
+    /^https?:\/\/192\.168\.\d{1,3}\.\d{1,3}([\/:]|$)/.test(origin) ||
     origin === 'null' || // This is for file://index.html
     // This is for Docker tests, dotless domain
     /^https?:\/\/[\d\w-]+([\/:]|$)/.test(origin) ||
     /^https?:\/\/[\d\w-]+\.github\.dev(\/|$)/.test(origin) ||
     /^https?:\/\/[\d\w-]+\.githubpreview\.dev(\/|$)/.test(origin) ||
+    /^https?:\/\/[\d\w-]+\.preview.app.github\.dev(\/|$)/.test(origin) ||
     /^https?:\/\/[\d\w]+\.ngrok\.io(\/|$)/.test(origin) ||
     /^https?:\/\/webchat-playground\.azurewebsites\.net(\/|$)/.test(origin) ||
     /^https?:\/\/webchat-playground2\.azurewebsites\.net(\/|$)/.test(origin) ||
